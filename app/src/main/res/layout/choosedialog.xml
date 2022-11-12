@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:gravity="center"
+    android:padding="20dp"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:layout_height="300dp">
+
+    <LinearLayout
+        android:id="@+id/fromGallery"
+        android:padding="5dp"
+        android:background="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@drawable/gellary"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+        <TextView
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:text="choose from gallery"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/FromFolder"
+        android:layout_marginTop="25dp"
+        android:padding="5dp"
+        android:background="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@drawable/folder"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+        <TextView
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:text="choose from library"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp" />
+    </LinearLayout>
+</LinearLayout>

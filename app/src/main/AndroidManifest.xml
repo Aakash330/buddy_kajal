@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.studybuddy.pc.brainmate">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".mains.ShareDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar_StatusBar" />
+        <activity
+            android:name=".mains.Splash"
+            android:exported="true"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".teacher.Students_Class" />
+        <activity android:name=".teacher.Books_Details" />
+        <activity
+            android:name=".teacher.LearningElementary"
+            android:theme="@style/AppTheme.NoActionBar_StatusBar" />
+        <activity android:name=".teacher.MainActivity" />
+        <activity
+            android:name=".teacher.Main2Activity"
+            android:label="Classes"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".mains.Registration"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".student.StudentdashBord"
+            android:label="@string/title_activity_studentdash_bord"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".student.StudebtElimentery"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".teacher.Quetionlistsubjective" />
+        <activity android:name=".teacher.Objective" />
+        <activity android:name=".teacher.Subjective_Plush_Ojective" />
+        <activity android:name=".teacher.Chapters" />
+        <activity
+            android:name=".teacher.QuetionPaper"
+            android:label="@string/title_activity_quetion_paper"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".teacher.TeChapter"
+            android:label="@string/title_activity_te_chapter"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".teacher.PaperConfirmition"
+            android:label="@string/title_activity_paper_confirmition"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".teacher.E_book"
+            android:theme="@style/AppTheme.NoActionBar_StatusBar" />
+        <activity
+            android:name=".teacher.TeachersManual"
+            android:theme="@style/AppTheme.NoActionBar_StatusBar" />
+        <activity
+            android:name=".teacher.AnimationView"
+            android:screenOrientation="landscape" />
+        <activity android:name=".teacher.ActivityScore" />
+        <!--<activity android:name=".student.Student_Subject_Books" />-->
+        <activity
+            android:name=".student.Students_Chapters"
+            android:label="@string/title_activity_students__chapters"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <!--<activity android:name=".student.ScoreCard" />-->
+        <activity
+            android:name=".student.Take_Test"
+            android:label="@string/title_activity_take__test"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".student.StudentTest"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".student.StudentEbook"
+            android:theme="@style/AppTheme.NoActionBar_StatusBar" />
+        <activity
+            android:name=".student.StudentAnimition"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".teacher.Books_Access_Code"
+            android:label="@string/title_activity_books__access__code"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".student.painting.coloring.settings.SettingsActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".student.painting.coloring.about.AboutActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".student.painting.coloring.coloring.ColoringActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".student.painting.coloring.color_picker.ColorPickerActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".student.painting.coloring.page_selection.PageSelectionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".student.painting.coloring.picture_gallery.PictureGalleryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".student.painting.coloring.book_selection.BookSelectionMainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".student.freehandpainting.FreehandActivityMain"
+            android:label="Free Hand Painting" />
+        <activity android:name=".student.ChoosePaint" />
+        <activity
+            android:name=".mains.LoginBothActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".teacher.TePaintingChapters"
+            android:screenOrientation="portrait" />
+        <activity android:name=".teacher.Expired_book" />
+        <activity
+            android:name=".teacher.Teachers_Profile"
+            android:theme="@style/AppTheme.NoActionBar_StatusBar" />
+        <activity
+            android:name=".teacher.Contact_us"
+            android:theme="@style/AppTheme.NoActionBar_StatusBar" />
+        <activity android:name=".teacher.About_us" />
+        <activity
+            android:name=".student.Student_Profile"
+            android:theme="@style/AppTheme.NoActionBar_StatusBar" />
+        <activity
+            android:name=".teacher.Book_Subjects"
+            android:label="@string/title_activity_book__subjects"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".student.Stu_Classes"
+            android:label="@string/title_activity_stu__classes"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".student.Stu_Subjects"
+            android:label="@string/title_activity_stu__subjects"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".teacher.ViewCreatedPdfActivity1"
+            android:theme="@style/AppTheme.NoActionBar_StatusBar" />
+        <activity
+            android:name=".teacher.ViewCreatedPdfActivity2"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar_StatusBar" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <activity
+            android:name=".DisplayTestResultActivity"
+            android:label="@string/test_report"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".teacher.FillDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar_StatusBar"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".teacher.FunActivity"
+            android:theme="@style/AppTheme.NoActionBar_StatusBar" />
+        <activity
+            android:name=".student.FunWebViewActivity"
+            android:theme="@style/AppTheme.NoActionBar_StatusBar" />
+    </application>
+
+</manifest>

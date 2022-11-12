@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home"
+            android:iconTint="#006A62"
+            android:title="Home"
+            android:visible="false" />
+        <item
+            android:id="@+id/Profile"
+            android:icon="@drawable/ic_person"
+            android:iconTint="#006A62"
+            android:title="Profile" />
+        <item
+            android:id="@+id/AddCode"
+            android:icon="@drawable/code"
+            android:iconTint="#006A62"
+            android:title="Add Accesses Code" />
+        <item
+            android:id="@+id/ScoreCard"
+            android:icon="@drawable/ic_catalog"
+            android:iconTint="#006A62"
+            android:title="Activity Score" />
+
+        <item
+            android:id="@+id/nav_change_pwd"
+            android:icon="@drawable/ic_key"
+            android:iconTint="#006A62"
+            android:title="Change Password" />
+        <item
+            android:id="@+id/nav_gallery2"
+            android:icon="@drawable/shopping"
+            android:iconTint="#006A62"
+            android:title="QR Code Scanner"
+            android:visible="false" />
+        <item
+            android:id="@+id/SCustomerSupport"
+            android:icon="@drawable/ic_chat"
+            android:iconTint="#006A62"
+            android:title="Customer Support"
+            android:visible="false" />
+        <item
+            android:id="@+id/SShare"
+            android:icon="@drawable/ic_share"
+            android:iconTint="#006A62"
+            android:title="Invite Friends" />
+        <item
+            android:id="@+id/SContactUS"
+            android:icon="@drawable/ic_contact"
+            android:iconTint="#006A62"
+            android:title="Contact Us" />
+        <item
+            android:id="@+id/SAboutus"
+            android:icon="@drawable/ic_info"
+            android:iconTint="#006A62"
+            android:title="About Us" />
+        <item
+            android:id="@+id/SLogout"
+            android:icon="@drawable/ic_logout"
+            android:iconTint="#006A62"
+            android:title="Logout" />
+    </group>
+    <group android:id="@+id/nav_footer">
+        <item
+            android:id="@+id/nav_log_version"
+            android:title=""
+            app:actionLayout="@layout/footer_navigation_menu" />
+    </group>
+</menu>

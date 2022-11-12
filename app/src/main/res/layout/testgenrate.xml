@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="320dp"
+    android:layout_height="450dp"
+    android:layout_gravity="center"
+    android:background="#00ffffff"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <Button
+        android:id="@+id/longAnswer"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/roundloginbutton"
+        android:backgroundTint="@color/color1"
+        android:text="@string/long_q_a"
+        android:textColor="#fff"
+        android:textSize="17sp" />
+
+    <Button
+        android:id="@+id/shortanswers"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/roundloginbutton"
+        android:backgroundTint="@color/color2"
+        android:text="@string/short_q_a"
+        android:textColor="#fff"
+        android:textSize="17sp" />
+
+    <Button
+        android:id="@+id/mcqs"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/roundloginbutton"
+        android:backgroundTint="@color/color3"
+        android:text="@string/mcqs"
+        android:textColor="#fff"
+        android:textSize="17sp" />
+
+    <Button
+        android:id="@+id/truenfalse"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/roundloginbutton"
+        android:backgroundTint="@color/color4"
+        android:text="@string/tf"
+        android:textColor="#fff"
+        android:textSize="17sp" />
+
+    <Button
+        android:id="@+id/fillintheblank"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/roundloginbutton"
+        android:backgroundTint="@color/color5"
+        android:text="@string/fill_in_blank"
+        android:textColor="#fff"
+        android:textSize="17sp" />
+
+    <Button
+        android:id="@+id/MatchMakingButton"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/roundloginbutton"
+        android:backgroundTint="@color/color6"
+        android:text="@string/match_col"
+        android:textColor="#fff"
+        android:textSize="17sp" />
+
+    <!--  <Button
+          android:backgroundTint="@color/color7"
+          android:layout_marginTop="15dp"
+          android:id="@+id/MCQButton"
+          android:textColor="#fff"
+          android:text="M.C.Q"
+          android:background="@drawable/roundloginbutton"
+          android:layout_width="match_parent"
+          android:layout_height="45dp" />-->
+
+</LinearLayout>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/planone"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/barcodeScanner"
+                android:text="Scan QR Code"
+                android:background="#9f4107"
+                android:layout_width="100dp"
+                android:layout_height="50dp" />
+            <EditText
+                android:layout_marginLeft="5dp"
+                android:id="@+id/inputSearch"
+                android:layout_width="fill_parent"
+                android:background="@drawable/card"
+                android:layout_height="50dp"
+                android:hint="Search By Book Name"
+                android:inputType="textVisiblePassword"/>
+        </LinearLayout>
+        <ListView
+            android:layout_marginTop="50dp"
+            android:padding="2dp"
+            android:id="@+id/listview25"
+            android:dividerHeight="10dp"
+            android:divider="#00605d5d"
+            android:focusable="false"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/search"
+            android:layoutAnimation="@anim/animation"/>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Name" />
+
+            <TextView
+                android:id="@+id/textViewName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="xyz"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Address" />
+
+            <TextView
+                android:id="@+id/textViewAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="xyz"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
+
+        </LinearLayout>
+
+        <Button
+            android:visibility="gone"
+            android:id="@+id/buttonScan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="Scan QR Code" />
+    </LinearLayout>
+
+</LinearLayout>

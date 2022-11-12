@@ -1,0 +1,49 @@
+{
+  "data": [
+    {
+      "id": "2",
+      "publisher_id": "1",
+      "class": "UKG",
+      "subject": "Activity",
+      "series": "",
+      "title": "Drawing title",
+      "type": "1",
+      "url": "fun-activity/15471177682.jpg",
+      "date": "2019-01-10 16:26:08"
+    },
+    {
+      "id": "3",
+      "publisher_id": "1",
+      "class": "UKG",
+      "subject": "Activity",
+      "series": "",
+      "title": "Web View Title",
+      "type": "0",
+      "url": "http://brainmate.co.in/brainmate/",
+      "date": "2019-01-10 16:53:53"
+    },
+    {
+      "id": "4",
+      "publisher_id": "1",
+      "class": "UKG",
+      "subject": "Activity",
+      "series": "",
+      "title": "Coloring Title",
+      "type": "2",
+      "url": "fun-activity/154711948612.jpg",
+      "date": "2019-01-10 16:54:46"
+    },
+    {
+      "id": "5",
+      "publisher_id": "1",
+      "class": "UKG",
+      "subject": "Activity",
+      "series": "",
+      "title": "Memorable Moment",
+      "type": "2",
+      "url": "fun-activity/154711956010.jpg",
+      "date": "2019-01-10 16:56:00"
+    }
+  ],
+  "success": "1"
+}

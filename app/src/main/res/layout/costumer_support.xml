@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="320dp"
+    android:layout_height="280dp"
+    android:background="@drawable/dailogback"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="#006A62"
+        android:gravity="center"
+        android:text="Costumer Support"
+        android:textColor="#fff"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="BRAINMATE is the latest development in the long standing history
+       of PRAGATI PRAKASHAN. It has been established as an independent unit to mainly cater to children school books segment. It was established in September 09' and has already started bearing fruits."
+            android:textSize="17sp" />
+        <!--Call us or Drop Mail to us.-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:visibility="gone"
+            android:weightSum="10">
+
+            <Button
+                android:id="@+id/Call_US"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_call" />
+
+            <Button
+                android:id="@+id/Email_Us"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="80dp"
+                android:background="@drawable/ic_mail" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/planone"
+    android:orientation="vertical"
+    android:padding="10dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:background="@drawable/card"
+        android:gravity="center"
+        android:text="Select Class"
+        android:textColor="#088708"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/barcodeScanner"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:background="@drawable/qrcode"
+            android:padding="2dp"
+            android:text="" />
+
+        <EditText
+            android:id="@+id/inputSearch"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/card"
+            android:hint="Search By Book Name"
+            android:inputType="textVisiblePassword" />
+    </LinearLayout>
+    <!--  <EditText
+          android:visibility="gone"
+          android:layout_marginLeft="5dp"
+          android:id="@+id/inputSearch"
+          android:layout_width="fill_parent"
+          android:background="@drawable/card"
+          android:layout_height="50dp"
+          android:hint="Search By Book Name"
+          android:inputType="textVisiblePassword"/>-->
+    <!--  <TextView
+          android:layout_marginTop="5dp"
+          android:gravity="center"
+          android:textStyle="bold"
+          android:layout_gravity="center"
+          android:textColor="#088708"
+          android:textSize="20dp"
+          android:text="Nursery"
+          android:background="@drawable/card"
+          android:layout_width="match_parent"
+          android:layout_height="30dp" />-->
+    <!-- <LinearLayout
+         android:layout_marginTop="5dp"
+         android:layout_gravity="center"
+         android:gravity="center"
+         android:background="@drawable/card"
+         android:layout_width="match_parent"
+         android:layout_height="60dp">
+         <TextView
+             android:textStyle="bold"
+             android:textColor="#000"
+             android:textSize="20dp"
+             android:id="@+id/heading"
+             android:text="Class 1 "
+             android:layout_marginTop="5dp"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content" />
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+             <ImageButton
+                 android:id="@+id/imgg12"
+                 android:tint="#1f8308"
+                 android:src="@drawable/arrol"
+                 android:background="#f0ffffff"
+                 android:layout_alignParentRight="true"
+                 android:layout_width="40dp"
+                 android:layout_height="40dp" />
+         </RelativeLayout>
+     </LinearLayout>
+     <LinearLayout
+         android:layout_marginTop="5dp"
+         android:layout_gravity="center"
+         android:gravity="center"
+         android:background="@drawable/card"
+         android:layout_width="match_parent"
+         android:layout_height="60dp">
+         <TextView
+             android:textStyle="bold"
+             android:textColor="#000"
+             android:textSize="20dp"
+
+             android:text="Class 1 "
+             android:layout_marginTop="5dp"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content" />
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+             <ImageButton
+
+                 android:tint="#1f8308"
+                 android:src="@drawable/arrol"
+                 android:background="#f0ffffff"
+                 android:layout_alignParentRight="true"
+                 android:layout_width="40dp"
+                 android:layout_height="40dp" />
+         </RelativeLayout>
+     </LinearLayout>
+     <LinearLayout
+         android:layout_marginTop="5dp"
+         android:layout_gravity="center"
+         android:gravity="center"
+         android:background="@drawable/card"
+         android:layout_width="match_parent"
+         android:layout_height="60dp">
+         <TextView
+             android:textStyle="bold"
+             android:textColor="#000"
+             android:textSize="20dp"
+
+             android:text="Class 1 "
+             android:layout_marginTop="5dp"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content" />
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+             <ImageButton
+
+                 android:tint="#1f8308"
+                 android:src="@drawable/arrol"
+                 android:background="#f0ffffff"
+                 android:layout_alignParentRight="true"
+                 android:layout_width="40dp"
+                 android:layout_height="40dp" />
+         </RelativeLayout>
+     </LinearLayout>-->
+    <!--  <TextView
+          android:layout_marginTop="5dp"
+          android:gravity="center"
+          android:textStyle="bold"
+          android:layout_gravity="center"
+          android:textColor="#088708"
+          android:textSize="20dp"
+          android:text="Classes"
+          android:background="@drawable/card"
+          android:layout_width="match_parent"
+          android:layout_height="30dp" />-->
+    <ListView
+        android:id="@+id/listview12"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/search"
+
+        android:layout_marginTop="10dp"
+        android:divider="#00949393"
+        android:dividerHeight="02dp"
+        android:layoutAnimation="@anim/animation"
+        android:padding="2dp" />
+
+
+</LinearLayout>

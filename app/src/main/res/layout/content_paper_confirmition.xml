@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/backk"
+
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".teacher.PaperConfirmition"
+    tools:showIn="@layout/activity_paper_confirmition">
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="#b7ede7a6"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <EditText
+        android:visibility="gone"
+        android:padding="5dp"
+        android:id="@+id/inputSearch"
+        android:layout_width="match_parent"
+        android:background="@drawable/card"
+        android:layout_height="50dp"
+        android:hint="Search By Book Name"
+        android:inputType="textVisiblePassword"/>
+    <LinearLayout
+        android:background="@drawable/card"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:textColor="#088708"
+            android:textSize="18dp"
+            android:text=""
+            android:id="@+id/SectionNAne"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp" />
+        <RelativeLayout
+
+            android:layout_marginRight="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:textColor="#088708"
+                android:textSize="18dp"
+                android:text="1"
+
+                android:id="@+id/SectionNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:orientation="vertical"
+        android:id="@+id/longQAlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ListView
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="60dp"
+            android:id="@+id/Subjectivelist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </ListView>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:id="@+id/ObjectiveLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+       <!-- <TextView
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:textColor="#088708"
+            android:textSize="18dp"
+            android:text="Choose Questions From Here"
+            android:background="@drawable/card"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />-->
+        <ListView
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="60dp"
+            android:id="@+id/Objectivelist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </ListView>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:id="@+id/ObjectiveplushsubLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!--<TextView
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:textColor="#088708"
+            android:textSize="18dp"
+            android:text="Choose Questions From Here"
+            android:background="@drawable/card"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />-->
+        <ListView
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="60dp"
+            android:id="@+id/true_false_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </ListView>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:id="@+id/Fillintheblanklayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+       <!-- <TextView
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:textColor="#088708"
+            android:textSize="18dp"
+            android:text="Choose Questions From Here"
+            android:background="@drawable/card"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />-->
+        <ListView
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="60dp"
+            android:id="@+id/Fillintheblanklist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </ListView>
+
+    </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

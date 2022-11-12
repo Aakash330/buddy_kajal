@@ -1,0 +1,65 @@
+{
+  "match_column": [
+    {
+      "q_no": "1",
+      "column1": "Sleep",
+      "column2": "Zero power state with resume option",
+      "ans": "Low power state"
+    },
+    {
+      "q_no": "1",
+      "column1": "Log off",
+      "column2": "windows + L",
+      "ans": "Allows others to log on."
+    },
+    {
+      "q_no": "1",
+      "column1": "Hibernate",
+      "column2": "Low power state",
+      "ans": "Zero power state with resume option"
+    },
+    {
+      "q_no": "1",
+      "column1": "Lock",
+      "column2": "windows + D",
+      "ans": "windows + L"
+    },
+    {
+      "q_no": "1",
+      "column1": "Desktop",
+      "column2": "Shut down and start again",
+      "ans": "windows + D"
+    },
+    {
+      "q_no": "2",
+      "column1": "Sleep",
+      "column2": "Zero power state with resume option",
+      "ans": "Low power state"
+    },
+    {
+      "q_no": "2",
+      "column1": "Log off",
+      "column2": "windows + L",
+      "ans": "Allows others to log on."
+    },
+    {
+      "q_no": "2",
+      "column1": "Hibernate",
+      "column2": "Low power state",
+      "ans": "Zero power state with resume option"
+    },
+    {
+      "q_no": "2",
+      "column1": "Lock",
+      "column2": "windows + D",
+      "ans": "windows + L"
+    },
+    {
+      "q_no": "2",
+      "column1": "Desktop",
+      "column2": "Shut down and start again",
+      "ans": "windows + D"
+    }
+  ],
+  "match_column_response": "1"
+}

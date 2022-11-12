@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/planone"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".teacher.TeChapter"
+    tools:showIn="@layout/activity_te_chapter">
+
+    <!--Note : Not in use-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <EditText
+            android:id="@+id/inputSearch"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/card"
+            android:hint="Search By Book Name"
+            android:inputType="textVisiblePassword"
+            android:padding="5dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:background="@drawable/card"
+            android:gravity="center"
+            android:text="Choose Chapters From Here"
+            android:textColor="#088708"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <ListView
+            android:id="@+id/listview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/search"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="55dp"
+            android:divider="#00949393"
+            android:dividerHeight="3dp"
+            android:focusable="false"
+            android:layoutAnimation="@anim/animation" />
+
+    </LinearLayout>
+
+</LinearLayout>

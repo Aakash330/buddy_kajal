@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/planone"
+    tools:context=".teacher.ActivityScore">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <EditText
+            android:id="@+id/inputSearch"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/card"
+            android:hint="Search By Book Name"
+            android:inputType="textVisiblePassword"
+            android:visibility="gone" />
+
+        <ListView
+            android:id="@+id/listview25"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:divider="#00605d5d"
+            android:dividerHeight="10dp"
+            android:focusable="false"
+            android:layoutAnimation="@anim/animation"
+            android:padding="2dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/planone"
+    android:orientation="vertical"
+    tools:context=".teacher.LearningElementary">
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <include layout="@layout/tool_bar"/>
+
+    </android.support.design.widget.AppBarLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/ActivityOlympiad"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Activities/olympiad"
+                android:background="@drawable/buttoncard"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="#403e3e">
+
+            </View>
+
+            <Button
+                android:id="@+id/E_Book"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/buttoncard"
+                android:text="E-Book"
+                android:textColor="#006A62"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="#282626" />
+
+            <Button
+                android:id="@+id/AnimationVideo"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/buttoncard"
+                android:text="Animation"
+                android:textColor="#006A62"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="#282626"
+                android:visibility="gone" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/buttoncard"
+                android:text="Activities/olympiad"
+                android:textColor="#006A62"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="#282626"
+                android:visibility="gone" />
+            <!-- <Button
+                 android:layout_marginTop="5dp"
+                 android:id="@+id/TeacherMenual"
+                 android:textColor="#1f8308"
+                 android:textSize="16dp"
+                 android:background="@drawable/buttoncard"
+                 android:text="Teacher's book"
+                 android:layout_width="match_parent"
+                 android:layout_height="50dp" />-->
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

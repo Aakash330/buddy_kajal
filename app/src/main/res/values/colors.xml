@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<color name="colorPrimary">#d7218e25</color>
+    <color name="colorPrimaryDark">#086c0d</color>
+    <color name="colorAccent">#FF4081</color>-->
+
+    <color name="colorPrimary">#202931</color>
+    <!--<color name="colorPrimaryDark">#006A62</color>-->
+    <color name="colorPrimaryDark">#20524e</color>
+    <color name="colorAccent">#202931</color>
+    <color name="dark_grey">#999494</color>
+
+    <color name="green">#1F8308</color>
+    <color name="greenlight">#EB369E1F</color>
+    <color name="color1">#fdcc2b25</color>
+    <color name="color2">#fbccbf2d</color>
+    <color name="color3">#fbd6881c</color>
+    <color name="color4">#fe149c14</color>
+    <color name="color5">#fb24aebe</color>
+    <color name="color6">#fbbe2467</color>
+    <color name="color7">#19848f</color>
+    <color name="Blackcolor">#353636</color>
+    <color name="green11">#219b0b</color>
+
+
+    <color name="bg_button_enabled">#212121</color>
+    <color name="bg_button_pressed">#616161</color>
+    <color name="text_color_books_pages">#448aff</color>
+    <color name="text_background_overlay_image">#80424242</color>
+    <color name="light_grey">#d7d6d6</color>
+
+
+    <item name="white" type="color">#ffffff</item>
+    <item name="black" type="color">#000000</item>
+    <item name="green1" type="color">#0d760d</item>
+    <item name="green2" type="color">#199c19</item>
+    <item name="green3" type="color">#25c225</item>
+    <item name="green4" type="color">#37ec37</item>
+    <item name="red" type="color">#ff0000</item>
+    <item name="blue" type="color">#050540</item>
+    <item name="blue1" type="color">#0a0a7b</item>
+    <item name="blue2" type="color">#2c2cd1</item>
+    <item name="blue3" type="color">#5454f7</item>
+    <item name="yellow" type="color">#baba11</item>
+    <item name="yellow1" type="color">#dcdc22</item>
+    <item name="yellow2" type="color">#daf4f438</item>
+    <item name="yellow3" type="color">#eded5d</item>
+    <item name="yellow4" type="color">#f7f790</item>
+    <item name="skin" type="color">#ffcc99</item>
+    <item name="orange" type="color">#a94712</item>
+    <item name="orange1" type="color">#c45113</item>
+    <item name="orange2" type="color">#d76527</item>
+    <item name="orange3" type="color">#f77d3b</item>
+    <item name="parpule" type="color">#a312ae</item>
+    <item name="parpule1" type="color">#c11ece</item>
+    <item name="parpule2" type="color">#ee51fa</item>
+    <item name="Gray" type="color">#815712</item>
+    <item name="Gray2" type="color">#b68026</item>
+    <item name="Gray3" type="color">#f2bb60</item>
+    <item name="pink" type="color">#ff0067</item>
+    <item name="pink1" type="color">#e41266</item>
+    <item name="pink2" type="color">#f23a84</item>
+    <item name="pink3" type="color">#f7468d</item>
+    <item name="pink4" type="color">#ff5a9d</item>
+    <item name="dark_green" type="color">#85d24b</item>
+    <item name="cream" type="color">#cefcf8c5</item>
+    <item name="cream1" type="color">#e7f5ef9e</item>
+</resources>
