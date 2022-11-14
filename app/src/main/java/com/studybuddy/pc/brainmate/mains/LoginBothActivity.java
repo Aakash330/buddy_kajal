@@ -8,8 +8,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -48,6 +50,7 @@ import static com.studybuddy.pc.brainmate.Network_connection.data.Constants.CONN
 
 public class LoginBothActivity extends AppCompatActivity {
 
+    private static final String TAG ="LoginBothActivity" ;
     RadioButton Student, Teacher, TeacherF, StudentF;
     int Status = 0;
     EditText StEmail, stPassword;
@@ -56,12 +59,14 @@ public class LoginBothActivity extends AppCompatActivity {
     TextView register;
     CheckBox keeplogin;
     String Teachers_ID;
-    String access_code = "";
+    String access_code = "",AccessCode,regEmail,regPass,type;
     IntentFilter intentFilter;
     NetworkChangeReceiver receiver;
     private static TextView log_network;
     private static String log_str;
     Context context;
+    public SharedPreferences preferences,getPreference;
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -95,6 +100,52 @@ public class LoginBothActivity extends AppCompatActivity {
         loginbuttonStudent = (Button) findViewById(R.id.loginbuttonStudent);
         register = (TextView) findViewById(R.id.register);
         keeplogin = (CheckBox) findViewById(R.id.keeplogin);
+
+        preferences = context.getSharedPreferences("STUDENT_DETAILS",MODE_PRIVATE);
+        getPreference= context.getSharedPreferences("TEACHER_DETAILS",MODE_PRIVATE);
+
+        try {
+            type = getIntent().getExtras().getString("Type");
+            regEmail = getIntent().getExtras().getString("Email");
+            regPass = getIntent().getExtras().getString("Password");
+
+            if (!preferences.getString("TAccessCode", "0").equals(0)) {
+                access_code = preferences.getString("TAccessCode", "0");
+                Toast.makeText(context, "teacher access code="+access_code, Toast.LENGTH_SHORT).show();
+            } else {
+                access_code = "0";
+                Toast.makeText(context, "teacher access code="+access_code, Toast.LENGTH_SHORT).show();
+
+            }
+
+            if (!preferences.getString("AccessCode", "0").equals(0)) {
+                Toast.makeText(context, "student access code="+access_code, Toast.LENGTH_SHORT).show();
+                access_code = getPreference.getString("AccessCode", "0");
+            } else {
+                Toast.makeText(context, "student access code="+access_code, Toast.LENGTH_SHORT).show();
+                access_code = "0";
+            }
+
+            Log.w(TAG, "onCreate  LoginBothActivity type=" + type);
+
+            if (type.equals("Teacher")) {
+                Student.setChecked(false);
+                Teacher.setChecked(true);
+                StEmail.setText(regEmail);
+                stPassword.setText(regPass);
+                Toast.makeText(context, "teacher: ac="+access_code+"; email"+StEmail+"; pass"+stPassword, Toast.LENGTH_SHORT).show();
+
+            } else if (type.equals("Student")) {
+                Student.setChecked(true);
+                Teacher.setChecked(false);
+                StEmail.setText(regEmail);
+                stPassword.setText(regPass);
+                Toast.makeText(context, "student: ac="+access_code+"; email"+StEmail+"; pass"+stPassword, Toast.LENGTH_SHORT).show();
+
+            }
+
+
+        }catch (Exception ee){}
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,6 +180,7 @@ public class LoginBothActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Student.setSelected(false);
+
                 Teacher.setChecked(true);
                 Student.setChecked(false);
                 Status = 2;
@@ -343,6 +395,7 @@ public class LoginBothActivity extends AppCompatActivity {
                     progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                     progressDialog.show();
                     progressDialog.setCancelable(false);
+
                     String url = Apis.base_url1 + Apis.student_login_url;
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                             new Response.Listener<String>() {
@@ -450,6 +503,7 @@ public class LoginBothActivity extends AppCompatActivity {
                                     progressDialog.dismiss();
                                     try {
                                         Log.d("Status123", "3");
+
                                         JSONObject jsonObject1 = new JSONObject(response);
                                         //  Log.d("login_succes_student", "" + jsonObject1.getString("success"));
                                         String LoginCredential = jsonObject1.getString("success");

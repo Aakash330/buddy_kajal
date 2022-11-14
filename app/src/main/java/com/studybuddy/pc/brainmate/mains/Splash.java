@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.studybuddy.pc.brainmate.student.CommonMethods;
 import com.studybuddy.pc.brainmate.student.Stu_Classes;
@@ -39,6 +40,7 @@ public class Splash extends Activity {
 
         Status = prefs.getString("Status", "0");
 
+        Toast.makeText(context, "hello", Toast.LENGTH_SHORT).show();
 
         /*for (int i = 0; i < 10; i++) {
             int temp;

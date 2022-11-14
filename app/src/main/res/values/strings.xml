@@ -21,7 +21,7 @@
 
     <!-- Strings related to login -->
     <string name="no_chapter">No Chapter Found</string>
-    <string name="no_username">Don\'t have username password ? </string>
+    <string name="no_username">Do not have username password ? </string>
     <string name="share_details">Share your details to get username password</string>
     <string name="school_name">School Name</string>
     <string name="school_address">School Address</string>
@@ -157,4 +157,5 @@
     <string name="title_activity_stu__classes">Stu_Classes</string>
     <string name="title_activity_stu__subjects">Stu_Subjects</string>
     <string name="title">Title</string>
+    <string name="select_language">Select Language</string>
 </resources>

@@ -50,6 +50,7 @@ import com.studybuddy.pc.brainmate.mains.Apis;
 import com.studybuddy.pc.brainmate.mains.LoginBothActivity;
 import com.studybuddy.pc.brainmate.Network_connection.utils.NetworkUtil;
 import com.studybuddy.pc.brainmate.R;
+import com.studybuddy.pc.brainmate.mains.Registration;
 import com.studybuddy.pc.brainmate.teacher.About_us;
 import com.studybuddy.pc.brainmate.teacher.ActivityScore;
 import com.studybuddy.pc.brainmate.teacher.Books_Details;
@@ -335,8 +336,21 @@ public class Stu_Classes extends AppCompatActivity implements NavigationView.OnN
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
-        }
+           // super.onBackPressed();
+
+            new AlertDialog.Builder(this)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setTitle("Closing StudyBuddy")
+                    .setMessage("Are you sure you want to exit StudyBuddy?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+
+                    })
+                    .setNegativeButton("No", null)
+                    .show();      }
     }
 
     //region "OptionsMenu"

@@ -8,7 +8,8 @@
     android:orientation="vertical"
     tools:context=".mains.Registration">
 
-    <LinearLayout
+    <!--code with access code mandatory-->
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -145,7 +146,7 @@
                     android:textColor="#fff"
                     android:textColorHint="#fff" />
 
-                <!--TODO-->
+                &lt;!&ndash;TODO&ndash;&gt;
 
                 <Button
                     android:id="@+id/loginbuttonStudent"
@@ -158,7 +159,7 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!---->
+        &lt;!&ndash;&ndash;&gt;
 
         <LinearLayout
             android:id="@+id/Tchers_full_layout"
@@ -368,6 +369,622 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+    </LinearLayout>-->
+    <!--code add new fields and access code is not mandatory-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/doct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="#fff"
+                android:checked="true"
+                android:text="Student"
+                android:textColor="#fff" />
+
+            <RadioButton
+                android:id="@+id/Pateintt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:buttonTint="#fff"
+                android:text="Teacher"
+                android:textColor="#fff" />
+
+        </LinearLayout>
+
+        <!--student access code-->
+        <LinearLayout
+            android:id="@+id/student_Fuul_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <!--   <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="30dp"
+                   android:gravity="center"
+                   android:weightSum="10">
+
+                   <EditText
+                       android:id="@+id/AccessCode"
+                       android:layout_width="0dp"
+                       android:layout_height="45dp"
+                       android:layout_weight="9"
+                       android:background="@drawable/back"
+                       android:hint="Accesses code"
+                       android:textColor="#fff"
+                       android:textColorHint="#fff" />
+
+                   <ImageView
+                       android:id="@+id/accessCheck"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_marginLeft="10dp"
+                       android:layout_weight="1" />
+               </LinearLayout>
+
+
+               <Button
+                   android:id="@+id/Student_Validate"
+                   android:layout_width="100dp"
+                   android:layout_height="30dp"
+                   android:layout_marginTop="10dp"
+                   android:background="#3043ef"
+                   android:text="validate"
+                   android:textColor="#fff" />
+
+   -->
+            <LinearLayout
+                android:id="@+id/StudentlAyout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+
+                <EditText
+                    android:id="@+id/AccessCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@drawable/back"
+                    android:hint="Access Code"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:textColor="#fff"
+                    android:textColorHint="#fff" />
+
+                <EditText
+                    android:id="@+id/StName"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/back"
+                    android:hint="Name"
+                    android:textColor="#fff"
+                    android:textColorHint="#fff" />
+
+
+
+
+
+                <EditText
+                    android:id="@+id/stPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/back"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:textColor="#fff"
+                    android:textColorHint="#fff" />
+
+
+                <EditText
+                    android:id="@+id/StContact"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/back"
+                    android:hint="Contact Number"
+                    android:inputType="phone"
+                    android:maxLength="10"
+                    android:textColor="#fff"
+                    android:textColorHint="#fff" />
+
+                <EditText
+                    android:id="@+id/StAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/back"
+                    android:hint="Address"
+                    android:textColor="#fff"
+                    android:textColorHint="#fff" />
+
+
+                <EditText
+                    android:id="@+id/StSchoolName"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/back"
+                    android:hint="School Name"
+                    android:textColor="#fff"
+                    android:textColorHint="#fff" />
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/back">
+                    <Spinner
+                        android:id="@+id/SpState"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:textColor="#fff"
+                        android:textColorHint="#fff" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/back">
+                    <Spinner
+                        android:id="@+id/SpCity"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:textColor="#fff"
+                        android:textColorHint="#fff" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    android:background="@drawable/back">
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/white"
+                        android:textColor="@color/white"
+                        android:textSize="17dp"
+                        android:hint="Select Class"
+                      />
+                </LinearLayout>
+
+
+
+
+                <EditText
+                    android:id="@+id/StEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@drawable/back"
+                    android:hint="Email"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#fff"
+                    android:textColorHint="#fff" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/btnSendOtp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:elevation="3dp"
+                        android:visibility="visible"
+                        android:background="@drawable/roundloginbutton"
+                        android:text="Send OTP"
+                        android:textColor="#fff" />
+
+                    <TextView
+                        android:id="@+id/sendOtpBtnDis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:visibility="gone"
+                        android:elevation="3dp"
+                        android:background="@drawable/round_login_btn_disable"
+                        android:text="Send OTP"
+                        android:textColor="#959494" />
+
+                </LinearLayout>
+                <EditText
+                    android:id="@+id/edSendOtp"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@drawable/roundloginbutton_with_dark_boarder"
+                    android:hint="Enter OTP"
+                    android:visibility="gone"
+                    android:layout_marginTop="10dp"
+                    android:inputType="phone"
+                    android:maxLength="6"
+                    android:textColor="#fff"
+                    android:textColorHint="#fff" />
+                <!--TODO-->
+
+                <Button
+                    android:id="@+id/loginbuttonStudent"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:elevation="12dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/roundloginbutton"
+                    android:text="Register"
+                    android:textColor="#fff" />
+                <Button
+                    android:id="@+id/loginbuttonStudentDis"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:elevation="12dp"
+                    android:visibility="gone"
+                    android:background="@drawable/round_login_btn_disable"
+                    android:text="Register"
+                    android:layout_marginTop="25dp"
+                    android:textColor="#fff" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!---->
+
+        <LinearLayout
+            android:id="@+id/Tchers_full_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <!--       <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="30dp"
+                       android:gravity="center"
+                       android:weightSum="10">
+
+                       <EditText
+                           android:id="@+id/AccessCodeTeacher"
+                           android:layout_width="0dp"
+                           android:layout_height="45dp"
+                           android:layout_weight="9"
+                           android:background="@drawable/back"
+                           android:hint="Accesses code"
+                           android:textColor="#fff"
+                           android:textColorHint="#fff"
+                           android:visibility="visible" />
+
+                       <TextView
+                           android:id="@+id/txtAccessCodeTeacher"
+                           android:layout_width="0dp"
+                           android:layout_height="45dp"
+                           android:layout_weight="9"
+                           android:gravity="center_vertical"
+                           android:text="Accesscode"
+                           android:textColor="@color/white"
+                           android:textSize="16sp"
+                           android:visibility="gone" />
+
+                       <ImageView
+                           android:id="@+id/accessCheckteche"
+                           android:layout_width="0dp"
+                           android:layout_height="wrap_content"
+                           android:layout_marginLeft="10dp"
+                           android:layout_weight="1" />
+                   </LinearLayout>
+       -->
+            <!--    <EditText
+                    android:id="@+id/TCUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/back"
+                    android:hint="User Name"
+                    android:textColor="#fff"
+                    android:textColorHint="#fff" />
+
+                <TextView
+                    android:id="@+id/txtUsernameTeacher"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:visibility="gone" />-->
+            <!--
+
+                        <EditText
+                            android:id="@+id/TCPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/back"
+                            android:hint="Password"
+                            android:inputType="textPassword"
+                            android:textColor="#fff"
+                            android:textColorHint="#fff" />
+
+                        <TextView
+                            android:id="@+id/txtPasswordTeacher"
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:visibility="visible" />
+
+                        <Button
+                            android:id="@+id/Teachers_Validate"
+                            android:layout_width="100dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="10dp"
+                            android:background="#3043ef"
+                            android:text="validate"
+                            android:textColor="#fff" />
+            -->
+
+            <LinearLayout
+                android:id="@+id/TeacherLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:visibility="visible">
+                <EditText
+                    android:id="@+id/AccessCodeTeacher"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_weight="9"
+                    android:background="@drawable/back"
+                    android:hint="Accesses code"
+                    android:textColor="#fff"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:textColorHint="#fff"
+                    android:visibility="visible" />
+
+
+                <EditText
+                    android:id="@+id/TCName"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/back"
+                    android:hint="Name"
+                    android:textColor="#fff"
+                    android:textColorHint="#fff" />
+
+                <EditText
+                    android:id="@+id/TCPhonenumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/back"
+                    android:hint="Mobile Number  ( 10 digit )"
+                    android:inputType="phone"
+                    android:maxLength="10"
+                    android:textColor="#fff"
+                    android:textColorHint="#fff" />
+
+
+                <EditText
+                    android:id="@+id/TCPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/back"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:textColor="#fff"
+                    android:textColorHint="#fff" />
+
+                <EditText
+                    android:id="@+id/TCAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/back"
+                    android:hint="Address"
+                    android:textColor="#fff"
+                    android:textColorHint="#fff" />
+
+                <EditText
+                    android:id="@+id/TCSchholName"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/back"
+                    android:hint="School Name"
+                    android:textColor="#fff"
+                    android:textColorHint="#fff" />
+
+                <EditText
+                    android:id="@+id/TCSchholAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/back"
+                    android:hint="School Address"
+                    android:textColor="#fff"
+                    android:textColorHint="#fff" />
+
+                <EditText
+                    android:id="@+id/TCSchholPhoneNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/back"
+                    android:hint="School Phone Number"
+                    android:inputType="phone"
+                    android:maxLength="10"
+                    android:textColor="#fff"
+                    android:textColorHint="#fff" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/back">
+                    <Spinner
+                        android:id="@+id/TCState"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:textColor="#fff"
+                        android:textColorHint="#fff" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/back">
+                    <Spinner
+                        android:id="@+id/TCCity"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:textColor="#fff"
+                        android:textColorHint="#fff" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    android:background="@drawable/back">
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/white"
+                        android:textColor="@color/white"
+                        android:textSize="17dp"
+                        android:hint="Select Class"
+                        />
+                </LinearLayout>
+
+
+                <EditText
+                    android:id="@+id/TCSubject"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/back"
+                    android:hint="Subject"
+                    android:textColor="#fff"
+                    android:textColorHint="#fff" />
+
+
+                <EditText
+                    android:id="@+id/TCEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@drawable/back"
+                    android:hint="Email"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#fff"
+                    android:textColorHint="#fff" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/TCSendOtp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:elevation="3dp"
+                        android:visibility="visible"
+                        android:background="@drawable/roundloginbutton"
+                        android:text="Send OTP"
+                        android:textColor="#fff" />
+
+                    <TextView
+                        android:id="@+id/TCSendOtpDis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:visibility="gone"
+                        android:elevation="3dp"
+                        android:background="@drawable/round_login_btn_disable"
+                        android:text="Send OTP"
+                        android:textColor="#959494" />
+
+                </LinearLayout>
+                <EditText
+                    android:id="@+id/edTCSendOtp"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@drawable/roundloginbutton_with_dark_boarder"
+                    android:hint="Enter OTP"
+                    android:visibility="gone"
+                    android:inputType="phone"
+                    android:maxLength="6"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#fff"
+                    android:textColorHint="#fff" />
+
+                <Button
+                    android:id="@+id/Teacherbutton"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/roundloginbutton"
+                    android:text="Register"
+                    android:textColor="#fff" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llShareDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:id="@+id/txt_share_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="Do not have username password ?"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
 </ScrollView>

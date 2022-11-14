@@ -490,7 +490,7 @@ public class QuetionPaper extends AppCompatActivity {
         CommonMethods.callWebserviceForResponse(stringRequest3, context);
 
         //todo Method for Ture False
-        String url = Apis.base_url + Apis.test_generator_url;
+        String url = Apis.base_url + Apis.test_generator_url;// ChapterId come from this url
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -520,6 +520,7 @@ public class QuetionPaper extends AppCompatActivity {
                                 contact1.put("Answer", Answer);
                                 contact1.put("tf_id", c.getString("tf_id"));
                                 contact1.put("ch_id", c.getString("ch_id"));
+
                                 contact1.put("ch_name", c.getString("ch_name"));
                                 contact1.put("isSelected", "0");
                                 Log.d("sarejhaseachha", String.valueOf(contact1));
@@ -2542,9 +2543,9 @@ public class QuetionPaper extends AppCompatActivity {
                         }
                         Log.d("getParamsDatas11", "" + volleyError.getMessage());
                         if (volleyError instanceof NoConnectionError) {
-                            Toast.makeText(QuetionPaper.this, "Internet not Connected", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(QuetionPaper.this, "Internet not Connected"+volleyError.getMessage(), Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(QuetionPaper.this, "Some Error Occurred", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(QuetionPaper.this, "Some Error Occurred"+volleyError.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 }) {
@@ -2572,7 +2573,7 @@ public class QuetionPaper extends AppCompatActivity {
                 params.put("mcq_ques_marks", "" + MarksForQbjective.getText().toString());
                 params.put("tf_ques_marks", "" + MarksTurefalse.getText().toString());
                 params.put("fib_ques_marks", "" + Marksfillinblacks.getText().toString());
-                params.put("multiple_ques_marks", "" + MarksMatchMaking.getText().toString());
+                    params.put("multiple_ques_marks", "" + MarksMatchMaking.getText().toString());
 
                 params.put("title", "" + title);
                 params.put("subject", "" + Subject);
