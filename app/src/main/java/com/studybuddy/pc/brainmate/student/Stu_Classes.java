@@ -53,6 +53,7 @@ import com.studybuddy.pc.brainmate.R;
 import com.studybuddy.pc.brainmate.mains.Registration;
 import com.studybuddy.pc.brainmate.teacher.About_us;
 import com.studybuddy.pc.brainmate.teacher.ActivityScore;
+import com.studybuddy.pc.brainmate.teacher.Books_Access_Code;
 import com.studybuddy.pc.brainmate.teacher.Books_Details;
 import com.studybuddy.pc.brainmate.teacher.Contact_us;
 import com.studybuddy.pc.brainmate.teacher.ImageslistAdapter;
@@ -90,6 +91,15 @@ public class Stu_Classes extends AppCompatActivity implements NavigationView.OnN
     private LinearLayoutManager horizontalLayoutManager;
     Button AddAccessesCodebutton, AddAccesscodeValidate;
 
+    LinearLayout classesListLty,imageListLty;
+    Button classRetryBtn,imageRetryBtn;
+    RecyclerView imageList;
+    ListView classList;
+    JSONObject c1;
+    private String TAG="Stu_Classes";
+    private EditText getAccesescode;
+    private String Ac,SId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,13 +107,38 @@ public class Stu_Classes extends AppCompatActivity implements NavigationView.OnN
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("Classes");
-
         accesscodes = getIntent().getStringExtra("accesscodes");
         Student_ID = getIntent().getStringExtra("Student_ID");
+
+        if(accesscodes.equals("123")){
+
+        }
+        Log.w(TAG,"accesscode:"+accesscodes);
+        Log.w(TAG,"studentId:"+Student_ID);
+        Log.w(TAG," sp studentId:"+CommonMethods.getId(this));
+        Log.w(TAG," sp accesscode:"+CommonMethods.getAccessCode(this));
+
 
         Log.d("ASSSASSAS", "126364GH  " + accesscodes + "id " + Student_ID);
         inputSearch = (EditText) findViewById(R.id.inputSearch);
         list = (ListView) findViewById(R.id.listview12);
+
+        //BookNotFound
+        classList=findViewById(R.id.listview12);
+        imageListLty=findViewById(R.id.bookImageLty);
+        classesListLty=findViewById(R.id.ClassLyt);
+        imageRetryBtn=findViewById(R.id.book_retry);
+        classRetryBtn=findViewById(R.id.classRetry);
+        imageList=findViewById(R.id.Imageslist);
+        imageRetryBtn.setOnClickListener(v ->{//imageslistAdapter.notify();
+            Toast.makeText(this, "imageBtn", Toast.LENGTH_SHORT).show();
+        });
+        classRetryBtn.setOnClickListener(v ->getBookWithAccessCode());
+        
+        if(CommonMethods.getAccessCode(this).equals("123")){
+            classList.setVisibility(View.GONE);
+            classesListLty.setVisibility(View.VISIBLE);
+        }
         Imageslist = (RecyclerView) findViewById(R.id.Imageslist);
         PatientList = new ArrayList<HashMap<String, String>>();
         CatalogArray = new ArrayList<>();
@@ -146,7 +181,8 @@ public class Stu_Classes extends AppCompatActivity implements NavigationView.OnN
                             Log.d("object111", jsonObject1.getString("success"));
                             JSONArray heroArray = jsonObject1.getJSONArray("data");
                             for (int j = 0; j < heroArray.length(); j++) {
-                                JSONObject c1 = heroArray.getJSONObject(j);
+                                 c1 = heroArray.getJSONObject(j);
+                                Log.w(TAG,"APi length c1="+c1.length());
                                 if (c1.getString("status").equals("1")) {
                                     Log.d("imageArray", "ok" + c1.getString("class"));
                                     HashMap<String, String> ObjectiveMap = new HashMap<>();
@@ -162,7 +198,7 @@ public class Stu_Classes extends AppCompatActivity implements NavigationView.OnN
                                     // ObjectiveMap.put("access_code", c1.getString("access_code"));
 
                                     //   Books_By_Accesscode.add(ObjectiveMap);
-                                    Arraylist.add(ObjectiveMap);
+                                  //  Arraylist.add(ObjectiveMap);
                                     Log.d("imageArray1254f", c1.getString("book_img"));
                                 }
                             }
@@ -178,8 +214,21 @@ public class Stu_Classes extends AppCompatActivity implements NavigationView.OnN
                             }
                             Log.d("AAAAAAA", String.valueOf(Arraylist));
 
-                            adapter = new StudentClassAdapter(Stu_Classes.this, Arraylist);
-                            list.setAdapter(adapter);
+                            Toast.makeText(Stu_Classes.this, "c1="+c1.length(), Toast.LENGTH_SHORT).show();
+
+                                if(Arraylist.size() == 0) {
+                                    Log.w(TAG, "zero c1=" + c1.length());
+                                    classList.setVisibility(View.GONE);
+                                    classesListLty.setVisibility(View.VISIBLE);
+
+                                } else {
+                                    classList.setVisibility(View.VISIBLE);
+                                    classesListLty.setVisibility(View.GONE);
+                                    Log.w(TAG, "length c1=" + c1.length());
+                                    adapter = new StudentClassAdapter(Stu_Classes.this, Arraylist);
+                                    list.setAdapter(adapter);
+                                }
+
 
                             Log.d("Sssssssslist", String.valueOf(PatientList));
                         } catch (JSONException e) {
@@ -194,7 +243,7 @@ public class Stu_Classes extends AppCompatActivity implements NavigationView.OnN
                 if (error instanceof NoConnectionError) {
                     Toast.makeText(Stu_Classes.this, "Internet not Connected", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(Stu_Classes.this, "Some Error Occurred", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Stu_Classes.this, " failSome Error Occurred"+error.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         }) {
@@ -203,8 +252,8 @@ public class Stu_Classes extends AppCompatActivity implements NavigationView.OnN
             protected java.util.Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 //TODO : changes made below
-                //params.put("accesscodes", accesscodes);
-                params.put("student_id", Student_ID);
+                params.put("accesscodes",accesscodes);
+                params.put("student_id",Student_ID);
                 return params;
             }
         };
@@ -250,7 +299,8 @@ public class Stu_Classes extends AppCompatActivity implements NavigationView.OnN
                 if (volleyError instanceof NoConnectionError) {
                     Toast.makeText(Stu_Classes.this, "Internet not Connected", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(Stu_Classes.this, "Some Error Occurred", Toast.LENGTH_SHORT).show();
+                 //   Toast.makeText(Stu_Classes.this, "Some Error Occurred", Toast.LENGTH_SHORT).show();
+                    Log.w(TAG,"error"+volleyError.getMessage());
                 }
             }
         }) {
@@ -258,8 +308,8 @@ public class Stu_Classes extends AppCompatActivity implements NavigationView.OnN
             @Override
             protected java.util.Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("accesscodes", accesscodes);
-                params.put("student_id", Student_ID);
+                params.put("accesscodes",accesscodes);
+                params.put("student_id",Student_ID);
                 return params;
             }
         };
@@ -392,7 +442,8 @@ public class Stu_Classes extends AppCompatActivity implements NavigationView.OnN
             CommonMethods.saveIsLogin(Stu_Classes.this, 0);
             CommonMethods.saveAccessCode(Stu_Classes.this, null);
         } else if (id == R.id.AddCode) {
-            final Dialog dialog = new Dialog(Stu_Classes.this);
+            getBookWithAccessCode();
+          /*  final Dialog dialog = new Dialog(Stu_Classes.this);
             dialog.setContentView(R.layout.addaccesscodlay);
             dialog.setTitle("Custom Dialog");
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
@@ -435,7 +486,7 @@ public class Stu_Classes extends AppCompatActivity implements NavigationView.OnN
                                             if (LoginCredential.equals("1")) {
                                                 Toast.makeText(Stu_Classes.this, "Book added successfully", Toast.LENGTH_LONG).show();
                                             } else if (LoginCredential.equals("0")) {
-                                                Toast.makeText(Stu_Classes.this, "Something went to wrong", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(Stu_Classes.this, " Add Something went to wrong", Toast.LENGTH_LONG).show();
                                             } else if (LoginCredential.equals("2")) {
                                                 Toast.makeText(Stu_Classes.this, "You have already added this book", Toast.LENGTH_LONG).show();
                                             }
@@ -452,7 +503,8 @@ public class Stu_Classes extends AppCompatActivity implements NavigationView.OnN
                                 if (volleyError instanceof NoConnectionError) {
                                     Toast.makeText(Stu_Classes.this, "Internet not Connected", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Toast.makeText(Stu_Classes.this, "Some Error Occurred", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Stu_Classes.this, "add FailSome Error Occurred"+volleyError.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Log.w(TAG,"error"+volleyError.getMessage());
                                 }
                             }
                         }) {
@@ -538,7 +590,7 @@ public class Stu_Classes extends AppCompatActivity implements NavigationView.OnN
                     }
                 }
             });
-
+*/
         } else if (id == R.id.nav_change_pwd) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Stu_Classes.this);
             alertDialogBuilder.setMessage("To change password please login to the website");
@@ -624,9 +676,14 @@ public class Stu_Classes extends AppCompatActivity implements NavigationView.OnN
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             SharedPreferences preferences = getSharedPreferences("LoginDetails", Context.MODE_PRIVATE);
+            SharedPreferences preferences2 = getSharedPreferences("StudyBuddyPreference", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
+            SharedPreferences.Editor editor2 = preferences2.edit();
             editor.clear();
+            editor2.remove("IsLogin");
+            editor2.apply();
             editor.apply();
+
             CommonMethods.saveEmailId(Stu_Classes.this, null);
             CommonMethods.saveId(Stu_Classes.this, null);
             CommonMethods.saveUsername(Stu_Classes.this, null);
@@ -659,6 +716,233 @@ public class Stu_Classes extends AppCompatActivity implements NavigationView.OnN
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
+
+    private void getBookWithAccessCode() {
+
+        final Dialog dialog = new Dialog(Stu_Classes.this);
+        dialog.setContentView(R.layout.addaccesscodlay);
+        dialog.setTitle("Custom Dialog");
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.show();
+
+        final ImageView checkAccese = (ImageView) dialog.findViewById(R.id.checkAccese);
+        getAccesescode = (EditText) dialog.findViewById(R.id.getAccesescode);
+        AddAccesscodeValidate = (Button) dialog.findViewById(R.id.AddAccesscode);//Name Change validate to add
+        AddAccessesCodebutton = (Button) dialog.findViewById(R.id.AddAccessesCodebutton);
+
+      /*  AddAccessesCodebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (NetworkUtil.getConnectivityStatus(Stu_Classes.this) > 0) {
+                    System.out.println("Connect");
+                    Network_Status = "Connect";
+
+                    progressDialog = new ProgressDialog(Stu_Classes.this);
+                    progressDialog.setMessage("Loading..."); // Setting Title
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+                    progressDialog.show(); // Display Progress Dialog
+                    progressDialog.setCancelable(false);
+                    //RequestQueue queue = Volley.newRequestQueue(Stu_Classes.this);
+                    //String url = "http://www.techive.in/studybuddy/api/student_ac_insert.php";
+                    String url = Apis.base_url + Apis.student_ac_insert_url;
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    Log.d("books_validator009", response);
+                                    progressDialog.dismiss();
+                                    try {
+                                        Log.d("Status123", "3");
+                                        JSONObject jsonObject1 = new JSONObject(response);
+
+                                        String LoginCredential = jsonObject1.getString("success");
+
+                                        Log.d("login_succes_student", "" + LoginCredential);
+
+                                        if (LoginCredential.equals("1")) {
+                                            Toast.makeText(Stu_Classes.this, "Book added successfully", Toast.LENGTH_LONG).show();
+                                        } else if (LoginCredential.equals("0")) {
+                                          //  Toast.makeText(Stu_Classes.this, "Something went to wrong", Toast.LENGTH_LONG).show();
+                                            Log.w(TAG,"Something went to wrong");
+                                        } else if (LoginCredential.equals("2")) {
+                                            Toast.makeText(Stu_Classes.this, "You have already added this book", Toast.LENGTH_LONG).show();
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                        Log.d("login_succes_student", "" + e.getMessage());
+                                    }
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            progressDialog.dismiss();
+                            Log.d("getParamsDatas11", "" + volleyError.getMessage());
+                            if (volleyError instanceof NoConnectionError) {
+                                Toast.makeText(Stu_Classes.this, "Internet not Connected", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(Stu_Classes.this, "Some Error Occurred", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }) {
+                        @Override
+                        protected java.util.Map<String, String> getParams() throws AuthFailureError {
+                            java.util.Map<String, String> params = new HashMap<>();
+                            params.put("accesscodes", getAccesescode.getText().toString());
+                            params.put("student_id",Student_ID);
+                            Log.d("get_ac_code", params.toString() + "");
+                            return params;
+                        }
+                    };
+                    CommonMethods.callWebserviceForResponse(stringRequest, Stu_Classes.this);
+                } else {
+                    System.out.println("No connection");
+                    Network_Status = "notConnect";
+                    checkNetDialog();
+                }
+            }
+        });*/
+        AddAccesscodeValidate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (NetworkUtil.getConnectivityStatus(Stu_Classes.this) > 0) {
+                    System.out.println("Connect");
+                    Network_Status = "Connect";
+                    progressDialog = new ProgressDialog(Stu_Classes.this);
+                    progressDialog.setMessage("Loading..."); // Setting Title
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+                    progressDialog.show(); // Display Progress Dialog
+                    progressDialog.setCancelable(false);
+                    //RequestQueue queue = Volley.newRequestQueue(Stu_Classes.this);
+                    //String url = "http://www.techive.in/studybuddy/api/book_validate.php";
+                    String url = Apis.base_url + Apis.book_validate_url;
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    Log.d("books_validator", "response " + response);
+                                    progressDialog.dismiss();
+                                    try {
+                                        Log.d("Status123", "3");
+                                        JSONObject jsonObject1 = new JSONObject(response);
+                                        //  Log.d("login_succes_student", "" + jsonObject1.getString("success"));
+                                        String LoginCredential = jsonObject1.getString("success");
+                                        Log.d("login_succes_student", "" + LoginCredential);
+                                        if (LoginCredential.equals("1")) {
+                                            Log.d("Status123", "1");
+
+                                             LetsAddAccessCode();
+                                            //AddAccessesCodebutton.setVisibility(View.VISIBLE);
+                                            //AddAccesscodeValidate.setVisibility(View.GONE);
+                                        } else if (LoginCredential.equals("0")) {
+                                            Toast.makeText(Stu_Classes.this, "Access Code Invalid", Toast.LENGTH_LONG).show();
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            progressDialog.dismiss();
+                            Log.d("getParamsDatas11", "" + volleyError.getMessage());
+                            if (volleyError instanceof NoConnectionError) {
+                                Toast.makeText(Stu_Classes.this, "Internet not Connected", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(Stu_Classes.this, "Some Error Occurred", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }) {
+                        @Override
+                        protected java.util.Map<String, String> getParams() throws AuthFailureError {
+                            java.util.Map<String, String> params = new HashMap<>();
+                            params.put("accesscodes", getAccesescode.getText().toString());
+                            return params;
+                        }
+                    };
+                    //queue.add(stringRequest);
+                    CommonMethods.callWebserviceForResponse(stringRequest, Stu_Classes.this);
+                } else {
+                    System.out.println("No connection");
+                    Network_Status = "notConnect";
+                    checkNetDialog();
+                }
+            }
+        });
+    }
+
+    private void LetsAddAccessCode() {
+
+        if (NetworkUtil.getConnectivityStatus(Stu_Classes.this) > 0) {
+            System.out.println("Connect");
+            Network_Status = "Connect";
+
+            progressDialog = new ProgressDialog(Stu_Classes.this);
+            progressDialog.setMessage("Loading..."); // Setting Title
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+            progressDialog.show(); // Display Progress Dialog
+            progressDialog.setCancelable(false);
+            //RequestQueue queue = Volley.newRequestQueue(Stu_Classes.this);
+            //String url = "http://www.techive.in/studybuddy/api/student_ac_insert.php";
+            String url = Apis.base_url + Apis.student_ac_insert_url;
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d("books_validator009", response);
+                            progressDialog.dismiss();
+                            try {
+                                Log.d("Status123", "3");
+                                JSONObject jsonObject1 = new JSONObject(response);
+
+                                String LoginCredential = jsonObject1.getString("success");
+
+                                Log.d("login_succes_student", "" + LoginCredential);
+
+                                if (LoginCredential.equals("1")) {
+                                    Toast.makeText(Stu_Classes.this, "Book added successfully", Toast.LENGTH_LONG).show();
+                                /*    Intent intent=new Intent(Stu_Classes.this,Stu_Subjects.class);
+                                    startActivity(intent);*/
+                                } else if (LoginCredential.equals("0")) {
+                                      Toast.makeText(Stu_Classes.this, "Something went to wrong", Toast.LENGTH_LONG).show();
+                                    Log.w(TAG,"Something went to wrong");
+                                } else if (LoginCredential.equals("2")) {
+                                    Toast.makeText(Stu_Classes.this, "You have already added this book", Toast.LENGTH_LONG).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Log.d("login_succes_student", "" + e.getMessage());
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    progressDialog.dismiss();
+                    Log.d("getParamsDatas11", "" + volleyError.getMessage());
+                    if (volleyError instanceof NoConnectionError) {
+                        Toast.makeText(Stu_Classes.this, "Internet not Connected", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(Stu_Classes.this, "Some Error Occurred", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }) {
+                @Override
+                protected java.util.Map<String, String> getParams() throws AuthFailureError {
+                    java.util.Map<String, String> params = new HashMap<>();
+                    params.put("accesscodes", getAccesescode.getText().toString());
+                    params.put("student_id",Student_ID);
+                    Log.d("get_ac_code", params.toString() + "");
+                    return params;
+                }
+            };
+            CommonMethods.callWebserviceForResponse(stringRequest, Stu_Classes.this);
+        } else {
+            System.out.println("No connection");
+            Network_Status = "notConnect";
+            checkNetDialog();
+        }
+
+    }
+
 
     //region "StudentClassAdapter"
     public class StudentClassAdapter extends BaseAdapter {
@@ -780,10 +1064,12 @@ public class Stu_Classes extends AppCompatActivity implements NavigationView.OnN
 
     public void scrollImg() {
         if (CatalogArray != null && CatalogArray.size() > 0) {
+          //  imageList.setVisibility(View.VISIBLE);
+           // imageListLty.setVisibility(View.GONE);
             imageslistAdapter = new ImageslistAdapter(CatalogArray, Stu_Classes.this) {
                 @Override
                 public void load() {
-                    // CatalogArray.addAll(CatalogArray);
+                   // CatalogArray.addAll(CatalogArray);
                 }
             };
             Imageslist.setAdapter(imageslistAdapter);
@@ -810,6 +1096,11 @@ public class Stu_Classes extends AppCompatActivity implements NavigationView.OnN
             Imageslist.setDrawingCacheEnabled(true);
             Imageslist.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_LOW);
             Imageslist.setAdapter(imageslistAdapter);
-        }
+        }/*else {
+
+                imageList.setVisibility(View.GONE);
+                imageListLty.setVisibility(View.VISIBLE);
+
+        }*/
     }//endregion
 }

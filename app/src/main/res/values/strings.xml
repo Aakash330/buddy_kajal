@@ -158,4 +158,8 @@
     <string name="title_activity_stu__subjects">Stu_Subjects</string>
     <string name="title">Title</string>
     <string name="select_language">Select Language</string>
+    <string name="thanksmsg">Thank you for registering with us! Your acount will get activated after verification. you ill getactivation email once verification is done</string>
+    <string name="school">School</string>
+    <string name="passvalid"><![CDATA[Password must contain atlest 1 uppercase, 1 lower case, 1 numeric & 1 special character.]]></string>
+
 </resources>

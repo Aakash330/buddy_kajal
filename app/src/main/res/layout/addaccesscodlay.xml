@@ -53,9 +53,9 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/btn_border"
-            android:textColor="@color/colorPrimaryDark"
-            android:text="Validate"
+            android:background="@drawable/roundloginbutton"
+            android:text="Add"
+            android:textColor="@color/white"
             android:textSize="18sp" />
 
         <Button
@@ -63,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/btn_border"
+            android:background="@drawable/roundloginbutton"
             android:textColor="@color/colorPrimaryDark"
             android:padding="10dp"
             android:text="Add"

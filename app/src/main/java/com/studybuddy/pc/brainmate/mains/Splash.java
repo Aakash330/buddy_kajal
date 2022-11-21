@@ -22,6 +22,7 @@ public class Splash extends Activity {
     String Status = "0";
     String Teachers_ID, Access_code, Password, Email;
     Context context;
+    private String TAG="Splash";
 
     /*int a = 0;
     int b = 1;
@@ -40,8 +41,7 @@ public class Splash extends Activity {
 
         Status = prefs.getString("Status", "0");
 
-        Toast.makeText(context, "hello", Toast.LENGTH_SHORT).show();
-
+       // Toast.makeText(context, "Login type:"+CommonMethods.getIsLogin(this), Toast.LENGTH_SHORT).show();
         /*for (int i = 0; i < 10; i++) {
             int temp;
             c = a + b;
@@ -83,11 +83,15 @@ public class Splash extends Activity {
                     CommonMethods.getIsLogin(context);//Teachers==2
                     CommonMethods.getAccessCode(context);
 
-                    Intent intent = new Intent(context, Main2Activity.class);
+                    Intent intent = new Intent(context, Stu_Classes.class);
                     intent.putExtra("name", "" + CommonMethods.getUsername(context));
                     intent.putExtra("email", "" + CommonMethods.getEmailId(context));
-                    intent.putExtra("accesscodes", "" + CommonMethods.getAccessCode(context));
-                    intent.putExtra("Teachers_ID", CommonMethods.getId(context));
+                    intent.putExtra("accesscodes", "" +CommonMethods.getAccessCode(context));
+                    intent.putExtra("Student_ID", CommonMethods.getId(context));
+                    Log.w(TAG,"AC:"+ CommonMethods.getAccessCode(context));
+                    Log.w(TAG,"Email:"+CommonMethods.getEmailId(context));
+                    Log.w(TAG,"UN:"+CommonMethods.getUsername(context));
+
                     startActivity(intent);
 
                     finish();
@@ -100,11 +104,15 @@ public class Splash extends Activity {
                     CommonMethods.getIsLogin(context);//Student==2
                     CommonMethods.getAccessCode(context);
 
-                    Intent intent = new Intent(context, Stu_Classes.class);
+                    Intent intent = new Intent(context,Main2Activity.class);
                     intent.putExtra("name", "" + CommonMethods.getUsername(context));
                     intent.putExtra("email", "" + CommonMethods.getEmailId(context));
                     intent.putExtra("accesscodes", "" + CommonMethods.getAccessCode(context));
-                    intent.putExtra("Student_ID", CommonMethods.getId(context));
+                    intent.putExtra("Teachers_ID", CommonMethods.getId(context));
+                    Log.w(TAG,"AC:"+ CommonMethods.getAccessCode(context));
+                    Log.w(TAG,"Email:"+CommonMethods.getEmailId(context));
+                    Log.w(TAG,"UN:"+CommonMethods.getUsername(context));
+
                     startActivity(intent);
                     finish();
                 }

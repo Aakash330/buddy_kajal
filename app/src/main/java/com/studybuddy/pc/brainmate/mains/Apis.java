@@ -9,14 +9,15 @@ public class Apis {
 
     //Login base url
    //  public static final String base_url1 = "https://brainmate.co.in/studybuddy/api/";@kajal
-    public static final String base_url1 = " https://test.brainmate.co.in/studybuddy/api/";
+    public static final String base_url1 ="https://test.brainmate.co.in/studybuddy/api/";
+    public static final String base_url2 = "https://test.brainmate.co.in/";//yugal sir e-book api base url
 
     //public static final String base_url_img = "https://www.techive.in/studybuddy/";
     public static final String base_url_img = "https://brainmate.co.in/studybuddy/";
 
 
     public static final String teacher_access_url = "teacher_access.php";
-    public static final String student_access_url = "student_access.php";
+    public static final String student_access_url ="book_validate.php";
     public static final String teacher_register_url = "teacher_register.php";
     public static final String student_register_url = "student_register.php";
 
@@ -63,4 +64,5 @@ public class Apis {
 
     public static String send_otp="send-otp.php";
     public static String register_url="register.php";
+    public static String read_url="readingAPI.php";
 }

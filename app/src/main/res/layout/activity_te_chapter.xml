@@ -20,6 +20,7 @@
     </android.support.design.widget.AppBarLayout>-->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
@@ -37,45 +38,112 @@
     </android.support.design.widget.AppBarLayout>
 
     <!--<include layout="@layout/content_te_chapter" />-->
-
-    <TextView
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_gravity="center"
-        android:background="@drawable/card"
-        android:gravity="center"
-        android:text="Choose Chapters From Here"
-        android:textColor="#088708"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <ListView
-        android:id="@+id/listview"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="5dp"
-        android:layout_weight="1"
-        android:divider="#00949393"
-        android:dividerHeight="3dp"
-        android:focusable="false"
-        android:layoutAnimation="@anim/animation" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:padding="5dp">
-
-        <Button
-            android:id="@+id/Continue"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/chapterNotFoundLyt"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/roundloginbutton"
-            android:text="Continue"
-            android:textColor="#fff"
-            android:textSize="18sp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:visibility="gone"
+            android:gravity="center">
+            <!--   <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textColor="@color/colorPrimaryDark"
+                   android:textSize="30dp"
+                   android:textStyle="bold"
+                   android:text="OPPS!" />-->
 
-    </LinearLayout>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/book_not_found" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:text="SOMETHING WENT WRONG!" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="12dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:text="CHAPTER NOT FOUND WAIT TO ADD CHAPTER IN YOU SUBJECT" />
+
+            <!-- <Button
+                 android:id="@+id/book_retry"
+                 android:layout_width="wrap_content"
+                 android:layout_height="45dp"
+                 android:elevation="12dp"
+                 android:layout_marginTop="10dp"
+                 android:background="@drawable/roundloginbutton"
+                 android:text="Retry"
+                 android:textColor="#fff" />-->
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/te_chapter"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:background="@drawable/card"
+                android:gravity="center"
+                android:text="Choose Chapters From Here"
+                android:textColor="#088708"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/listview"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:divider="#00949393"
+                android:dividerHeight="3dp"
+                android:focusable="false"
+                android:layoutAnimation="@anim/animation" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:padding="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <Button
+                android:id="@+id/Continue"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/roundloginbutton"
+                android:text="Continue"
+                android:textColor="#fff"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
+
+
+
 
 </LinearLayout>
 

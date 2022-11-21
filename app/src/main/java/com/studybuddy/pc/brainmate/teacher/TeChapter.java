@@ -36,6 +36,7 @@ import com.android.volley.toolbox.Volley;
 import com.studybuddy.pc.brainmate.R;
 import com.studybuddy.pc.brainmate.mains.Apis;
 import com.studybuddy.pc.brainmate.student.CommonMethods;
+import com.studybuddy.pc.brainmate.student.Students_Chapters;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -63,6 +64,7 @@ public class TeChapter extends AppCompatActivity {
     String Class, Subject, displayClassName;
     String access_code;
     Toolbar toolbarHeader;
+    LinearLayout chNotFound,tc_chapter;
 
 
     @Override
@@ -76,6 +78,9 @@ public class TeChapter extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             toolbarHeader.setTitleTextColor(getResources().getColor(R.color.white));
+
+            chNotFound=findViewById(R.id.chapterNotFoundLyt);
+            tc_chapter=findViewById(R.id.te_chapter);
             //toolbar.setNavigationIcon(R.drawable.ic_toolbar_arrow);
             //getSupportActionBar().setTitle("Techive");
         }
@@ -176,8 +181,19 @@ public class TeChapter extends AppCompatActivity {
                                 }
                             });
 
-                            adapter = new ChapterAdapter(TeChapter.this, chapList);
-                            list.setAdapter(adapter);
+                            if(chapList.size()==0){
+                                tc_chapter.setVisibility(View.GONE);
+                                chNotFound.setVisibility(View.VISIBLE);
+
+                            }else{
+                                tc_chapter.setVisibility(View.VISIBLE);
+                                chNotFound.setVisibility(View.GONE);
+                                adapter = new ChapterAdapter(TeChapter.this, chapList);
+                                list.setAdapter(adapter);
+                            }
+
+
+
 
                             //marksList.add(PateintDATA);
                             searchResults = new ArrayList<>((Collection<? extends HashMap<String, String>>) chapList);

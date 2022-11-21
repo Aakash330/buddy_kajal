@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,6 +30,7 @@ public class StudentEbook extends AppCompatActivity {
         setContentView(R.layout.activity_student_ebook);
         //setTitle(getIntent().getStringExtra("Title") != null ? getIntent().getStringExtra("Title") : "");
         ebook = getIntent().getStringExtra("ebook");
+        Log.d("object111","ebook StudentEbook url:"+ebook);
         pd = ProgressDialog.show(StudentEbook.this, "", "Please wait...", true);
 
         toolbarHeader = findViewById(R.id.toolbarHeader);
@@ -70,7 +72,8 @@ public class StudentEbook extends AppCompatActivity {
         });
 
 
-        webView.loadUrl(ebook);
+       webView.loadUrl(ebook);
+       // webView.loadUrl("https://test.ebookselibrary.com/reader_start_reading/J1MAuAOZ33I33T2zKcq6015lsn0RWq6tU43PCL9aVgEdCZJV0Ms3m9P8eXvyTF3EO7GIC0FEMhyT70YBH52oJab73xDtEvFyE6F8ECVDHp6HM71DXK0cF40QsLQwKcVGGur1LwgYWbeRmiKDTGNfJDNsihCRqtinbbwquGsCQm7nfOCZ\n");
     }
 
     @Override

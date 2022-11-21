@@ -405,6 +405,7 @@
         </LinearLayout>
 
         <!--student access code-->
+
         <LinearLayout
             android:id="@+id/student_Fuul_layout"
             android:layout_width="match_parent"
@@ -456,6 +457,43 @@
                 android:layout_marginTop="10dp"
                 android:orientation="vertical"
                 android:visibility="visible">
+                <LinearLayout
+                    android:id="@+id/textBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:padding="4dp"
+                    android:visibility="gone"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        android:paddingLeft="5dp"
+                        android:text="Please Fill "
+                        android:textColor="@color/white"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        android:background="@color/white"
+                        android:paddingLeft="5dp"
+                        android:text="Important(Enter)"
+                        android:textColor="@color/colorPrimaryDark"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        android:paddingLeft="5dp"
+                        android:text="information "
+                        android:textColor="@color/white"/>
+                    android:textColor="@color/colorAccent"/>
+
+                </LinearLayout>
 
 
                 <EditText
@@ -463,9 +501,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:background="@drawable/back"
-                    android:hint="Access Code"
+                    android:layout_marginTop="10dp"
+                    android:hint="Access Code(Optional)"
                     android:inputType="number"
-                    android:maxLength="10"
                     android:textColor="#fff"
                     android:textColorHint="#fff" />
 
@@ -476,11 +514,18 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/back"
                     android:hint="Name"
+                    android:inputType="textPersonName"
                     android:textColor="#fff"
                     android:textColorHint="#fff" />
-
-
-
+               <!-- <TextView
+                    android:id="@+id/textBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:text="Please Fill Important(*) information First"
+                    android:textColor="#D32F2F"/>-->
 
 
                 <EditText
@@ -490,9 +535,16 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/back"
                     android:hint="Password"
-                    android:inputType="textPassword"
                     android:textColor="#fff"
                     android:textColorHint="#fff" />
+                <TextView
+                    android:id="@+id/PassInvalidTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/passvalid"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:textColor="@color/color1"/>
 
 
                 <EditText
@@ -513,7 +565,8 @@
                     android:layout_height="45dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/back"
-                    android:hint="Address"
+                    android:hint="Address(optional)"
+                    android:inputType="textWebEmailAddress"
                     android:textColor="#fff"
                     android:textColorHint="#fff" />
 
@@ -524,7 +577,7 @@
                     android:layout_height="45dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/back"
-                    android:hint="School Name"
+                    android:hint="@string/school"
                     android:textColor="#fff"
                     android:textColorHint="#fff" />
 
@@ -548,29 +601,40 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
                     android:background="@drawable/back">
                     <Spinner
                         android:id="@+id/SpCity"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="45dp"
                         android:textColor="#fff"
+                        android:visibility="gone"
                         android:textColorHint="#fff" />
+                    <TextView
+                        android:id="@+id/tvCity"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:gravity="start|center_vertical"
+                        android:textColorHint="@color/white"
+                        android:textColor="@color/white"
+                        android:textSize="20dp"
+                        android:hint="Select City"
+                        />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:paddingTop="12dp"
-                    android:paddingBottom="12dp"
                     android:background="@drawable/back">
                     <TextView
                         android:id="@+id/textView"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="45dp"
+                        android:gravity="start|center_vertical"
                         android:textColorHint="@color/white"
                         android:textColor="@color/white"
-                        android:textSize="17dp"
+                        android:textSize="20dp"
                         android:hint="Select Class"
                       />
                 </LinearLayout>
@@ -586,6 +650,7 @@
                     android:hint="Email"
                     android:layout_marginTop="10dp"
                     android:textColor="#fff"
+                    android:inputType="textFilter|textMultiLine"
                     android:textColorHint="#fff" />
 
                 <LinearLayout
@@ -611,11 +676,11 @@
                         android:layout_marginTop="5dp"
                         android:gravity="center"
                         android:padding="5dp"
-                        android:visibility="gone"
                         android:elevation="3dp"
-                        android:background="@drawable/round_login_btn_disable"
-                        android:text="Send OTP"
-                        android:textColor="#959494" />
+                        android:visibility="gone"
+                        android:background="@drawable/roundloginbutton"
+                        android:text="Resend OTP"
+                        android:textColor="#fff" />
 
                 </LinearLayout>
                 <EditText
@@ -631,6 +696,7 @@
                     android:textColor="#fff"
                     android:textColorHint="#fff" />
                 <!--TODO-->
+
 
                 <Button
                     android:id="@+id/loginbuttonStudent"
@@ -762,8 +828,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_weight="9"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/back"
-                    android:hint="Accesses code"
+                    android:hint="Accesses code(Optional)"
                     android:textColor="#fff"
                     android:inputType="number"
                     android:maxLength="10"
@@ -777,6 +844,7 @@
                     android:layout_height="45dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/back"
+                    android:inputType="textPersonName"
                     android:hint="Name"
                     android:textColor="#fff"
                     android:textColorHint="#fff" />
@@ -805,13 +873,23 @@
                     android:textColor="#fff"
                     android:textColorHint="#fff" />
 
+                <TextView
+                    android:id="@+id/PassInvalidTCTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/passvalid"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:textColor="@color/color1"/>
+
+
                 <EditText
                     android:id="@+id/TCAddress"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/back"
-                    android:hint="Address"
+                    android:hint="Address(Optional)"
                     android:textColor="#fff"
                     android:textColorHint="#fff" />
 
@@ -821,7 +899,7 @@
                     android:layout_height="45dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/back"
-                    android:hint="School Name"
+                    android:hint="@string/school"
                     android:textColor="#fff"
                     android:textColorHint="#fff" />
 
@@ -864,6 +942,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
                     android:background="@drawable/back">
                     <Spinner
                         android:id="@+id/TCCity"
@@ -871,21 +950,30 @@
                         android:layout_height="40dp"
                         android:textColor="#fff"
                         android:textColorHint="#fff" />
+                    <TextView
+                        android:id="@+id/tvTCity"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:gravity="start|center_vertical"
+                        android:textColorHint="@color/white"
+                        android:textColor="@color/white"
+                        android:textSize="20dp"
+                        android:hint="Select City"
+                        />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:paddingTop="12dp"
-                    android:paddingBottom="12dp"
                     android:background="@drawable/back">
                     <TextView
                         android:id="@+id/textView2"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="45dp"
+                        android:gravity="start|center_vertical"
                         android:textColorHint="@color/white"
                         android:textColor="@color/white"
-                        android:textSize="17dp"
+                        android:textSize="20dp"
                         android:hint="Select Class"
                         />
                 </LinearLayout>
@@ -937,9 +1025,9 @@
                         android:padding="5dp"
                         android:visibility="gone"
                         android:elevation="3dp"
-                        android:background="@drawable/round_login_btn_disable"
-                        android:text="Send OTP"
-                        android:textColor="#959494" />
+                        android:background="@drawable/roundloginbutton"
+                        android:text="Resend OTP"
+                        android:textColor="@color/white" />
 
                 </LinearLayout>
                 <EditText
@@ -979,6 +1067,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
+                android:gravity="center"
                 android:text="Do not have username password ?"
                 android:textColor="@color/white"
                 android:textSize="16sp" />

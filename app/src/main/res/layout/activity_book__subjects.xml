@@ -37,17 +37,72 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <ListView
-        android:id="@+id/listview25"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:divider="#00605d5d"
-        android:dividerHeight="10dp"
-        android:focusable="false"
-        android:layoutAnimation="@anim/animation"
-        android:padding="2dp"
-        android:layout_margin="3dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/subjectNotFoundLyt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:background="@color/white"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:text="OPPS!" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/book_not_found" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:text="Subject NOT FOUND" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                android:text="wait to add subject in your class.." />
+
+
+
+            <!--  <Button
+                  android:id="@+id/book_retry"
+                  android:layout_width="wrap_content"
+                  android:layout_height="45dp"
+                  android:elevation="12dp"
+                  android:layout_marginTop="10dp"
+                  android:background="@drawable/roundloginbutton"
+                  android:text="Add Book"
+                  android:textColor="#fff" />-->
+        </LinearLayout>
+        <ListView
+            android:id="@+id/listview25"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:divider="#00605d5d"
+            android:dividerHeight="10dp"
+            android:focusable="false"
+            android:layoutAnimation="@anim/animation"
+            android:padding="2dp"
+            android:layout_margin="3dp"/>
+    </LinearLayout>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/Imageslist1"

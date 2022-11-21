@@ -65,7 +65,7 @@ public class LoginBothActivity extends AppCompatActivity {
     private static TextView log_network;
     private static String log_str;
     Context context;
-    public SharedPreferences preferences,getPreference;
+    public SharedPreferences preferences,getPreference,pref;
 
     @Override
     protected void onResume() {
@@ -100,10 +100,12 @@ public class LoginBothActivity extends AppCompatActivity {
         loginbuttonStudent = (Button) findViewById(R.id.loginbuttonStudent);
         register = (TextView) findViewById(R.id.register);
         keeplogin = (CheckBox) findViewById(R.id.keeplogin);
-
+        pref = context.getSharedPreferences("StudyBuddyPreference", context.MODE_PRIVATE);
         preferences = context.getSharedPreferences("STUDENT_DETAILS",MODE_PRIVATE);
         getPreference= context.getSharedPreferences("TEACHER_DETAILS",MODE_PRIVATE);
 
+
+        Log.w(TAG,"onCreate LoginBothActivity");
         try {
             type = getIntent().getExtras().getString("Type");
             regEmail = getIntent().getExtras().getString("Email");
@@ -376,12 +378,14 @@ public class LoginBothActivity extends AppCompatActivity {
             Network_Status = "Connect";
             if (StEmail.getText().toString().isEmpty() && stPassword.getText().toString().isEmpty()) {
                 StEmail.setError("Please fill Email");
-                stPassword.setError("Please fill Email");
+                stPassword.setError("Please fill Password");
             } else if (StEmail.getText().toString().isEmpty()) {
                 StEmail.setError("Please fill Email");
             } else if (stPassword.getText().toString().isEmpty()) {
-                stPassword.setError("Please fill Email");
+                stPassword.setError("Please fill Password");
             } else {
+
+                Log.w(TAG,"onCreate LoginBothActivity status="+Status);
                 /*    Intent intent=new Intent(LoginBothActivity.this,StudentdashBord.class);
                     startActivity(intent);*/
                 if (Status == 0) {
@@ -389,6 +393,8 @@ public class LoginBothActivity extends AppCompatActivity {
                 }
                 Log.d("LOOOOOOOO", "FFFFFFFFFFFFFFFFF" + Status);
                 if (Status == 1) {
+
+
                     Log.d("LOOOOOOOO", "FFFFFFFFFFFFFFFFF" + Status);
                     progressDialog = new ProgressDialog(LoginBothActivity.this);
                     progressDialog.setMessage("Loading..."); // Setting Title
@@ -421,16 +427,37 @@ public class LoginBothActivity extends AppCompatActivity {
 
                                         if (LoginCredential.equals("1")) {
                                             //student//////////////!!!!!!!!!!!!
+                                            Log.w(TAG,"onCreate LoginBothActivity Login");
                                             Log.d("Status123", "1");
                                             Intent intent = new Intent(LoginBothActivity.this, Stu_Classes.class);
                                             intent.putExtra("accesscodes", accesscodes);
-                                            intent.putExtra("Student_ID", Student_ID);
+                                            intent.putExtra("Student_ID",Student_ID);
+                                            SharedPreferences.Editor editor1= pref.edit();
+
+
+                                            Log.w(TAG,"onCreate LoginBothActivity LoginCredential Ac:"+accesscodes);
+                                            Log.w(TAG,"onCreate LoginBothActivity LoginCredential SI:"+Student_ID);
+                                            Log.w(TAG,"onCreate LoginBothActivity LoginCredential IsLogin:"+pref.getInt("IsLogin",0));
+                                            Log.w(TAG,"onCreate LoginBothActivity LoginCredential Em:"+email);
+                                            Log.w(TAG,"onCreate LoginBothActivity LoginCredential Nm:"+c.getString("name"));
+
+                                            if(pref.getInt("IsLogin",0)!=0){
+                                                editor1.remove("IsLogin");
+                                                editor1.putInt("IsLogin",1);
+                                                editor1.apply();
+                                            }else {
+                                                editor1.putInt("IsLogin",1);
+
+                                            }
+                                            keeplogin.setChecked(true);
+
                                             CommonMethods.saveEmailId(LoginBothActivity.this, email);
                                             CommonMethods.saveId(LoginBothActivity.this, Student_ID);
                                             CommonMethods.saveUsername(LoginBothActivity.this, c.getString("name"));
                                             CommonMethods.saveType(LoginBothActivity.this, "s");
-                                            CommonMethods.saveIsLogin(LoginBothActivity.this, keeplogin.isChecked() ? 2 : 0);//Student==2
+                                            CommonMethods.saveIsLogin(LoginBothActivity.this, keeplogin.isChecked() ? 1 : 0);//Student==1
                                             CommonMethods.saveAccessCode(LoginBothActivity.this, accesscodes);
+
                                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                             startActivity(intent);
                                         } else if (LoginCredential.equals("0")) {
@@ -478,6 +505,8 @@ public class LoginBothActivity extends AppCompatActivity {
                             java.util.Map<String, String> params = new HashMap<>();
                             params.put("email", StEmail.getText().toString());
                             params.put("password", stPassword.getText().toString());
+                        /*    params.put("email","yugal.k236@gmail.com");
+                            params.put("password","Yugal@1234");*/
                             Log.d("stu_params", "" + params.toString());
                             return params;
                         }
@@ -493,7 +522,7 @@ public class LoginBothActivity extends AppCompatActivity {
                     progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                     progressDialog.show();
                     progressDialog.setCancelable(false);
-                    String url = Apis.base_url1 + Apis.teacher_login_url;
+                    String url = Apis.base_url1+Apis.teacher_login_url;
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                             new Response.Listener<String>() {
                                 @SuppressLint("ResourceAsColor")
@@ -508,12 +537,14 @@ public class LoginBothActivity extends AppCompatActivity {
                                         //  Log.d("login_succes_student", "" + jsonObject1.getString("success"));
                                         String LoginCredential = jsonObject1.getString("success");
                                         String email_field = jsonObject1.getString("email_field");
+
                                         if (LoginCredential.equals("0") && email_field.equals("0")) {
                                             Toast.makeText(LoginBothActivity.this, getString(R.string.invalid_email_password), Toast.LENGTH_LONG).show();
                                         } else if (LoginCredential.equals("1") && email_field.equals("0")) {
                                             Toast.makeText(LoginBothActivity.this, getString(R.string.register_first), Toast.LENGTH_LONG).show();
                                         }
                                         Log.d("login_succes_student", "" + LoginCredential);
+
                                         JSONArray heroArray = jsonObject1.getJSONArray("data");
                                         JSONObject c = heroArray.getJSONObject(0);
                                         String accesscodes = c.getString("accesscodes");
@@ -527,18 +558,24 @@ public class LoginBothActivity extends AppCompatActivity {
                                         if (Active_Status.equals("1")) {
                                             if (LoginCredential.equals("1")) {
                                                 Log.d("Status123", "1");
+                                                SharedPreferences.Editor editor1= pref.edit();
+                                                editor1.putInt("IsLogin",2);
+                                                editor1.apply();
+                                                keeplogin.setChecked(true);
                                                 /* Intent intent = new Intent(LoginBothActivity.this, Books_Access_Code.class);*/
                                                 Intent intent = new Intent(LoginBothActivity.this, Main2Activity.class);
                                                 intent.putExtra("name", "" + name);
                                                 intent.putExtra("email", "" + email);
-                                                intent.putExtra("accesscodes", "" + accesscodes);
+                                                intent.putExtra("Teachers_ID",Teachers_ID);
+                                                intent.putExtra("accesscodes", accesscodes);
                                                 CommonMethods.saveEmailId(LoginBothActivity.this, email);
                                                 CommonMethods.saveId(LoginBothActivity.this, Teachers_ID);
                                                 CommonMethods.saveType(LoginBothActivity.this, "t");
                                                 CommonMethods.saveUsername(LoginBothActivity.this, c.getString("name"));
-                                                CommonMethods.saveIsLogin(LoginBothActivity.this, keeplogin.isChecked() ? 1 : 0);//Teacher==1
+                                                CommonMethods.saveIsLogin(LoginBothActivity.this, keeplogin.isChecked() ? 2 : 0);//Teacher==2
                                                 CommonMethods.saveAccessCode(LoginBothActivity.this, accesscodes);
                                                 intent.putExtra("Teachers_ID", Teachers_ID);
+                                                intent.putExtra("EntryType", "Log");
                                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                                 startActivity(intent);
                                             } else if (LoginCredential.equals("0")) {
@@ -588,8 +625,8 @@ public class LoginBothActivity extends AppCompatActivity {
                         @Override
                         protected java.util.Map<String, String> getParams() throws AuthFailureError {
                             java.util.Map<String, String> params = new HashMap<>();
-                            params.put("username", StEmail.getText().toString());
-                            //params.put("email", StEmail.getText().toString());
+                          //  params.put("username", StEmail.getText().toString());
+                            params.put("email", StEmail.getText().toString());
                             params.put("password", stPassword.getText().toString());
                             Log.d("params_detail", params.toString());
                             return params;

@@ -14,8 +14,10 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +39,7 @@ public class E_book extends AppCompatActivity {
     private static String log_str;
     String Network_Status;
     Toolbar toolbarHeader;
+    LinearLayout webPageNotFound;
 
     @Override
     protected void onResume() {
@@ -56,6 +59,9 @@ public class E_book extends AppCompatActivity {
         setContentView(R.layout.activity_e_book);
         toolbarHeader = findViewById(R.id.toolbarHeader);
         setSupportActionBar(toolbarHeader);
+
+        webPageNotFound=findViewById(R.id.pageNotFoundLyt);
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -98,7 +104,17 @@ public class E_book extends AppCompatActivity {
                     String webUrl = webView.getUrl();
                 }
             });
-            webView.loadUrl(ebook);
+            Log.w("kk","ebookUrl E_book:"+ebook);
+            if(ebook==null){
+                pd.dismiss();
+                webView.setVisibility(View.GONE);
+                webPageNotFound.setVisibility(View.VISIBLE);
+            }else{
+                webView.setVisibility(View.VISIBLE);
+                webPageNotFound.setVisibility(View.GONE);
+                webView.loadUrl(ebook);
+            }
+
             //webView.loadUrl("http://brainmate.co.in/BELS/Infonet%20Book3/mobile/index.html");
         } else {
             checkNetDialog();

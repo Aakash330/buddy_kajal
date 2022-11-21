@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -61,7 +62,7 @@ public class Stu_Subjects extends AppCompatActivity {
     ArrayList<HashMap<String, String>> Arraylist;
     String[] TRUEFALSE = {"Computer science", "Art & Activity", "G.K", "Hindi", "EVS"};
     String[] nursery = {"Play", "LKG", "UKG"};
-
+     EditText getAccesescode;
 
     StuSubjectAdapter adapter;
     ProgressDialog progressDialog;
@@ -78,6 +79,8 @@ public class Stu_Subjects extends AppCompatActivity {
     ArrayList<HashMap<String, String>> CatalogArray;
     int count = 1;
     Toolbar toolbarHeader;
+
+    LinearLayout subjectLNotFoundLty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +114,7 @@ public class Stu_Subjects extends AppCompatActivity {
         }*/
 
         list = (ListView) findViewById(R.id.listview25);
+        subjectLNotFoundLty=findViewById(R.id.subjectNotFoundLyt);
         /*barcodeScanner = (Button) findViewById(R.id.barcodeScanner);
         barcodeScanner.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,7 +164,7 @@ public class Stu_Subjects extends AppCompatActivity {
                                     ObjectiveMap.put("Class", c1.getString("class"));
                                     if (c1.getString("class").equals(ClassName)) {
                                         ObjectiveMap.put("Subject", c1.getString("subject"));
-                                        Arraylist.add(ObjectiveMap);
+                                      Arraylist.add(ObjectiveMap);
                                     }
                                     // ObjectiveMap.put("Subject", c1.getString("subject"));
                                     //ObjectiveMap.put("book_img", c1.getString("book_img"));
@@ -186,8 +190,19 @@ public class Stu_Subjects extends AppCompatActivity {
                                 }
 
                             }
-                            adapter = new StuSubjectAdapter(Stu_Subjects.this, Arraylist);
-                            list.setAdapter(adapter);
+
+                            if(Arraylist.size()==0){
+                                list.setVisibility(View.GONE);
+                                subjectLNotFoundLty.setVisibility(View.VISIBLE);
+
+                            }else{
+                                list.setVisibility(View.VISIBLE);
+                                subjectLNotFoundLty.setVisibility(View.GONE);
+                                adapter = new StuSubjectAdapter(Stu_Subjects.this, Arraylist);
+                                list.setAdapter(adapter);
+
+                            }
+
 
                             Log.d("Sssssssslist", String.valueOf(PatientList));
                         } catch (JSONException e) {

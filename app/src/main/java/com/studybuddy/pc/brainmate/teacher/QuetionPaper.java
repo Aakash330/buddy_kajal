@@ -2277,6 +2277,7 @@ public class QuetionPaper extends AppCompatActivity {
                 Log.d("headheadimageurl", elephantList.get(0) + "========" + elephantList.get(1));
                 QUESTION = elephantList.get(0);
                 imageurl = "https://brainmate.co.in/studybuddy/question_img/" + elephantList.get(1);
+                Log.w("QPImage","image:   MCQAdaptor="+imageurl);
             }
 
 
@@ -2284,12 +2285,13 @@ public class QuetionPaper extends AppCompatActivity {
 
 
             if (str.equals("jpg") || str.equals("png")) {
+                Log.w("QPImage","Question is in image");
+                Log.w("QPImage","ImageType MCQAdaptor:"+str);
                 holder.QuestionImage.setVisibility(View.VISIBLE);
                 //   holder.heading.setVisibility(View.GONE);
-
                 holder.heading.setVisibility(View.VISIBLE);
                 holder.heading.setText(QUESTION);
-                Log.d("imageurl", str);
+                Log.d("imageurl Ques:", str);
 
                 Glide.with(mContext).load(imageurl)
                         .crossFade()
@@ -2297,20 +2299,25 @@ public class QuetionPaper extends AppCompatActivity {
                         .into(holder.QuestionImage);
 
             } else {
+                Log.w("QPImage","Question is in Text");
                 holder.QuestionImage.setVisibility(View.GONE);
                 holder.heading.setVisibility(View.VISIBLE);
                 holder.heading.setText(books.get(position).get("ques"));
+                Log.w("QPImage","Ques:"+books.get(position).get("option_a"));
             }
             if (option1.contains("-")) {
+                Log.w("QPImage","Option2 is contain -");
                 List<String> elephantList = Arrays.asList(option1.split("-"));
                 Log.d("headheadimageurl", elephantList.get(0) + "========" + elephantList.get(1));
                 Option1 = "https://brainmate.co.in/studybuddy/question_img/" + elephantList.get(1);
+                Log.w("QPImage","imgUrl Option4:"+option2);
             }
             String str1 = "";
             if (option1.length() > 3) {
                 str1 = option1.substring(option1.length() - 3, option1.length());
             }
             if (str1.equals("jpg") || str1.equals("png")) {
+                Log.w("QPImage","Option1 is image");
                 holder.Imageoption1.setVisibility(View.VISIBLE);
                 holder.Option1.setVisibility(View.GONE);
                 // Option1= books.get(position).get("option_a");
@@ -2320,10 +2327,12 @@ public class QuetionPaper extends AppCompatActivity {
                             .crossFade()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into(holder.Imageoption1);
+                    Log.w("QPImage","img Option4:"+option2);
                 }
 
 
             } else {
+                Log.w("QPImage","Option1 is Text");
                 holder.Imageoption1.setVisibility(View.GONE);
                 holder.Option1.setVisibility(View.VISIBLE);
                 holder.Option1.setText(books.get(position).get("option_a"));
@@ -2333,6 +2342,8 @@ public class QuetionPaper extends AppCompatActivity {
                 List<String> elephantList = Arrays.asList(option2.split("-"));
                 Log.d("headheadimageurl", elephantList.get(0) + "========" + elephantList.get(1));
                 Option2 = "https://brainmate.co.in/studybuddy/question_img/" + elephantList.get(1);
+                Log.w("QPImage","imgUrl Option2:"+option2);
+
             }
             String str2 = "";
             if (option2.length() > 3) {
@@ -2340,6 +2351,7 @@ public class QuetionPaper extends AppCompatActivity {
             }
             //str2 = option2.substring(option2.length() - 3, option2.length());
             if (str2.equals("jpg") || str2.equals("png")) {
+                Log.w("QPImage","Option2 is image");
                 holder.Imageoption2.setVisibility(View.VISIBLE);
                 holder.Option2.setVisibility(View.GONE);
                 // String Option2 = books.get(position).get("option_b");
@@ -2349,18 +2361,23 @@ public class QuetionPaper extends AppCompatActivity {
                             .crossFade()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into(holder.Imageoption2);
+                    Log.w("QPImage","img Option2:"+option2);
                 }
 
             } else {
+                Log.w("QPImage","Option2 is text");
                 holder.Imageoption2.setVisibility(View.GONE);
                 holder.Option2.setVisibility(View.VISIBLE);
                 holder.Option2.setText(books.get(position).get("option_b"));
+                Log.w("QPImage","Option2:"+books.get(position).get("option_b"));
+
             }
 
             if (option3.contains("-")) {
                 List<String> elephantList = Arrays.asList(option3.split("-"));
                 Log.d("headheadimageurl", elephantList.get(0) + "========" + elephantList.get(1));
                 Option3 = "https://brainmate.co.in/studybuddy/question_img/" + elephantList.get(1);
+                Log.w("QPImage","imgUrl Option4:"+option3);
             }
             String str3 = "";
             if (option3.length() > 3) {
@@ -2368,6 +2385,7 @@ public class QuetionPaper extends AppCompatActivity {
             }
             // String str3 = option3.substring(option3.length() - 3, option3.length());
             if (str3.equals("jpg") || str3.equals("png")) {
+                Log.w("QPImage","Option3 is image");
                 holder.Imageoption3.setVisibility(View.VISIBLE);
                 holder.Option3.setVisibility(View.GONE);
                 // String Option3 = books.get(position).get("option_c");
@@ -2378,18 +2396,22 @@ public class QuetionPaper extends AppCompatActivity {
                             .crossFade()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into(holder.Imageoption3);
+                    Log.w("QPImage","img Option3:"+option3);
                 }
 
             } else {
+                Log.w("QPImage","Option3 is Text");
                 holder.Imageoption3.setVisibility(View.GONE);
                 holder.Option3.setVisibility(View.VISIBLE);
                 holder.Option3.setText(books.get(position).get("option_c"));
+                Log.w("QPImage","Option3:"+books.get(position).get("option_c"));
             }
 
             if (option4.contains("-")) {
                 List<String> elephantList = Arrays.asList(option4.split("-"));
                 Log.d("headheadimageurl", elephantList.get(0) + "========" + elephantList.get(1));
                 Option4 = "https://brainmate.co.in/studybuddy/question_img/" + elephantList.get(1);
+                Log.w("QPImage","imgUrl Option4:"+option4);
             }
             String str4 = "";
             if (option4.length() > 3) {
@@ -2403,16 +2425,22 @@ public class QuetionPaper extends AppCompatActivity {
                 //  Log.d("imageurl", Option4);
 
                 if (Option4 != null) {
+                    Log.w("QPImage","Option4 is image");
                     Glide.with(mContext).load(Option4)
                             .crossFade()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into(holder.Imageoption4);
+                    Log.w("QPImage","img Option4:"+option4);
+
                 }
 
             } else {
+                Log.w("QPImage","Option4 is text");
                 holder.Imageoption4.setVisibility(View.GONE);
                 holder.Option4.setVisibility(View.VISIBLE);
                 holder.Option4.setText(books.get(position).get("option_d"));
+                Log.w("QPImage","img Option4:"+option4);
+                Log.w("QPImage","Option4:"+books.get(position).get("option_d"));
             }
 
             holder.Questionnumber.setText("Q " + books.get(position).get("ques_no"));

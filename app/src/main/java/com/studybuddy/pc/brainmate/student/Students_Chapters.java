@@ -63,12 +63,17 @@ public class Students_Chapters extends AppCompatActivity {
     String from = "";
     String Ch_name = "";
 
+    LinearLayout chapterLNotFoundLty,linearList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_students__chapters);
         toolbarHeader = findViewById(R.id.toolbarHeader);
         setSupportActionBar(toolbarHeader);
+
+        chapterLNotFoundLty=findViewById(R.id.chapterNotFoundLyt);
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -83,6 +88,7 @@ public class Students_Chapters extends AppCompatActivity {
         inputSearch = (EditText) findViewById(R.id.inputSearch);
         list = (ListView) findViewById(R.id.listview);
         Continue = (Button) findViewById(R.id.Continue);
+        linearList=findViewById(R.id.listviewLty);
         chapterList = new ArrayList<HashMap<String, String>>();
 
         progressDialog = new ProgressDialog(Students_Chapters.this);
@@ -134,8 +140,18 @@ public class Students_Chapters extends AppCompatActivity {
                                     }
                                 });
                                 //
-                                adapter = new StudentChapterAdapter(Students_Chapters.this, chapterList);
-                                list.setAdapter(adapter);
+                                if(chapterList.size()==0){
+                                    linearList.setVisibility(View.GONE);
+                                    chapterLNotFoundLty.setVisibility(View.VISIBLE);
+
+                                }else{
+                                    linearList.setVisibility(View.VISIBLE);
+                                    chapterLNotFoundLty.setVisibility(View.GONE);
+                                    adapter = new StudentChapterAdapter(Students_Chapters.this, chapterList);
+                                    list.setAdapter(adapter);
+                                }
+
+
                             } else {
                                 Toast.makeText(Students_Chapters.this, getString(R.string.no_chapter), Toast.LENGTH_SHORT).show();
                             }

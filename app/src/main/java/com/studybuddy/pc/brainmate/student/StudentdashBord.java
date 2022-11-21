@@ -1,11 +1,14 @@
 package com.studybuddy.pc.brainmate.student;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,11 +18,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -44,7 +51,8 @@ import static com.studybuddy.pc.brainmate.Network_connection.data.Constants.CONN
 
 public class StudentdashBord extends AppCompatActivity {// implements NavigationView.OnNavigationItemSelectedListener {
 
-    Button AddAccessesCodebutton, AddAccesscodeValidate;
+    Button AddAccessesCodebutton, AddAccesscodeValidate,bookRetryBtn;
+    String TAG="StudentdashBord";
     ArrayList<HashMap<String, String>> Books_By_Accesscode;
     ListView Bookslist;
     ProgressDialog progressDialog;
@@ -52,8 +60,12 @@ public class StudentdashBord extends AppCompatActivity {// implements Navigation
     Toolbar toolbarHeader;
     IntentFilter intentFilter;
     NetworkChangeReceiver receiver;
+    LinearLayout bookNotFoundLty;
     private static TextView log_network;
     private static String log_str;
+     EditText getAccesescode;
+    BooksAcsStuCodeAdapter acsCodeAdapter;
+    ListView bookListRv;
 
     @Override
     protected void onResume() {
@@ -77,6 +89,15 @@ public class StudentdashBord extends AppCompatActivity {// implements Navigation
         setContentView(R.layout.activity_studentdash_bord);
 
         toolbarHeader = findViewById(R.id.toolbarHeader);
+
+        //BookNotFound
+         bookNotFoundLty=findViewById(R.id.bookNotFoundLyt);
+         bookRetryBtn=findViewById(R.id.book_retry);
+         bookListRv=findViewById(R.id.Bookslist);
+
+         bookRetryBtn.setOnClickListener(v ->getBookWithAccessCode());
+
+
         setSupportActionBar(toolbarHeader);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -125,6 +146,8 @@ public class StudentdashBord extends AppCompatActivity {// implements Navigation
                         @Override
                         public void onResponse(String response) {
                             Log.d("Studentbooks", response);
+                            Log.d("Studentbooks","@kajal testing books page");
+
 
                             progressDialog.dismiss();
                             try {
@@ -172,7 +195,6 @@ public class StudentdashBord extends AppCompatActivity {// implements Navigation
                                                 ObjectiveMap.put("status", c1.getString("status"));
                                                 ObjectiveMap.put("book_Type", "11");
                                                 ObjectiveMap.put("access_code", c1.getString("access_code"));
-
                                                 Books_By_Accesscode.add(ObjectiveMap);
                                             }
                                         }
@@ -188,8 +210,20 @@ public class StudentdashBord extends AppCompatActivity {// implements Navigation
                                     }
 
                                 }
-                                BooksAcsStuCodeAdapter acsCodeAdapter = new BooksAcsStuCodeAdapter(StudentdashBord.this, Books_By_Accesscode);
-                                Bookslist.setAdapter(acsCodeAdapter);
+                                Log.d("Studentbooks","@kajal testing books page");
+                                Log.d("Studentbooks","@kajal testing books page array size:"+Books_By_Accesscode.size());
+
+                                if(Books_By_Accesscode.size()==0){
+                                    bookListRv.setVisibility(View.GONE);
+                                    bookNotFoundLty.setVisibility(View.VISIBLE);
+
+                                }else{
+                                    bookListRv.setVisibility(View.VISIBLE);
+                                    bookNotFoundLty.setVisibility(View.GONE);
+                                    acsCodeAdapter = new BooksAcsStuCodeAdapter(StudentdashBord.this, Books_By_Accesscode);
+                                    Bookslist.setAdapter(acsCodeAdapter);
+                                }
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -242,6 +276,224 @@ public class StudentdashBord extends AppCompatActivity {// implements Navigation
                 }
             }
         });
+    }
+
+    private void getBookWithAccessCode() {
+
+        final Dialog dialog = new Dialog(StudentdashBord.this);
+        dialog.setContentView(R.layout.addaccesscodlay);
+        dialog.setTitle("Custom Dialog");
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.show();
+
+        final ImageView checkAccese = (ImageView) dialog.findViewById(R.id.checkAccese);
+        final EditText getAccesescode = (EditText) dialog.findViewById(R.id.getAccesescode);
+        AddAccesscodeValidate = (Button) dialog.findViewById(R.id.AddAccesscode);
+        AddAccessesCodebutton = (Button) dialog.findViewById(R.id.AddAccessesCodebutton);
+
+   /*     AddAccessesCodebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (NetworkUtil.getConnectivityStatus(StudentdashBord.this) > 0) {
+                    System.out.println("Connect");
+                    Network_Status = "Connect";
+
+                    progressDialog = new ProgressDialog(StudentdashBord.this);
+                    progressDialog.setMessage("Loading..."); // Setting Title
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+                    progressDialog.show(); // Display Progress Dialog
+                    progressDialog.setCancelable(false);
+                    //RequestQueue queue = Volley.newRequestQueue(Stu_Classes.this);
+                    //String url = "http://www.techive.in/studybuddy/api/student_ac_insert.php";
+                    String url = Apis.base_url + Apis.student_ac_insert_url;
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    Log.d("books_validator009", response);
+                                    progressDialog.dismiss();
+                                    try {
+                                        Log.d("Status123", "3");
+                                        JSONObject jsonObject1 = new JSONObject(response);
+
+                                        String LoginCredential = jsonObject1.getString("success");
+
+                                        Log.d("login_succes_student", "" + LoginCredential);
+
+                                        if (LoginCredential.equals("1")) {
+                                            Toast.makeText(StudentdashBord.this, "Book added successfully", Toast.LENGTH_LONG).show();
+                                        } else if (LoginCredential.equals("0")) {
+                                            Toast.makeText(StudentdashBord.this, "Something went to wrong", Toast.LENGTH_LONG).show();
+                                        } else if (LoginCredential.equals("2")) {
+                                            Toast.makeText(StudentdashBord.this, "You have already added this book", Toast.LENGTH_LONG).show();
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                        Log.d("login_succes_student", "" + e.getMessage());
+                                    }
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            progressDialog.dismiss();
+                            Log.d("getParamsDatas11", "" + volleyError.getMessage());
+                            if (volleyError instanceof NoConnectionError) {
+                                Toast.makeText(StudentdashBord.this, "Internet not Connected", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(StudentdashBord.this, "Some Error Occurred", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }) {
+                        @Override
+                        protected java.util.Map<String, String> getParams() throws AuthFailureError {
+                            java.util.Map<String, String> params = new HashMap<>();
+                            params.put("accesscodes", getAccesescode.getText().toString());
+                            params.put("student_id", Student_ID);
+                            Log.d("get_ac_code", params.toString() + "");
+                            return params;
+                        }
+                    };
+                    CommonMethods.callWebserviceForResponse(stringRequest, StudentdashBord.this);
+                } else {
+                    System.out.println("No connection");
+                    Network_Status = "notConnect";
+                    checkNetDialog();
+                }
+            }
+        });*/
+        AddAccesscodeValidate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (NetworkUtil.getConnectivityStatus(StudentdashBord.this) > 0) {
+                    System.out.println("Connect");
+                    Network_Status = "Connect";
+                    progressDialog = new ProgressDialog(StudentdashBord.this);
+                    progressDialog.setMessage("Loading..."); // Setting Title
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+                    progressDialog.show(); // Display Progress Dialog
+                    progressDialog.setCancelable(false);
+                    //RequestQueue queue = Volley.newRequestQueue(Stu_Classes.this);
+                    //String url = "http://www.techive.in/studybuddy/api/book_validate.php";
+                    String url = Apis.base_url + Apis.book_validate_url;
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    Log.d("books_validator", "response " + response);
+                                    progressDialog.dismiss();
+                                    try {
+                                        Log.d("Status123", "3");
+                                        JSONObject jsonObject1 = new JSONObject(response);
+                                        //  Log.d("login_succes_student", "" + jsonObject1.getString("success"));
+                                        String LoginCredential = jsonObject1.getString("success");
+                                        Log.d("login_succes_student", "" + LoginCredential);
+                                        if (LoginCredential.equals("1")) {
+                                            Log.d("Status123", "1");
+                                            let();
+                                       /*     AddAccessesCodebutton.setVisibility(View.VISIBLE);
+                                            AddAccesscodeValidate.setVisibility(View.GONE);*/
+                                        } else if (LoginCredential.equals("0")) {
+                                            Toast.makeText(StudentdashBord.this, "Access Code Invalid", Toast.LENGTH_LONG).show();
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            progressDialog.dismiss();
+                            Log.d("getParamsDatas11", "" + volleyError.getMessage());
+                            if (volleyError instanceof NoConnectionError) {
+                                Toast.makeText(StudentdashBord.this, "Internet not Connected", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(StudentdashBord.this, "Some Error Occurred", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }) {
+                        @Override
+                        protected java.util.Map<String, String> getParams() throws AuthFailureError {
+                            java.util.Map<String, String> params = new HashMap<>();
+                            params.put("accesscodes", getAccesescode.getText().toString());
+                            return params;
+                        }
+                    };
+                    //queue.add(stringRequest);
+                    CommonMethods.callWebserviceForResponse(stringRequest, StudentdashBord.this);
+                } else {
+                    System.out.println("No connection");
+                    Network_Status = "notConnect";
+                    checkNetDialog();
+                }
+            }
+        });
+    }
+    void let(){
+        if (NetworkUtil.getConnectivityStatus(StudentdashBord.this) > 0) {
+            System.out.println("Connect");
+            Network_Status = "Connect";
+
+            progressDialog = new ProgressDialog(StudentdashBord.this);
+            progressDialog.setMessage("Loading..."); // Setting Title
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+            progressDialog.show(); // Display Progress Dialog
+            progressDialog.setCancelable(false);
+            //RequestQueue queue = Volley.newRequestQueue(Stu_Classes.this);
+            //String url = "http://www.techive.in/studybuddy/api/student_ac_insert.php";
+            String url = Apis.base_url + Apis.student_ac_insert_url;
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d("books_validator009", response);
+                            progressDialog.dismiss();
+                            try {
+                                Log.d("Status123", "3");
+                                JSONObject jsonObject1 = new JSONObject(response);
+
+                                String LoginCredential = jsonObject1.getString("success");
+
+                                Log.d("login_succes_student", "" + LoginCredential);
+
+                                if (LoginCredential.equals("1")) {
+                                    Toast.makeText(StudentdashBord.this, "Book added successfully", Toast.LENGTH_LONG).show();
+                                } else if (LoginCredential.equals("0")) {
+                                    Toast.makeText(StudentdashBord.this, "Something went to wrong", Toast.LENGTH_LONG).show();
+                                } else if (LoginCredential.equals("2")) {
+                                    Toast.makeText(StudentdashBord.this, "You have already added this book", Toast.LENGTH_LONG).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Log.d("login_succes_student", "" + e.getMessage());
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    progressDialog.dismiss();
+                    Log.d("getParamsDatas11", "" + volleyError.getMessage());
+                    if (volleyError instanceof NoConnectionError) {
+                        Toast.makeText(StudentdashBord.this, "Internet not Connected", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(StudentdashBord.this, "Some Error Occurred", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }) {
+                @Override
+                protected java.util.Map<String, String> getParams() throws AuthFailureError {
+                    java.util.Map<String, String> params = new HashMap<>();
+                    params.put("accesscodes", getAccesescode.getText().toString());
+                    params.put("student_id", Student_ID);
+                    Log.d("get_ac_code", params.toString() + "");
+                    return params;
+                }
+            };
+            CommonMethods.callWebserviceForResponse(stringRequest, StudentdashBord.this);
+        } else {
+            System.out.println("No connection");
+            Network_Status = "notConnect";
+            checkNetDialog();
+        }
     }
 
     /*@Override

@@ -3,12 +3,58 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/drawable-hdpi/roundloginbutton_redboarder.xml" value="0.248" />
         <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/drawable-xxhdpi/round_login_btn_disable.xml" value="0.241" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/drawable/green_card.xml" value="0.241" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/drawable/ic_arrow_back_black_24dp.xml" value="0.241" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/drawable/ic_home.xml" value="0.241" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/drawable/ic_home_white_24dp.xml" value="0.241" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/drawable/roundloginbutton.xml" value="0.248" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/activity_book__subjects.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/activity_books__access__code.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/activity_chapters.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/activity_e_book.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/activity_expired_book.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/activity_freehand_acitiviy_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/activity_fun_web_view.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/activity_learning_elementary.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/activity_loingboth.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/activity_main2.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/activity_quetion_paper.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/activity_stu__classes.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/activity_stu__subjects.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/activity_studebt_factivty.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/activity_student_test.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/activity_studentdash_bord.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/activity_students__chapters.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/activity_students__class.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/activity_te_chapter.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/activity_te_painting_chapters.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/addaccesscodlay.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/app_bar_main2.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/app_bar_stu__classes.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/buymedicenilist.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/chapterslisrt.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/color_spinner_layout.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/content_book__subjects.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/content_books__access__code.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/content_quetion_paper.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/content_stu__classes.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/content_stu__subjects.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/content_studentdash_bord.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/created_papers_list.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/matchmakinglayout.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/spinner_style.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/studentclasslist.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/layout/tool_bar.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/menu/activity_books__access__code_drawer.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/menu/activity_main2_drawer.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/menu/activity_studentdash_bord_drawer.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/menu/books__access__code.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/menu/main_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/KAJAL/AndroidStudioProjects/study_buddy_26_04_19/StudyBuddy/app/src/main/res/menu/studentdash_bord.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>

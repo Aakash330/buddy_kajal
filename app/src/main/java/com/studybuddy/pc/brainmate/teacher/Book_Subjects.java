@@ -45,6 +45,7 @@ import com.studybuddy.pc.brainmate.Network_connection.utils.NetworkUtil;
 import com.studybuddy.pc.brainmate.R;
 import com.studybuddy.pc.brainmate.mains.Apis;
 import com.studybuddy.pc.brainmate.student.CommonMethods;
+import com.studybuddy.pc.brainmate.student.Stu_Subjects;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -76,8 +77,11 @@ public class Book_Subjects extends AppCompatActivity {
     ArrayList<HashMap<String, String>> CatalogArray;
     int count = 1;
     int inn = 0;
+    EditText getAccesescode;
     Toolbar toolbarHeader;
     Context context;
+
+    LinearLayout subjectLNotFoundLty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +108,8 @@ public class Book_Subjects extends AppCompatActivity {
         Imageslist = (RecyclerView) findViewById(R.id.Imageslist1);
         autoScrollAnother();
         list = (ListView) findViewById(R.id.listview25);
+        subjectLNotFoundLty=findViewById(R.id.subjectNotFoundLyt);
+
         PatientList = new ArrayList<HashMap<String, String>>();
         progressDialog = new ProgressDialog(Book_Subjects.this);
         progressDialog.setMessage("Loading..."); // Setting Title
@@ -170,15 +176,26 @@ public class Book_Subjects extends AppCompatActivity {
                             if (heroArray != null && heroArray.length() > 0 && ClassName.equals("LKG")) {
                                 HashMap<String, String> ObjectiveMap1 = new HashMap<>();
                                 ObjectiveMap1.put("Subject", "Fun Activities");
-                                Arraylist.add(ObjectiveMap1);
+                               Arraylist.add(ObjectiveMap1);
                             }
                             if (heroArray != null && heroArray.length() > 0 && ClassName.equals("UKG")) {
                                 HashMap<String, String> ObjectiveMap1 = new HashMap<>();
                                 ObjectiveMap1.put("Subject", "Fun Activities");
                                 Arraylist.add(ObjectiveMap1);
                             }
-                            adapter = new BookSubjectAdapter(Book_Subjects.this, Arraylist);
-                            list.setAdapter(adapter);
+
+                            if(Arraylist.size()==0){
+                                list.setVisibility(View.GONE);
+                                subjectLNotFoundLty.setVisibility(View.VISIBLE);
+
+                            }else{
+                                list.setVisibility(View.VISIBLE);
+                                subjectLNotFoundLty.setVisibility(View.GONE);
+                                adapter = new BookSubjectAdapter(Book_Subjects.this, Arraylist);
+                                list.setAdapter(adapter);
+
+                            }
+
 
                             Log.d("Sssssssslist", String.valueOf(PatientList));
                         } catch (JSONException e) {
