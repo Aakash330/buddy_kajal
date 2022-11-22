@@ -182,6 +182,8 @@ public class StudentdashBord extends AppCompatActivity {// implements Navigation
 
                                         HashMap<String, String> ObjectiveMap = new HashMap<>();
                                         ObjectiveMap.put("Subject", c1.getString("subject"));
+                                        if (c1.getString("expire_status").equals("0")) {
+
                                         if (Subject.equals(c1.getString("subject"))) {
 
                                             if (ClassName.equals(c1.getString("class"))) {
@@ -197,6 +199,9 @@ public class StudentdashBord extends AppCompatActivity {// implements Navigation
                                                 ObjectiveMap.put("access_code", c1.getString("access_code"));
                                                 Books_By_Accesscode.add(ObjectiveMap);
                                             }
+                                        }
+                                    }else{
+                                            getBookWithAccessCode();
                                         }
                                     }
                                 }
@@ -457,10 +462,12 @@ public class StudentdashBord extends AppCompatActivity {// implements Navigation
 
                                 if (LoginCredential.equals("1")) {
                                     Toast.makeText(StudentdashBord.this, "Book added successfully", Toast.LENGTH_LONG).show();
-                                } else if (LoginCredential.equals("0")) {
+                                } else if (LoginCredential.equals("3")) {
                                     Toast.makeText(StudentdashBord.this, "Something went to wrong", Toast.LENGTH_LONG).show();
-                                } else if (LoginCredential.equals("2")) {
+                                } else if (LoginCredential.equals("0")) {
                                     Toast.makeText(StudentdashBord.this, "You have already added this book", Toast.LENGTH_LONG).show();
+                                }else if (LoginCredential.equals("2")) {
+                                    Toast.makeText(StudentdashBord.this, "Book updated successfully", Toast.LENGTH_LONG).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

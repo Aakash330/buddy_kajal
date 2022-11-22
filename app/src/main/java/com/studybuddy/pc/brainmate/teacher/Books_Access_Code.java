@@ -38,6 +38,7 @@ import com.studybuddy.pc.brainmate.Network_connection.utils.NetworkUtil;
 import com.studybuddy.pc.brainmate.R;
 import com.studybuddy.pc.brainmate.mains.Apis;
 import com.studybuddy.pc.brainmate.student.CommonMethods;
+import com.studybuddy.pc.brainmate.student.Stu_Classes;
 import com.studybuddy.pc.brainmate.student.StudentdashBord;
 
 import org.json.JSONArray;
@@ -63,6 +64,7 @@ public class Books_Access_Code extends AppCompatActivity {//implements Navigatio
     private static String log_str;
     String Network_Status, SubjectNme, ClassName, displayClassName;
     Toolbar toolbarHeader;
+     Dialog dialog;
     Context context;
     LinearLayout bookNotFoundLty;
     ListView bookListRv;
@@ -545,7 +547,7 @@ public class Books_Access_Code extends AppCompatActivity {//implements Navigatio
     }
     private void getBookWithAccessCode() {
 
-        final Dialog dialog = new Dialog(Books_Access_Code.this);
+  dialog = new Dialog(Books_Access_Code.this);
         dialog.setContentView(R.layout.addaccesscodlay);
         dialog.setTitle("Custom Dialog");
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
@@ -694,71 +696,75 @@ public class Books_Access_Code extends AppCompatActivity {//implements Navigatio
         });
     }
     void let(){
-        if (NetworkUtil.getConnectivityStatus(Books_Access_Code.this) > 0) {
-            System.out.println("Connect");
-            Network_Status = "Connect";
+        AddAccessesCodebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (NetworkUtil.getConnectivityStatus(Books_Access_Code.this) > 0) {
+                    System.out.println("Connect");
+                    Network_Status = "Connect";
 
-            progressDialog = new ProgressDialog(Books_Access_Code.this);
-            progressDialog.setMessage("Loading..."); // Setting Title
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
-            progressDialog.show(); // Display Progress Dialog
-            progressDialog.setCancelable(false);
-            //RequestQueue queue = Volley.newRequestQueue(Stu_Classes.this);
-            //String url = "http://www.techive.in/studybuddy/api/student_ac_insert.php";
-            String url = Apis.base_url + Apis.student_ac_insert_url;
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            Log.d("books_validator009", response);
-                            progressDialog.dismiss();
-                            try {
-                                Log.d("Status123", "3");
-                                JSONObject jsonObject1 = new JSONObject(response);
-
-                                String LoginCredential = jsonObject1.getString("success");
-
-                                Log.d("login_succes_student", "" + LoginCredential);
-
-                                if (LoginCredential.equals("1")) {
-                                    Toast.makeText(Books_Access_Code.this, "Book added successfully", Toast.LENGTH_LONG).show();
-                                } else if (LoginCredential.equals("0")) {
-                                    Toast.makeText(Books_Access_Code.this, "Something went to wrong", Toast.LENGTH_LONG).show();
-                                } else if (LoginCredential.equals("2")) {
-                                    Toast.makeText(Books_Access_Code.this, "You have already added this book", Toast.LENGTH_LONG).show();
+                    progressDialog = new ProgressDialog(Books_Access_Code.this);
+                    progressDialog.setMessage("Loading..."); // Setting Title
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+                    progressDialog.show(); // Display Progress Dialog
+                    progressDialog.setCancelable(false);
+                    //RequestQueue queue = Volley.newRequestQueue(Main2Activity.this);
+                    //String url = "http://www.techive.in/studybuddy/api/teacher_ac_insert.php";
+                    String url = Apis.base_url + Apis.teacher_ac_insert_url;
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    Log.d("books_validator", response);
+                                    progressDialog.dismiss();
+                                    try {
+                                        Log.d("Status123", "3");
+                                        JSONObject jsonObject1 = new JSONObject(response);
+                                        //  Log.d("login_succes_student", "" + jsonObject1.getString("success"));
+                                        String LoginCredential = jsonObject1.getString("success");
+                                        Log.d("login_succes_student", "" + LoginCredential);
+                                        if (LoginCredential.equals("1")) {
+                                            Toast.makeText(Books_Access_Code.this, "Book Added Successfully", Toast.LENGTH_LONG).show();
+                                        } else if (LoginCredential.equals("0")) {
+                                            Toast.makeText(Books_Access_Code.this, "Something went to wrong", Toast.LENGTH_LONG).show();
+                                        } else if (LoginCredential.equals("2")) {
+                                            Toast.makeText(Books_Access_Code.this, "you have already added this book", Toast.LENGTH_LONG).show();
+                                            dialog.dismiss();
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                Log.d("login_succes_student", "" + e.getMessage());
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            progressDialog.dismiss();
+                            if (error instanceof NoConnectionError) {
+                                let();
+                                Toast.makeText(Books_Access_Code.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(Books_Access_Code.this, R.string.some_error_occurred, Toast.LENGTH_SHORT).show();
                             }
                         }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
-                    progressDialog.dismiss();
-                    Log.d("getParamsDatas11", "" + volleyError.getMessage());
-                    if (volleyError instanceof NoConnectionError) {
-                        Toast.makeText(Books_Access_Code.this, "Internet not Connected", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(Books_Access_Code.this, "Some Error Occurred", Toast.LENGTH_SHORT).show();
-                    }
+                    }) {
+                        @Override
+                        protected java.util.Map<String, String> getParams() throws AuthFailureError {
+                            java.util.Map<String, String> params = new HashMap<>();
+                            params.put("accesscodes", getAccesescode.getText().toString());
+                            params.put("teacher_id", Teachers_ID);
+                            return params;
+                        }
+                    };
+                    //queue.add(stringRequest);
+                    CommonMethods.callWebserviceForResponse(stringRequest, context);
+                } else {
+                    System.out.println("No connection");
+                    Network_Status = "notConnect";
+                    let();
                 }
-            }) {
-                @Override
-                protected java.util.Map<String, String> getParams() throws AuthFailureError {
-                    java.util.Map<String, String> params = new HashMap<>();
-                    params.put("accesscodes", getAccesescode.getText().toString());
-                    params.put("student_id", Teachers_ID);
-                    Log.d("get_ac_code", params.toString() + "");
-                    return params;
-                }
-            };
-            CommonMethods.callWebserviceForResponse(stringRequest, Books_Access_Code.this);
-        } else {
-            System.out.println("No connection");
-            Network_Status = "notConnect";
-            checkNetDialog();
-        }
+
+            }
+        });
     }
     //region "Menu"
     @Override

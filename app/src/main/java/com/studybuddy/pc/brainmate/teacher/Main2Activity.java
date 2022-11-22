@@ -78,6 +78,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     String accesscodes, Teachers_ID;
     ListView list;
     String code;
+     Dialog dialog;//@kajal
     StudentClassAdapter adapter;
     ProgressDialog progressDialog;
     ArrayList<HashMap<String, String>> PatientList;
@@ -241,18 +242,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                             if(jsonObject1.getString("success").equals("0")){
                                // Toast.makeText(activity, "inactive teacher", Toast.LENGTH_SHORT).show();
                                // Toast.makeText(activity, "Acount is in active", Toast.LENGTH_SHORT).show();
-                                AlertDialog dialog=  new AlertDialog.Builder(Main2Activity.this)
-                                        .setIcon(R.drawable.ic_launcher2)
-                                        .setTitle("Thank you for Registration")
-                                        .setMessage(R.string.thanksmsg)
-                                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.dismiss();
-                                            }
-
-                                        })
-                                        .show();
+                             startActivity(new Intent(Main2Activity.this,TeacherInactiveActivity.class));
                             }else {
                                // Toast.makeText(activity, "active teacher", Toast.LENGTH_SHORT).show();
                                 JSONArray heroArray = jsonObject1.getJSONArray("data");
@@ -456,20 +446,23 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         alertDialog.show();
     }
 
-    private void getBookWithAccessCode() {
+    //Add Access Code When No Book Available @kajal 11_22_22
 
-        final Dialog dialog = new Dialog(Main2Activity.this);
+    private void getBookWithAccessCode() {
+         dialog = new Dialog(Main2Activity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.addaccesscodlay);
-        dialog.setTitle("Custom Dialog");
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        //dialog.setTitle("Study Buddy");
+        //dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.show();
 
         final ImageView checkAccese = (ImageView) dialog.findViewById(R.id.checkAccese);
-        getAccesescode = (EditText) dialog.findViewById(R.id.getAccesescode);
+         getAccesescode = (EditText) dialog.findViewById(R.id.getAccesescode);
         AddAccesscodeValidate = (Button) dialog.findViewById(R.id.AddAccesscode);
         AddAccessesCodebutton = (Button) dialog.findViewById(R.id.AddAccessesCodebutton);
 
-     /*   AddAccessesCodebutton.setOnClickListener(new View.OnClickListener() {
+/*
+        AddAccessesCodebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (NetworkUtil.getConnectivityStatus(Main2Activity.this) > 0) {
@@ -481,83 +474,14 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                     progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
                     progressDialog.show(); // Display Progress Dialog
                     progressDialog.setCancelable(false);
-                    //RequestQueue queue = Volley.newRequestQueue(Stu_Classes.this);
-                    //String url = "http://www.techive.in/studybuddy/api/student_ac_insert.php";
-                    String url = Apis.base_url + Apis.student_ac_insert_url;
+                    //RequestQueue queue = Volley.newRequestQueue(Main2Activity.this);
+                    //String url = "http://www.techive.in/studybuddy/api/teacher_ac_insert.php";
+                    String url = Apis.base_url + Apis.teacher_ac_insert_url;
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-                                    Log.d("books_validator009", response);
-                                    progressDialog.dismiss();
-                                    try {
-                                        Log.d("Status123", "3");
-                                        JSONObject jsonObject1 = new JSONObject(response);
-
-                                        String LoginCredential = jsonObject1.getString("success");
-
-                                        Log.d("login_succes_student", "" + LoginCredential);
-
-                                        if (LoginCredential.equals("1")) {
-                                            Toast.makeText(Main2Activity.this, "Book added successfully", Toast.LENGTH_LONG).show();
-                                        } else if (LoginCredential.equals("0")) {
-                                           // Toast.makeText(Main2Activity.this, "Something went to wrong", Toast.LENGTH_LONG).show();
-                                        } else if (LoginCredential.equals("2")) {
-                                            Toast.makeText(Main2Activity.this, "You have already added this book", Toast.LENGTH_LONG).show();
-                                        }
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                        Log.d("login_succes_student", "" + e.getMessage());
-                                    }
-                                }
-                            }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError volleyError) {
-                            progressDialog.dismiss();
-                            Log.d("getParamsDatas11", "" + volleyError.getMessage());
-                            if (volleyError instanceof NoConnectionError) {
-                                Toast.makeText(Main2Activity.this, "Internet not Connected", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(Main2Activity.this, "Some Error Occurred", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }) {
-                        @Override
-                        protected java.util.Map<String, String> getParams() throws AuthFailureError {
-                            java.util.Map<String, String> params = new HashMap<>();
-                            params.put("accesscodes", getAccesescode.getText().toString());
-                            params.put("student_id",Teachers_ID);
-                            Log.d("get_ac_code", params.toString() + "");
-                            return params;
-                        }
-                    };
-                    CommonMethods.callWebserviceForResponse(stringRequest, Main2Activity.this);
-                } else {
-                    System.out.println("No connection");
-                    Network_Status = "notConnect";
-                    checkNetDialog();
-                }
-            }
-        });*/
-        AddAccesscodeValidate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (NetworkUtil.getConnectivityStatus(Main2Activity.this) > 0) {
-                    System.out.println("Connect");
-                    Network_Status = "Connect";
-                    progressDialog = new ProgressDialog(Main2Activity.this);
-                    progressDialog.setMessage("Loading..."); // Setting Title
-                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
-                    progressDialog.show(); // Display Progress Dialog
-                    progressDialog.setCancelable(false);
-                    //RequestQueue queue = Volley.newRequestQueue(Stu_Classes.this);
-                    //String url = "http://www.techive.in/studybuddy/api/book_validate.php";
-                    String url = Apis.base_url + Apis.book_validate_url;
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    Log.d("books_validator", "response " + response);
+                                    Log.d("books_validator", response);
                                     progressDialog.dismiss();
                                     try {
                                         Log.d("Status123", "3");
@@ -566,12 +490,12 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                                         String LoginCredential = jsonObject1.getString("success");
                                         Log.d("login_succes_student", "" + LoginCredential);
                                         if (LoginCredential.equals("1")) {
-                                            Log.d("Status123", "1");
-                                            LetsAddAccessCode();
-                                          /*  AddAccessesCodebutton.setVisibility(View.VISIBLE);
-                                            AddAccesscodeValidate.setVisibility(View.GONE);*/
+                                            Toast.makeText(Main2Activity.this, "Book Added Successfully", Toast.LENGTH_LONG).show();
                                         } else if (LoginCredential.equals("0")) {
-                                            Toast.makeText(Main2Activity.this, "Access Code Invalid", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(Main2Activity.this, "Something went to wrong", Toast.LENGTH_LONG).show();
+                                        } else if (LoginCredential.equals("2")) {
+                                            Toast.makeText(Main2Activity.this, "you have already added this book", Toast.LENGTH_LONG).show();
+                                            dialog.dismiss();
                                         }
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -579,16 +503,105 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                                 }
                             }, new Response.ErrorListener() {
                         @Override
-                        public void onErrorResponse(VolleyError volleyError) {
+                        public void onErrorResponse(VolleyError error) {
                             progressDialog.dismiss();
-                            Log.d("getParamsDatas11", "" + volleyError.getMessage());
-                            if (volleyError instanceof NoConnectionError) {
-                                Toast.makeText(Main2Activity.this, "Internet not Connected", Toast.LENGTH_SHORT).show();
+                            if (error instanceof NoConnectionError) {
+                                getConnectedStatus();
+                                Toast.makeText(Main2Activity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(Main2Activity.this, "Some Error Occurred", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Main2Activity.this, R.string.some_error_occurred, Toast.LENGTH_SHORT).show();
                             }
                         }
                     }) {
+                        @Override
+                        protected java.util.Map<String, String> getParams() throws AuthFailureError {
+                            java.util.Map<String, String> params = new HashMap<>();
+                            params.put("accesscodes", getAccesescode.getText().toString());
+                            params.put("teacher_id", Teachers_ID);
+                            return params;
+                        }
+                    };
+                    //queue.add(stringRequest);
+                    CommonMethods.callWebserviceForResponse(stringRequest, context);
+                } else {
+                    System.out.println("No connection");
+                    Network_Status = "notConnect";
+                    getConnectedStatus();
+                }
+
+            }
+        });
+*/
+        AddAccesscodeValidate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (NetworkUtil.getConnectivityStatus(Main2Activity.this) > 0) {
+                    System.out.println("Connect");
+                    Network_Status = "Connect";
+                    Log.d("books_validator", "books_validator");
+                    progressDialog = new ProgressDialog(Main2Activity.this);
+                    progressDialog.setMessage("Loading..."); // Setting Title
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+                    progressDialog.show(); // Display Progress Dialog
+                    progressDialog.setCancelable(false);
+                    //RequestQueue queue = Volley.newRequestQueue(Main2Activity.this);
+                    //String url = "http://www.techive.in/studybuddy/api/book_validate.php";
+                    String url = Apis.base_url + Apis.book_validate_url;
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    Log.d("books_validator", response);
+                                    progressDialog.dismiss();
+                                    try
+
+                                    {
+                                        Log.d("Status123", "3");
+                                        JSONObject jsonObject1 = new JSONObject(response);
+                                        //  Log.d("login_succes_student", "" + jsonObject1.getString("success"));
+                                        String LoginCredential = jsonObject1.getString("success");
+                                        Log.d("login_succes_student", "" + LoginCredential);
+
+                                        if (LoginCredential.equals("1"))
+
+                                        {
+
+                                            Log.d("Status123", "1");
+                                            LetsAddAccessCode();
+                                         /*   AddAccessesCodebutton.setVisibility(View.VISIBLE);
+                                            AddAccesscodeValidate.setVisibility(View.GONE);*/
+
+                                        } else if (LoginCredential.equals("0"))
+
+                                        {
+                                            Toast.makeText(Main2Activity.this, "Already assigned", Toast.LENGTH_LONG).show();
+
+                                        }else if(LoginCredential.equals("3")){
+                                            Toast.makeText(Main2Activity.this, "Some thing went wrong", Toast.LENGTH_LONG).show();
+
+                                        }
+                                        else  if(LoginCredential.equals("2")){
+                                            Toast.makeText(activity, "Updated", Toast.LENGTH_SHORT).show();
+                                        }
+
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            progressDialog.dismiss();
+                            if (error instanceof NoConnectionError) {
+                                getConnectedStatus();
+                                Toast.makeText(Main2Activity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(Main2Activity.this, R.string.some_error_occurred, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }) {
+
                         @Override
                         protected java.util.Map<String, String> getParams() throws AuthFailureError {
                             java.util.Map<String, String> params = new HashMap<>();
@@ -597,82 +610,86 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                         }
                     };
                     //queue.add(stringRequest);
-                    CommonMethods.callWebserviceForResponse(stringRequest, Main2Activity.this);
+                    CommonMethods.callWebserviceForResponse(stringRequest, context);
                 } else {
                     System.out.println("No connection");
                     Network_Status = "notConnect";
-                    checkNetDialog();
+                    getConnectedStatus();
                 }
             }
         });
     }
     private void LetsAddAccessCode() {
 
-        if (NetworkUtil.getConnectivityStatus(Main2Activity.this) > 0) {
-            System.out.println("Connect");
-            Network_Status = "Connect";
+        AddAccessesCodebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (NetworkUtil.getConnectivityStatus(Main2Activity.this) > 0) {
+                    System.out.println("Connect");
+                    Network_Status = "Connect";
 
-            progressDialog = new ProgressDialog(Main2Activity.this);
-            progressDialog.setMessage("Loading..."); // Setting Title
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
-            progressDialog.show(); // Display Progress Dialog
-            progressDialog.setCancelable(false);
-            //RequestQueue queue = Volley.newRequestQueue(Stu_Classes.this);
-            //String url = "http://www.techive.in/studybuddy/api/student_ac_insert.php";
-            String url = Apis.base_url + Apis.student_ac_insert_url;
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            Log.d("books_validator009", response);
-                            progressDialog.dismiss();
-                            try {
-                                Log.d("Status123", "3");
-                                JSONObject jsonObject1 = new JSONObject(response);
-
-                                String LoginCredential = jsonObject1.getString("success");
-
-                                Log.d("login_succes_student", "" + LoginCredential);
-
-                                if (LoginCredential.equals("1")) {
-                                    Toast.makeText(Main2Activity.this, "Book added successfully", Toast.LENGTH_LONG).show();
-                                } else if (LoginCredential.equals("0")) {
-                                    // Toast.makeText(Main2Activity.this, "Something went to wrong", Toast.LENGTH_LONG).show();
-                                } else if (LoginCredential.equals("2")) {
-                                    Toast.makeText(Main2Activity.this, "You have already added this book", Toast.LENGTH_LONG).show();
+                    progressDialog = new ProgressDialog(Main2Activity.this);
+                    progressDialog.setMessage("Loading..."); // Setting Title
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+                    progressDialog.show(); // Display Progress Dialog
+                    progressDialog.setCancelable(false);
+                    //RequestQueue queue = Volley.newRequestQueue(Main2Activity.this);
+                    //String url = "http://www.techive.in/studybuddy/api/teacher_ac_insert.php";
+                    String url = Apis.base_url + Apis.teacher_ac_insert_url;
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    Log.d("books_validator", response);
+                                    progressDialog.dismiss();
+                                    try {
+                                        Log.d("Status123", "3");
+                                        JSONObject jsonObject1 = new JSONObject(response);
+                                        //  Log.d("login_succes_student", "" + jsonObject1.getString("success"));
+                                        String LoginCredential = jsonObject1.getString("success");
+                                        Log.d("login_succes_student", "" + LoginCredential);
+                                        if (LoginCredential.equals("1")) {
+                                            Toast.makeText(Main2Activity.this, "Book Added Successfully", Toast.LENGTH_LONG).show();
+                                        } else if (LoginCredential.equals("0")) {
+                                            Toast.makeText(Main2Activity.this, "Something went to wrong", Toast.LENGTH_LONG).show();
+                                        } else if (LoginCredential.equals("2")) {
+                                            Toast.makeText(Main2Activity.this, "you have already added this book", Toast.LENGTH_LONG).show();
+                                            dialog.dismiss();
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                Log.d("login_succes_student", "" + e.getMessage());
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            progressDialog.dismiss();
+                            if (error instanceof NoConnectionError) {
+                                getConnectedStatus();
+                                Toast.makeText(Main2Activity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(Main2Activity.this, R.string.some_error_occurred, Toast.LENGTH_SHORT).show();
                             }
                         }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
-                    progressDialog.dismiss();
-                    Log.d("getParamsDatas11", "" + volleyError.getMessage());
-                    if (volleyError instanceof NoConnectionError) {
-                        Toast.makeText(Main2Activity.this, "Internet not Connected", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(Main2Activity.this, "Some Error Occurred", Toast.LENGTH_SHORT).show();
-                    }
+                    }) {
+                        @Override
+                        protected java.util.Map<String, String> getParams() throws AuthFailureError {
+                            java.util.Map<String, String> params = new HashMap<>();
+                            params.put("accesscodes", getAccesescode.getText().toString());
+                            params.put("teacher_id", Teachers_ID);
+                            return params;
+                        }
+                    };
+                    //queue.add(stringRequest);
+                    CommonMethods.callWebserviceForResponse(stringRequest, context);
+                } else {
+                    System.out.println("No connection");
+                    Network_Status = "notConnect";
+                    getConnectedStatus();
                 }
-            }) {
-                @Override
-                protected java.util.Map<String, String> getParams() throws AuthFailureError {
-                    java.util.Map<String, String> params = new HashMap<>();
-                    params.put("accesscodes", getAccesescode.getText().toString());
-                    params.put("student_id",Teachers_ID);
-                    Log.d("get_ac_code", params.toString() + "");
-                    return params;
-                }
-            };
-            CommonMethods.callWebserviceForResponse(stringRequest, Main2Activity.this);
-        } else {
-            System.out.println("No connection");
-            Network_Status = "notConnect";
-            checkNetDialog();
-        }
+
+            }
+        });
 
     }
 

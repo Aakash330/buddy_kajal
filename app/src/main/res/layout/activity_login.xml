@@ -505,6 +505,7 @@
                     android:hint="Access Code(Optional)"
                     android:inputType="number"
                     android:textColor="#fff"
+                    android:maxLength="10"
                     android:textColorHint="#fff" />
 
                 <EditText

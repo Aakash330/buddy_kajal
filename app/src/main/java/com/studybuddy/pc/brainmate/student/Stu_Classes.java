@@ -198,8 +198,8 @@ public class Stu_Classes extends AppCompatActivity implements NavigationView.OnN
                                     // ObjectiveMap.put("access_code", c1.getString("access_code"));
 
                                     //   Books_By_Accesscode.add(ObjectiveMap);
-                                  //  Arraylist.add(ObjectiveMap);
-                                    Log.d("imageArray1254f", c1.getString("book_img"));
+                                    Arraylist.add(ObjectiveMap);
+                                    Log.d("imageArray1254f",c1.getString("book_img"));
                                 }
                             }
                             for (int i = 0; i < Arraylist.size(); i++) {
@@ -902,11 +902,13 @@ public class Stu_Classes extends AppCompatActivity implements NavigationView.OnN
                                     Toast.makeText(Stu_Classes.this, "Book added successfully", Toast.LENGTH_LONG).show();
                                 /*    Intent intent=new Intent(Stu_Classes.this,Stu_Subjects.class);
                                     startActivity(intent);*/
-                                } else if (LoginCredential.equals("0")) {
+                                } else if (LoginCredential.equals("3")) {
                                       Toast.makeText(Stu_Classes.this, "Something went to wrong", Toast.LENGTH_LONG).show();
                                     Log.w(TAG,"Something went to wrong");
-                                } else if (LoginCredential.equals("2")) {
+                                } else if (LoginCredential.equals("0")) {
                                     Toast.makeText(Stu_Classes.this, "You have already added this book", Toast.LENGTH_LONG).show();
+                                }else if (LoginCredential.equals("2")) {
+                                    Toast.makeText(Stu_Classes.this, "Book updated successfully", Toast.LENGTH_LONG).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

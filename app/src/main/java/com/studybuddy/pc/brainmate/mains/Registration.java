@@ -3,6 +3,8 @@ package com.studybuddy.pc.brainmate.mains;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +12,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -39,6 +42,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.studybuddy.pc.brainmate.Network_connection.services.NetworkChangeReceiver;
 import com.studybuddy.pc.brainmate.Network_connection.utils.NetworkUtil;
 import com.studybuddy.pc.brainmate.R;
+import com.studybuddy.pc.brainmate.REgVerifyAccessCode;
+import com.studybuddy.pc.brainmate.RegistrationModeView;
 import com.studybuddy.pc.brainmate.student.CommonMethods;
 import com.studybuddy.pc.brainmate.student.Stu_Classes;
 import com.studybuddy.pc.brainmate.teacher.Main2Activity;
@@ -50,14 +55,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.regex.Pattern;
 
 import static com.studybuddy.pc.brainmate.Network_connection.data.Constants.CONNECTIVITY_ACTION;
 
-public class Registration extends AppCompatActivity {
+public class Registration extends AppCompatActivity implements REgVerifyAccessCode {
 
     private static final String TAG = "Registration";
     private static String SMS_OTP;
@@ -84,7 +88,9 @@ public class Registration extends AppCompatActivity {
     LinearLayout llShareDetails;
     Context context=Registration.this;
     int statePos;
-    RegistrationVerify registrationVerify;
+    REgVerifyAccessCode registrationVerify;
+    private RegistrationModeView model;
+
     //endregion
 
     //new
@@ -125,6 +131,7 @@ public class Registration extends AppCompatActivity {
     private boolean IsEmailValid;
     ArrayAdapter<String> arrayAdapterstate,arrayAdapter1;
     private String stateId;
+     Observer<String> nameObserver;
 
     //region "Overrided Methods"
     @Override
@@ -145,6 +152,8 @@ public class Registration extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
         setTitle("Register");
         context = Registration.this;
         intentFilter = new IntentFilter();
@@ -230,6 +239,8 @@ public class Registration extends AppCompatActivity {
         STATE_LIST=new ArrayList<>();
         CITY_LIST=new ArrayList<>();
 
+
+
         //sharedPreference
         preferences = context.getSharedPreferences("STUDENT_DETAILS", MODE_PRIVATE);
         getPreference = context.getSharedPreferences("TEACHER_DETAILS", MODE_PRIVATE);
@@ -240,8 +251,9 @@ public class Registration extends AppCompatActivity {
 
         STATE_LIST.add(0,"Select State");
         CITY_LIST.add(0,"Select City");
-        STSelectState();
 
+        STSelectState();
+        // Get the ViewModel.
         if (NetworkUtil.getConnectivityStatus(Registration.this) > 0) {
             System.out.println("Connect");
             Network_Status = "Connect";
@@ -255,51 +267,20 @@ public class Registration extends AppCompatActivity {
             });
 
             InitView();
+
+
         }
         else {
             dialogShowNoInternet();
         }
 
+    }
 
+    private void InitClicks() {
 
-        //Remove old vlaue in shared
-
-        /***NO LONGER NEEDED @kajal 11-12-2022*/
-        /**--START---*/
-       /* //Hide access code text @kajal 11-12-2022
-         txtAccessCodeTeacher = findViewById(R.id.txtAccessCodeTeacher);
-        txtUsernameTeacher = findViewById(R.id.txtUsernameTeacher);
-        Student_Validate = (Button) findViewById(R.id.Student_Validate);
-        Teachers_Validate = (Button) findViewById(R.id.Teachers_Validate);
-        accessCheck = (ImageView) findViewById(R.id.accessCheck);
-        accessCheckteche = (ImageView) findViewById(R.id.accessCheckteche);
-        TCUsername = (EditText) findViewById(R.id.TCUsername);
-        TCEmails = (EditText) findViewById(R.id.TCEmails);
-
-        // BY DEFAULT STUDENT WILL BE CHECKED INSTEAD OF
-        // Visible and GONE LAYOUTS AGAIN AND AGAIN
-         if (Student.isChecked()) {
-            student_Fuul_layout.setVisibility(View.VISIBLE);
-        } else if (!Student.isChecked()) {
-            student_Fuul_layout.setVisibility(View.GONE);
-        }
-
-        //region "teacher_access"
-        Teachers_Validate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Teachers_ValidateOnClick();
-            }
-        });
-           Student_Validate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Student_ValidateOnClick();
-            }
-        });//endregion*/
-        /**--END---*/
 
     }
+
 
     private void dialogShowNoInternet() {
 
@@ -316,107 +297,6 @@ public class Registration extends AppCompatActivity {
 
                 })
                 .show();
-    }
-
-    private void EmailValidationCheck() {
-
-        progressDialog = new ProgressDialog(Registration.this);
-        progressDialog.setMessage("Loading..."); // Setting Title
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.show();
-        progressDialog.setCancelable(false);
-        //String url = "https://test.brainmate.co.in/studybuddy/api_ver_2/register.php"; //change @kajal
-        String url = Apis.new_base_url + Apis.register_url;
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        progressDialog.dismiss();
-                        Log.w(TAG, "St Reg response->"+response);
-
-                        // Here for already registered user success value is 2
-                        try {
-
-
-                            JSONObject jsonObject1 = new JSONObject(response);
-                            String msg= jsonObject1.getString("msg");
-                            String RESPONSE_CODE = jsonObject1.getString("error");
-                            if (RESPONSE_CODE.equals(400)) {
-                                Toast.makeText(context, ""+msg, Toast.LENGTH_SHORT).show();
-
-                            }else if (RESPONSE_CODE.equals(200)) {
-                                Toast.makeText(context, ""+msg, Toast.LENGTH_SHORT).show();
-                                ST_OTP_CLICKED=true;
-                                sendOtpToStudent();
-
-                            }
-
-
-                        } catch (JSONException e) {
-                            Log.d("getDetailshere", "" + e.getMessage());
-                            e.printStackTrace();
-
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                progressDialog.dismiss();
-                Log.w(TAG, "TeacherLogin Registration error:" + error.getMessage());
-                System.out.println("ResponseRegistration" + error.getMessage());
-                Toast.makeText(context, "failed" + error.getMessage(), Toast.LENGTH_SHORT).show();
-
-            }
-        }) {
-
-            @Override
-            protected java.util.Map<String, String> getParams() throws AuthFailureError {
-                java.util.Map<String, String> params = new HashMap<>();
-
-                params.put("email", StEmail.getText().toString());
-                Log.w(TAG," ST Email:"+StEmail.getText().toString());
-                Log.w(TAG," ST p:"+stPassword.getText().toString());
-                Log.w(TAG," ST N:"+ StName.getText().toString());
-                Log.w(TAG," ST Contact:"+ StContact.getText().toString());
-                Log.w(TAG," ST SN:"+StSchoolName.getText().toString());
-                Log.w(TAG," ST SAC:"+ST_ACCESS_CODE);
-                Log.w(TAG," ST State:"+ST_STATE.getSelectedItem().toString());
-                Log.w(TAG," ST Address:"+StAddress.getText().toString());
-                Log.w(TAG," ST city:"+ST_CITY.getSelectedItem().toString());
-                Log.w(TAG," ST class:"+ST_CLASS.getText().toString());
-                params.put("password", stPassword.getText().toString());
-                params.put("name", StName.getText().toString());
-                params.put("mobile", StContact.getText().toString());
-                params.put("school_name", StSchoolName.getText().toString());
-                params.put("school_addess","0");
-
-                params.put("school_phone","0");
-                params.put("accesscode",ST_ACCESS_CODE);
-                params.put("address",StAddress.getText().toString());
-
-                params.put("state_id",ST_STATE.getSelectedItem().toString());
-                params.put("city_id",ST_CITY.getSelectedItem().toString());
-                params.put("classes",ST_CLASS.getText().toString());
-
-                params.put("subject","0");
-                params.put("type", "1");
-
-
-                                /*    params.put("email", "kajaldiwakar@gmail.com");
-                                    params.put("password", "1234");
-                                    params.put("name", "kajal");
-                                    params.put("mobile", "88888888888");
-                                    params.put("school_name", "abc");
-                                    params.put("school_addess", "mde1233");
-                                    params.put("school_phone", "99999999");
-                                    params.put("accesscode", "123434");
-                                    params.put("type", "2");*/
-
-                return params;
-            }
-        };
-        CommonMethods.callWebserviceForResponse(stringRequest, context);
-
     }
 
     private void InitView() {
@@ -461,14 +341,15 @@ public class Registration extends AppCompatActivity {
         //region "teacher_register"
         loginbuttonTecher.setOnClickListener(v ->{// loginbuttonTecherOnClick(); //OLD CODE @KAJAL
 //           NEW CODE
-            teacherReg();
+            Teacher_ValidateOnClick();
         });
 //      endregion
 
         //region "student_register"
         Studentlogin.setOnClickListener(v ->{// StudentloginOnClick()); //OLD CODE @KAJAL
 //         NEW CODE
-            studentReg();
+            Student_ValidateOnClick();
+
 // endregion
 
 
@@ -538,14 +419,15 @@ public class Registration extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                Toast.makeText(context, "vd", Toast.LENGTH_SHORT).show();
-                  /* if(Student_ValidateOnClick()){
-                       AccessCode.setText("invalid AccessCode");
-                }*/
+
+                if(s.length()>0&&s.length()<10){
+                    AccessCode.setError("invalide Access code");
+                }
+
             }
         });
 
-      /*  AccessCodeTeacher.addTextChangedListener(new TextWatcher() {
+        AccessCodeTeacher.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -558,17 +440,12 @@ public class Registration extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                Student_ValidateOnClick();
-               *//* if(s.length()>5){
-                    Student_ValidateOnClick();
-                }else if(s.length()>0&&s.length()<=5){
-                    Student_ValidateOnClick();
-                    AccessCode.setText("invalid access code");
-                    Toast.makeText(context, "incorrect AccessCode", Toast.LENGTH_SHORT).show();
-                    Log.w(TAG,"incorrect AccessCode(Watcher)");
-                }*//*
+
+                if(s.length()>0&&s.length()<10){
+                    AccessCodeTeacher.setError("invalide Access code");
+                }
             }
-        });*/
+        });
 
         StContact.addTextChangedListener(new TextWatcher() {
             @Override
@@ -714,7 +591,9 @@ public class Registration extends AppCompatActivity {
                 System.out.println("Connect");
                 Network_Status = "Connect";
 
-                //Student_ValidateOnClick();
+               // Student_ValidateOnClick(registrationVerify);
+
+
                 if(StEmail.getText().toString().equals("")&&stPassword.getText().toString().equals("")&&StName.getText().toString().equals("")&&
                         StContact.getText().toString().equals("") || StContact.getText().length() < 10&&StSchoolName.getText().toString().equals("")&&
                         ST_STATE.getSelectedItem().toString().equals("")&&ST_CITY.getSelectedItem().toString().isEmpty()){
@@ -828,20 +707,6 @@ public class Registration extends AppCompatActivity {
                                 AccessCode.getText().clear();
                                 ST_ACCESS_CODE=AccessCode.getText().toString();
                             }
-                          /*  if(check){
-                                Toast.makeText(context, "Invalid Access Code", Toast.LENGTH_SHORT).show();
-                                AccessCode.getText().clear();
-                                ST_ACCESS_CODE=AccessCode.getText().toString();
-                            }else if(AccessCode.getText().toString().isEmpty()){
-                                Toast.makeText(context, "Empty Access Code", Toast.LENGTH_SHORT).show();
-                                //   ST_ACCESS_CODE="0";
-                                AccessCode.getText().clear();
-                                ST_ACCESS_CODE=AccessCode.getText().toString();
-                            }else{
-                                Toast.makeText(context, "Valid Access code", Toast.LENGTH_SHORT).show();
-                                ST_ACCESS_CODE=AccessCode.getText().toString();
-                            }
-*/
                             progressDialog = new ProgressDialog(Registration.this);
                             progressDialog.setMessage("Loading..."); // Setting Title
                             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -951,18 +816,7 @@ public class Registration extends AppCompatActivity {
                                    params.put("subject","0");
                                    params.put("type", "1");
 
-
-                                /*    params.put("email", "kajaldiwakar@gmail.com");
-                                    params.put("password", "1234");
-                                    params.put("name", "kajal");
-                                    params.put("mobile", "88888888888");
-                                    params.put("school_name", "abc");
-                                    params.put("school_addess", "mde1233");
-                                    params.put("school_phone", "99999999");
-                                    params.put("accesscode", "123434");
-                                    params.put("type", "2");*/
-
-                                    return params;
+                                   return params;
                                 }
                             };
                             CommonMethods.callWebserviceForResponse(stringRequest, context);
@@ -972,9 +826,6 @@ public class Registration extends AppCompatActivity {
                         else {
                             Log.w(TAG, "invalid Otp");
                             ST_OTP_CLICKED=true;
-                           /* ST_ENTER_OTP.setVisibility(View.GONE);
-                            ST_DIS_OTP.setVisibility(View.GONE);
-                            ST_SEND_OTP.setVisibility(View.VISIBLE);*/
                             ST_ENTER_OTP.requestFocus();
                             Toast.makeText(context, "InValid OTP", Toast.LENGTH_SHORT).show();
                         }//@kajal
@@ -1006,9 +857,7 @@ public class Registration extends AppCompatActivity {
 
     }
 
-    public interface RegistrationVerify{
-        void IsInValidAccessCode(boolean value);
-    }
+
 
     private void teacherReg() {
 
@@ -1017,7 +866,6 @@ public class Registration extends AppCompatActivity {
                 System.out.println("Connect");
                 Network_Status = "Connect";
 
-                // Log.w(TAG, "OTPVerify TCAt:" + System.currentTimeMillis());
                 if(TCPassword.getText().toString().equals("")&&TCName.getText().toString().equals("")&& TCPhonenumber.getText().toString().isEmpty() && TCPhonenumber.getText().toString().length() < 10&& TCEmails.getText().toString().equals("")&&TCSchholName.getText().toString().equals("")&& TC_ENTER_OTP.getText().toString().isEmpty()&&TCSubject.getText().toString().isEmpty()){
                     Toast.makeText(context, "Please Enter Details... First", Toast.LENGTH_SHORT).show();
                 }else{
@@ -1030,11 +878,7 @@ public class Registration extends AppCompatActivity {
                         Log.w(TAG, " TC TimeOut");
 
                         Toast.makeText(context, "TimeOut! Resend OTP", Toast.LENGTH_SHORT).show();
-                    }/*else if(AccessCodeTeacher.getText().toString().isEmpty()){
-                        Toast.makeText(context, "Enter AccessCode", Toast.LENGTH_SHORT).show();
-                        AccessCodeTeacher.setError("enter access code");
-
-                    }*/
+                    }
                     else if (TCName.getText().toString().equals("")) {
                         TCName.setError("Please Enter Name");
                         Log.w(TAG, "Empty TC Name");
@@ -1241,21 +1085,7 @@ public class Registration extends AppCompatActivity {
                                         params.put("type", "2");
                                         Log.w(TAG,"map para:"+params);
 
-                               /*    params.put("email","kajaldiwakar@gmail.com");
-                                   params.put("password","1234");
-                                   params.put("name","kajal");
-                                   params.put("mobile","88888888888");
-                                   params.put("school_name","abc");
-                                   params.put("school_addess","mde1233");
-                                   params.put("school_phone","99999999");
-                                   params.put("accesscode","123434");
-                                     params.put("address","123434");
-                                        params.put("state_id","123434");
-                                        params.put("city_id","123434");
-                                        params.put("classes","123434");
-                                        params.put("subject","123434");
-                                   params.put("type", "2");
-*/
+
 
                                         return params;
                                     }
@@ -1265,14 +1095,8 @@ public class Registration extends AppCompatActivity {
                             }
                             else {
                                 Log.w(TAG, "invalid  TC Otp");
-                                //Clear otp
                                 Toast.makeText(context, "Invalid OTP", Toast.LENGTH_SHORT).show();
-                              /*  TC_OTP_CLICKED=false;
-                                TC_ENTER_OTP.getText().clear();
-                                TC_ENTER_OTP.setVisibility(View.GONE);
-                                TC_SEND_OTP.setVisibility(View.VISIBLE);
-                                TC_DIS_OTP.setVisibility(View.GONE);*/
-                            }
+                                   }
 
                         }
                     }
@@ -1301,7 +1125,6 @@ public class Registration extends AppCompatActivity {
             }
 
         }catch (Exception ee){
-           // Toast.makeText(context, "catch"+ee.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
 
@@ -1941,6 +1764,8 @@ public class Registration extends AppCompatActivity {
         if (NetworkUtil.getConnectivityStatus(Registration.this) > 0) {
             System.out.println("Connect");
             Network_Status = "Connect";
+            Log.w(TAG," i am in student validation");
+
        /*//TODO : success = 1 valid access code
                 progressDialog = new ProgressDialog(Registration.this);
                 progressDialog.setMessage("Loading..."); // Setting Title
@@ -1962,15 +1787,16 @@ public class Registration extends AppCompatActivity {
                                     String LoginCredential = jsonObject1.getString("success");
 
                                     if (LoginCredential.equals("0")) {
-                                        //validate accecode
-                                        check =true;
-                                        Toast.makeText(context, "Invalid"+check, Toast.LENGTH_SHORT).show();
+
+                                        Toast.makeText(context, "Invalid", Toast.LENGTH_SHORT).show();
                                         AccessCode.getText().clear();
                                         ST_ACCESS_CODE=AccessCode.getText().toString();
+                                        studentReg();
                                         return;
                                     }
                                     ST_ACCESS_CODE=AccessCode.getText().toString();
-                                    Toast.makeText(context, "valid AC"+check, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, "valid AC", Toast.LENGTH_SHORT).show();
+                                    studentReg();
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -1990,13 +1816,17 @@ public class Registration extends AppCompatActivity {
                     @Override
                     protected java.util.Map<String, String> getParams() throws AuthFailureError {
                         java.util.Map<String, String> params = new HashMap<>();
-                        params.put("accesscodes",CheckAccessCode);
+                        Log.w(TAG,"Edit value"+AccessCode.getText().toString());
+                        params.put("accesscodes",AccessCode.getText().toString());
                         return params;
                     }
                 };
+
+            Log.w(TAG,"out check="+check);
                 //.add(stringRequest);
                 CommonMethods.callWebserviceForResponse(stringRequest, context);
           //  }
+
         } else {
             System.out.println("No connection");
             Network_Status = "notConnect";
@@ -2017,7 +1847,6 @@ public class Registration extends AppCompatActivity {
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
         }
-
     }
     private void Teacher_ValidateOnClick() {
         if (NetworkUtil.getConnectivityStatus(Registration.this) > 0) {
@@ -2049,13 +1878,16 @@ public class Registration extends AppCompatActivity {
                                     String LoginCredential = jsonObject1.getString("success");
 
                                     if(LoginCredential.equals("0")){
-                                        //validate accecode
-                                        TC_ACCESS_CODE="0";
-                                        AccessCodeTeacher.setText("Invalid Access code");
-                                        //Toast.makeText(context, "Invalid Access code", Toast.LENGTH_SHORT).show();
-                                      //  progressDialog.dismiss();
+                                        AccessCodeTeacher.getText().clear();
+                                        TC_ACCESS_CODE=AccessCodeTeacher.getText().toString();
+                                        teacherReg();
+                                        Toast.makeText(context, "invalid AC", Toast.LENGTH_SHORT).show();
+
+                                        return;
                                         }
+                                    Toast.makeText(context, "valid AC", Toast.LENGTH_SHORT).show();
                                     TC_ACCESS_CODE=AccessCodeTeacher.getText().toString();
+                                    teacherReg();
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -2104,7 +1936,12 @@ public class Registration extends AppCompatActivity {
             alertDialog.show();
         }
     }
- //Access code mandatory code @kajal 11-12-2022
+
+    @Override
+    public void IsInValidAccessCode(boolean value) {
+        Toast.makeText(context, "CheckValideAccessCode:"+value, Toast.LENGTH_SHORT).show();
+    }
+    //Access code mandatory code @kajal 11-12-2022
  /*   private void Teachers_ValidateOnClick() {
         if (NetworkUtil.getConnectivityStatus(Registration.this) > 0) {
             System.out.println("Connect");

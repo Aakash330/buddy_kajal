@@ -16,7 +16,11 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".mains.ShareDetailsActivity"
+        <activity
+            android:name=".teacher.TeacherInactiveActivity"
+            android:exported="false" />
+        <activity
+            android:name=".mains.ShareDetailsActivity"
             android:theme="@style/AppTheme.NoActionBar_StatusBar" />
         <activity
             android:name=".mains.Splash"
@@ -76,13 +80,11 @@
         <activity
             android:name=".teacher.AnimationView"
             android:screenOrientation="landscape" />
-        <activity android:name=".teacher.ActivityScore" />
-        <!--<activity android:name=".student.Student_Subject_Books" />-->
+        <activity android:name=".teacher.ActivityScore" /> <!-- <activity android:name=".student.Student_Subject_Books" /> -->
         <activity
             android:name=".student.Students_Chapters"
             android:label="@string/title_activity_students__chapters"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <!--<activity android:name=".student.ScoreCard" />-->
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- <activity android:name=".student.ScoreCard" /> -->
         <activity
             android:name=".student.Take_Test"
             android:label="@string/title_activity_take__test"
