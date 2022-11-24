@@ -136,11 +136,21 @@ public class CommonMethods {
         SharedPreferences pref = context.getSharedPreferences(strSharedPrefName, context.MODE_PRIVATE);
         return pref.getInt("IsLogin", 0);
     }
+ public static String getMsg(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(strSharedPrefName, context.MODE_PRIVATE);
+        return pref.getString("msg", "0");
+    }
 
     public static void saveIsLogin(Context context, int value) {
         SharedPreferences pref = context.getSharedPreferences(strSharedPrefName, context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.putInt("IsLogin", value);
+        editor.apply();
+    }
+    public static void saveMsg(Context context, String value) {
+        SharedPreferences pref = context.getSharedPreferences(strSharedPrefName, context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("msg", value);
         editor.apply();
     }
 

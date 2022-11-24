@@ -70,7 +70,7 @@ public class Books_Access_Code extends AppCompatActivity {//implements Navigatio
     ListView bookListRv;
     BooksAcsCodeAdapter acsCodeAdapter;
     EditText getAccesescode;
-
+    int insertIndex=2;
     @Override
     protected void onResume() {
         super.onResume();
@@ -120,7 +120,9 @@ public class Books_Access_Code extends AppCompatActivity {//implements Navigatio
         Books_By_Accesscode = new ArrayList<>();
         Bookslist = (ListView) findViewById(R.id.Bookslist);
 
-        if (NetworkUtil.getConnectivityStatus(Books_Access_Code.this) > 0) {
+        getBookOfteacher();
+
+      /*  if (NetworkUtil.getConnectivityStatus(Books_Access_Code.this) > 0) {
             System.out.println("Connect");
             Network_Status = "Connect";
 
@@ -160,6 +162,7 @@ public class Books_Access_Code extends AppCompatActivity {//implements Navigatio
                                                 ObjectiveMap.put("status", c1.getString("status"));
                                                 ObjectiveMap.put("book_Type", "11");
                                                 ObjectiveMap.put("access_code", c1.getString("access_code"));
+                                                ObjectiveMap.put("expire_status", c1.getString("expire_status"));
                                                 Books_By_Accesscode.add(ObjectiveMap);
                                             }
                                         }
@@ -223,7 +226,7 @@ public class Books_Access_Code extends AppCompatActivity {//implements Navigatio
                     });
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
-        }
+        }*/
 
         Bookslist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -234,32 +237,45 @@ public class Books_Access_Code extends AppCompatActivity {//implements Navigatio
                 Log.d("ebookebook", book_Type);
                 // str = str.replaceAll("[^\\d.]", "");
                 String result = Books_By_Accesscode.get(position).get("Class");//.replaceAll("[^\\d.]", "");
+                String expireStatus = Books_By_Accesscode.get(position).get("expire_status");//.replaceAll("[^\\d.]", "");
                 //if (book_Type.equals("Drawing")) {
                 if (NetworkUtil.getConnectivityStatus(Books_Access_Code.this) > 0) {
                     //TODO : changes for lkg ukg and nursery
                     if (book_Type.equals("Drawing")) {
                         //finish();
-                        Intent intent = new Intent(Books_Access_Code.this, TePaintingChapters.class);
-                        intent.putExtra("access_code", Books_By_Accesscode.get(position).get("access_code"));
-                        intent.putExtra("class", result);
-                        startActivity(intent);
+                        if(expireStatus.equals("0")){
+
+                            Intent intent = new Intent(Books_Access_Code.this, TePaintingChapters.class);
+                            intent.putExtra("access_code", Books_By_Accesscode.get(position).get("access_code"));
+                            intent.putExtra("class", result);
+                            startActivity(intent);
+                        }else {
+                            getBookWithAccessCode();
+                        }
                     } else if (book_Type.equals("Art & Craft")) {
                         //finish();
-                        Intent intent = new Intent(Books_Access_Code.this, TePaintingChapters.class);
-                        intent.putExtra("access_code", Books_By_Accesscode.get(position).get("access_code"));
-                        intent.putExtra("class", result);
-                        startActivity(intent);
+                        if(expireStatus.equals("0")) {
+                            Intent intent = new Intent(Books_Access_Code.this, TePaintingChapters.class);
+                            intent.putExtra("access_code", Books_By_Accesscode.get(position).get("access_code"));
+                            intent.putExtra("class", result);
+                            startActivity(intent);
+                        }else {
+                            getBookWithAccessCode();
+                        }
                     } else {
                         //finish();
-                        Intent intent = new Intent(Books_Access_Code.this, LearningElementary.class);
-                        intent.putExtra("access_code", Books_By_Accesscode.get(position).get("access_code"));
-                        intent.putExtra("ebook", ebook);
-                        intent.putExtra("SubjectNme", SubjectNme);
-                        intent.putExtra("displayClassName", displayClassName);
-                        intent.putExtra("manual", Books_By_Accesscode.get(position).get("manual"));
-                        intent.putExtra("Title", Books_By_Accesscode.get(position).get("Title"));
-                        startActivity(intent);
-                    }
+                        if(expireStatus.equals("0")){
+                            Intent intent = new Intent(Books_Access_Code.this, LearningElementary.class);
+                            intent.putExtra("access_code", Books_By_Accesscode.get(position).get("access_code"));
+                            intent.putExtra("ebook", ebook);
+                            intent.putExtra("SubjectNme", SubjectNme);
+                            intent.putExtra("displayClassName", displayClassName);
+                            intent.putExtra("manual", Books_By_Accesscode.get(position).get("manual"));
+                            intent.putExtra("Title", Books_By_Accesscode.get(position).get("Title"));
+                            startActivity(intent);
+                        }else {
+                           getBookWithAccessCode();
+                        }}
                 } else {
                     Toast.makeText(Books_Access_Code.this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
                 }
@@ -282,6 +298,7 @@ public class Books_Access_Code extends AppCompatActivity {//implements Navigatio
         navigationView.setNavigationItemSelectedListener(this);*/
 
     }
+
 
     /*@Override
     public void onBackPressed() {
@@ -548,13 +565,13 @@ public class Books_Access_Code extends AppCompatActivity {//implements Navigatio
     private void getBookWithAccessCode() {
 
   dialog = new Dialog(Books_Access_Code.this);
-        dialog.setContentView(R.layout.addaccesscodlay);
+        dialog.setContentView(R.layout.addaccesscodlay_experi);
         dialog.setTitle("Custom Dialog");
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.show();
 
         final ImageView checkAccese = (ImageView) dialog.findViewById(R.id.checkAccese);
-        final EditText getAccesescode = (EditText) dialog.findViewById(R.id.getAccesescode);
+        getAccesescode = (EditText) dialog.findViewById(R.id.getAccesescode);
         AddAccesscodeValidate = (Button) dialog.findViewById(R.id.AddAccesscode);
         AddAccessesCodebutton = (Button) dialog.findViewById(R.id.AddAccessesCodebutton);
 
@@ -649,18 +666,19 @@ public class Books_Access_Code extends AppCompatActivity {//implements Navigatio
                                     Log.d("books_validator", "response " + response);
                                     progressDialog.dismiss();
                                     try {
-                                        Log.d("Status123", "3");
                                         JSONObject jsonObject1 = new JSONObject(response);
-                                        //  Log.d("login_succes_student", "" + jsonObject1.getString("success"));
+                                         Log.d("login_succes_student", "" + jsonObject1.getString("success"));
                                         String LoginCredential = jsonObject1.getString("success");
                                         Log.d("login_succes_student", "" + LoginCredential);
                                         if (LoginCredential.equals("1")) {
-                                            Log.d("Status123", "1");
                                             let();
-                                           /* AddAccessesCodebutton.setVisibility(View.VISIBLE);
-                                            AddAccesscodeValidate.setVisibility(View.GONE);*/
                                         } else if (LoginCredential.equals("0")) {
-                                            Toast.makeText(Books_Access_Code.this, "Access Code Invalid", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(Books_Access_Code.this, "Already Assign ", Toast.LENGTH_LONG).show();
+                                        }
+                                        else if (LoginCredential.equals("2")) {
+                                            Toast.makeText(Books_Access_Code.this, "update ", Toast.LENGTH_LONG).show();
+                                        }else if (LoginCredential.equals("3")) {
+                                            Toast.makeText(Books_Access_Code.this, "Something went wrong", Toast.LENGTH_LONG).show();
                                         }
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -696,13 +714,12 @@ public class Books_Access_Code extends AppCompatActivity {//implements Navigatio
         });
     }
     void let(){
-        AddAccessesCodebutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        Log.w("Add:","step1 AddAccessCode");
+
                 if (NetworkUtil.getConnectivityStatus(Books_Access_Code.this) > 0) {
                     System.out.println("Connect");
                     Network_Status = "Connect";
-
+                    Log.w("Add:","step1 if AddAccessCode");
                     progressDialog = new ProgressDialog(Books_Access_Code.this);
                     progressDialog.setMessage("Loading..."); // Setting Title
                     progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
@@ -715,7 +732,10 @@ public class Books_Access_Code extends AppCompatActivity {//implements Navigatio
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-                                    Log.d("books_validator", response);
+                                    Log.w("Add:"," if step1 AddAccessCode");
+                                    Log.d("AddAccessCode", response);
+                                    Log.w("Add:"," if step2 AddAccessCode");
+
                                     progressDialog.dismiss();
                                     try {
                                         Log.d("Status123", "3");
@@ -725,11 +745,18 @@ public class Books_Access_Code extends AppCompatActivity {//implements Navigatio
                                         Log.d("login_succes_student", "" + LoginCredential);
                                         if (LoginCredential.equals("1")) {
                                             Toast.makeText(Books_Access_Code.this, "Book Added Successfully", Toast.LENGTH_LONG).show();
+                                            Books_By_Accesscode.clear();
+                                        getBookOfteacher();
+                                            acsCodeAdapter.notifyDataSetChanged();
                                         } else if (LoginCredential.equals("0")) {
-                                            Toast.makeText(Books_Access_Code.this, "Something went to wrong", Toast.LENGTH_LONG).show();
-                                        } else if (LoginCredential.equals("2")) {
                                             Toast.makeText(Books_Access_Code.this, "you have already added this book", Toast.LENGTH_LONG).show();
-                                            dialog.dismiss();
+                                        }  else if (LoginCredential.equals("3")) {
+                                            Toast.makeText(Books_Access_Code.this, "Something went to wrong", Toast.LENGTH_LONG).show();
+                                        }else if (LoginCredential.equals("2")) {
+                                            Toast.makeText(Books_Access_Code.this, "book Updated Successfully", Toast.LENGTH_LONG).show();
+                                            Books_By_Accesscode.clear();
+                                            getBookOfteacher();
+                                            acsCodeAdapter.notifyDataSetChanged();
                                         }
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -763,8 +790,120 @@ public class Books_Access_Code extends AppCompatActivity {//implements Navigatio
                     let();
                 }
 
-            }
-        });
+
+    }
+
+
+    private void getBookOfteacher() {
+     Log.w("tt","Notify teacher");
+        if (NetworkUtil.getConnectivityStatus(Books_Access_Code.this) > 0) {
+            System.out.println("Connect");
+            Network_Status = "Connect";
+
+            Log.d("notice123", "AAAAAAA");
+            progressDialog = new ProgressDialog(Books_Access_Code.this);
+            progressDialog.setMessage("Loading..."); // Setting Title
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+            progressDialog.show(); // Display Progress Dialog
+            progressDialog.setCancelable(false);
+            String url = Apis.base_url + Apis.teacher_book_url;//webView ebook link come from this api
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d("notice12345", response);
+                            progressDialog.dismiss();
+                            try {
+                                JSONObject jsonObject1 = null;
+                                jsonObject1 = new JSONObject(response);
+                                Log.d("object111", jsonObject1.getString("success"));
+                                JSONArray heroArray = jsonObject1.getJSONArray("data");
+                                for (int j = 0; j < heroArray.length(); j++) {
+                                    JSONObject c1 = heroArray.getJSONObject(j);
+                                    if (c1.getString("status").equals("1")) {
+                                        Log.d("imageArray", "ok" + c1.getString("class"));
+                                        HashMap<String, String> ObjectiveMap = new HashMap<>();
+                                        ObjectiveMap.put("Subject", c1.getString("subject"));
+                                        if (SubjectNme.equals(c1.getString("subject"))) {
+                                            if (ClassName.equals(c1.getString("class"))) {
+                                                ObjectiveMap.put("Title", c1.getString("title"));
+                                                ObjectiveMap.put("Class", c1.getString("class"));
+                                                ObjectiveMap.put("Subject", c1.getString("subject"));
+                                                ObjectiveMap.put("book_img", c1.getString("book_img"));
+                                                ObjectiveMap.put("ebook", c1.getString("ebook"));
+                                                ObjectiveMap.put("manual", c1.getString("manual"));
+                                                ObjectiveMap.put("animation", c1.getString("animation"));
+                                                ObjectiveMap.put("status", c1.getString("status"));
+                                                ObjectiveMap.put("book_Type", "11");
+                                                ObjectiveMap.put("access_code", c1.getString("access_code"));
+                                                ObjectiveMap.put("expire_status", c1.getString("expire_status"));
+                                                Books_By_Accesscode.add(ObjectiveMap);
+                                            }
+                                        }
+                                        Log.d("imageArray1254f", c1.getString("book_img"));
+                                    }
+                                }
+                                for (int i = 0; i < Books_By_Accesscode.size(); i++) {
+
+                                    for (int j = i + 1; j < Books_By_Accesscode.size(); j++) {
+                                        if (Books_By_Accesscode.get(i).equals(Books_By_Accesscode.get(j))) {
+                                            Books_By_Accesscode.remove(j);
+                                            j--;
+                                        }
+                                    }
+                                }
+
+                                if(Books_By_Accesscode.size()==0){
+                                    bookListRv.setVisibility(View.GONE);
+                                    bookNotFoundLty.setVisibility(View.VISIBLE);
+
+                                }else{
+
+                                    bookListRv.setVisibility(View.VISIBLE);
+                                    bookNotFoundLty.setVisibility(View.GONE);
+                                    acsCodeAdapter = new BooksAcsCodeAdapter(Books_Access_Code.this, Books_By_Accesscode);
+                                    Bookslist.setAdapter(acsCodeAdapter);
+
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    progressDialog.dismiss();
+                    System.out.println("ResponseRegistration" + error.getMessage());
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("accesscodes", accesscodes);
+                    params.put("teacher_id", Teachers_ID);
+                    Log.d("teacher_id", "" + Teachers_ID);
+                    return params;
+                }
+            };
+            // Add the request to the RequestQueue.
+            CommonMethods.callWebserviceForResponse(stringRequest, context);
+        } else {
+            System.out.println("No connection");
+            Network_Status = "notConnect";
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Books_Access_Code.this);
+            alertDialogBuilder.setMessage(getString(R.string.no_internet));
+            alertDialogBuilder.setPositiveButton("Exit",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            finish();
+                        }
+                    });
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
     }
     //region "Menu"
     @Override

@@ -12,6 +12,8 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,6 +41,7 @@ import com.studybuddy.pc.brainmate.R;
 import com.studybuddy.pc.brainmate.student.CommonMethods;
 import com.studybuddy.pc.brainmate.student.Stu_Classes;
 import com.studybuddy.pc.brainmate.teacher.Main2Activity;
+import com.studybuddy.pc.brainmate.teacher.TeacherInactiveActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -453,7 +456,7 @@ public class LoginBothActivity extends AppCompatActivity {
 
                                             CommonMethods.saveEmailId(LoginBothActivity.this, email);
                                             CommonMethods.saveId(LoginBothActivity.this, Student_ID);
-                                            CommonMethods.saveUsername(LoginBothActivity.this, c.getString("name"));
+                                            CommonMethods.saveUsername(LoginBothActivity.this,stPassword.getText().toString());
                                             CommonMethods.saveType(LoginBothActivity.this, "s");
                                             CommonMethods.saveIsLogin(LoginBothActivity.this, keeplogin.isChecked() ? 1 : 0);//Student==1
                                             CommonMethods.saveAccessCode(LoginBothActivity.this, accesscodes);
@@ -535,15 +538,29 @@ public class LoginBothActivity extends AppCompatActivity {
 
                                         JSONObject jsonObject1 = new JSONObject(response);
                                         //  Log.d("login_succes_student", "" + jsonObject1.getString("success"));
-                                        String LoginCredential = jsonObject1.getString("success");
-                                        String email_field = jsonObject1.getString("email_field");
+                                       // String LoginCredential = jsonObject1.getString("success");
+                                       // String email_field = jsonObject1.getString("email_field");
 
-                                        if (LoginCredential.equals("0") && email_field.equals("0")) {
-                                            Toast.makeText(LoginBothActivity.this, getString(R.string.invalid_email_password), Toast.LENGTH_LONG).show();
-                                        } else if (LoginCredential.equals("1") && email_field.equals("0")) {
+                                        if (jsonObject1.getString("success").equals("0")) {
+                                            Toast.makeText(LoginBothActivity.this, getString(R.string.register_first), Toast.LENGTH_LONG).show();
+                                        }/* else if (LoginCredential.equals("1") && email_field.equals("0")) {
                                             Toast.makeText(LoginBothActivity.this, getString(R.string.register_first), Toast.LENGTH_LONG).show();
                                         }
                                         Log.d("login_succes_student", "" + LoginCredential);
+*/
+                                        if(jsonObject1.getString("success").equals("2")){
+                                            String msg=jsonObject1.getString("msg");
+                                            Intent intent = new Intent(LoginBothActivity.this, TeacherInactiveActivity.class);
+                                            intent.putExtra("msg",msg);
+                                            intent.putExtra("email",StEmail.getText().toString());
+                                            intent.putExtra("pass",stPassword.getText().toString());
+                                            CommonMethods.saveMsg(LoginBothActivity.this, msg);
+                                            CommonMethods.saveEmailId(LoginBothActivity.this,StEmail.getText().toString());
+                                            CommonMethods.saveUsername(LoginBothActivity.this,stPassword.getText().toString());
+                                            CommonMethods.saveIsLogin(LoginBothActivity.this, 3);//Teacher==2
+                                            finishAffinity();
+                                            startActivity(intent);
+                                        }
 
                                         JSONArray heroArray = jsonObject1.getJSONArray("data");
                                         JSONObject c = heroArray.getJSONObject(0);
@@ -553,10 +570,11 @@ public class LoginBothActivity extends AppCompatActivity {
                                         String name = c.getString("name");
                                         Teachers_ID = c.getString("t_id");
 
+
                                         Log.d("teachers_ID", "Teachers " + Teachers_ID + "Acc " + accesscodes + "Status" + Active_Status);
 
-                                        if (Active_Status.equals("1")) {
-                                            if (LoginCredential.equals("1")) {
+                                      /*  if (Active_Status.equals("1")) {*///@kajal 11_23_22
+                                            if (jsonObject1.getString("success").equals("1")) {
                                                 Log.d("Status123", "1");
                                                 SharedPreferences.Editor editor1= pref.edit();
                                                 editor1.putInt("IsLogin",2);
@@ -571,16 +589,17 @@ public class LoginBothActivity extends AppCompatActivity {
                                                 CommonMethods.saveEmailId(LoginBothActivity.this, email);
                                                 CommonMethods.saveId(LoginBothActivity.this, Teachers_ID);
                                                 CommonMethods.saveType(LoginBothActivity.this, "t");
-                                                CommonMethods.saveUsername(LoginBothActivity.this, c.getString("name"));
+                                                CommonMethods.saveUsername(LoginBothActivity.this,stPassword.getText().toString());
                                                 CommonMethods.saveIsLogin(LoginBothActivity.this, keeplogin.isChecked() ? 2 : 0);//Teacher==2
                                                 CommonMethods.saveAccessCode(LoginBothActivity.this, accesscodes);
                                                 intent.putExtra("Teachers_ID", Teachers_ID);
                                                 intent.putExtra("EntryType", "Log");
                                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                                 startActivity(intent);
-                                            } else if (LoginCredential.equals("0")) {
+                                            //}
+                                          /*  else if (LoginCredential.equals("0")) {
                                                 Toast.makeText(LoginBothActivity.this, "", Toast.LENGTH_LONG).show();
-                                            }
+                                            }*/
                                         } else {
 
                                             final Dialog dialog = new Dialog(LoginBothActivity.this);
@@ -659,4 +678,23 @@ public class LoginBothActivity extends AppCompatActivity {
             Network_Status = "notConnect";
         }
     }
+    @Override
+    public void onBackPressed() {
+
+            new AlertDialog.Builder(this)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setTitle("Closing StudyBuddy")
+                    .setMessage("Are you sure you want to exit StudyBuddy?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
+
+    }
+
 }

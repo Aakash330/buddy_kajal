@@ -81,6 +81,7 @@ class BooksAcsStuCodeAdapter extends BaseAdapter {
         holder.ForClass.setText(Books_by_accessCode.get(position).get("Class"));
         holder.BookSubject.setText(Books_by_accessCode.get(position).get("Subject"));
        String Image_Name=Books_by_accessCode.get(position).get("book_img");
+       String expireStatus=Books_by_accessCode.get(position).get("expire_status");
         //Image_url ="http://techive.in/studybuddy/"+Image_Name;
         Image_url =Apis.base_url_img +Image_Name;
         Log.d("Image_url",""+Image_url);

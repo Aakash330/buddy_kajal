@@ -47,6 +47,7 @@ import com.studybuddy.pc.brainmate.RegistrationModeView;
 import com.studybuddy.pc.brainmate.student.CommonMethods;
 import com.studybuddy.pc.brainmate.student.Stu_Classes;
 import com.studybuddy.pc.brainmate.teacher.Main2Activity;
+import com.studybuddy.pc.brainmate.teacher.TeacherInactiveActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -90,6 +91,7 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
     int statePos;
     REgVerifyAccessCode registrationVerify;
     private RegistrationModeView model;
+    SharedPreferences getPref;
 
     //endregion
 
@@ -152,6 +154,8 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        getPref=getSharedPreferences("Inactive",MODE_PRIVATE);
 
 
         setTitle("Register");
@@ -971,6 +975,7 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
 
                                 //Store Teacher Details in preference
                                 SharedPreferences.Editor editor = getPreference.edit();
+
                                 editor.putString("TName", TCName.getText().toString());
 
                                 editor.putString("TEmail", TCEmails.getText().toString());
@@ -1016,24 +1021,33 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
                                                     }
                                                    else{
 
-                                                        Intent intent = new Intent(Registration.this,Main2Activity.class);
+                                                       String email=TCEmails.getText().toString();
+                                                       String pass=TCPassword.getText().toString();
+
+                                                        Intent intent = new Intent(Registration.this, TeacherInactiveActivity.class);
                                                         intent.putExtra("Type", "2");
                                                         intent.putExtra("Id", TC_Id);
                                                         intent.putExtra("EntryType", "Reg");
                                                         intent.putExtra("accesscodes", TC_ACCESS_CODE);
                                                         intent.putExtra("Email",TCEmails.getText().toString());
                                                         intent.putExtra("Password",TCPassword.getText().toString());
-                                                        startActivity(intent);
+
                                                         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                                                         clearTeacherField();
                                                         clearStudentField();
                                                         SharedPreferences.Editor editor1= pref.edit();
-                                                        editor1.putInt("IsLogin",2);
+                                                        editor1.putInt("IsLogin",3);
                                                         editor1.apply();
-                                                        CommonMethods.saveEmailId(Registration.this,TCEmails.getText().toString());
+                                                        SharedPreferences.Editor editor2 = getPref.edit();
+                                                        editor2.putString("email",TCEmails.getText().toString());
+                                                        editor2.putString("pass",TCPassword.getText().toString());
+                                                        editor2.apply();
+                                                        CommonMethods.saveIsLogin(Registration.this, 3);
+                                                        CommonMethods.saveEmailId(Registration.this,email);
+                                                        CommonMethods.saveUsername(Registration.this,pass);
                                                         CommonMethods.saveId(Registration.this,TC_Id);
                                                         CommonMethods.saveAccessCode(Registration.this,TC_ACCESS_CODE);
-
+                                                        startActivity(intent);
 
 
                                                         //finish();
@@ -1470,7 +1484,6 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
                                             TC_ENTER_OTP.requestFocus();
                                         SMS_OTP = jsonObject1.getString("otp");
                                         Log.w(TAG,"OTP:"+SMS_OTP);
-                                        Toast.makeText(context, "otp"+SMS_OTP, Toast.LENGTH_SHORT).show();
 
                                     }
 
@@ -1788,14 +1801,11 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
 
                                     if (LoginCredential.equals("0")) {
 
-                                        Toast.makeText(context, "Invalid", Toast.LENGTH_SHORT).show();
-                                        AccessCode.getText().clear();
                                         ST_ACCESS_CODE=AccessCode.getText().toString();
                                         studentReg();
                                         return;
                                     }
                                     ST_ACCESS_CODE=AccessCode.getText().toString();
-                                    Toast.makeText(context, "valid AC", Toast.LENGTH_SHORT).show();
                                     studentReg();
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -1881,11 +1891,8 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
                                         AccessCodeTeacher.getText().clear();
                                         TC_ACCESS_CODE=AccessCodeTeacher.getText().toString();
                                         teacherReg();
-                                        Toast.makeText(context, "invalid AC", Toast.LENGTH_SHORT).show();
-
                                         return;
                                         }
-                                    Toast.makeText(context, "valid AC", Toast.LENGTH_SHORT).show();
                                     TC_ACCESS_CODE=AccessCodeTeacher.getText().toString();
                                     teacherReg();
 

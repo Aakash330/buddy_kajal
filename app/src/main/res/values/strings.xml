@@ -161,5 +161,7 @@
     <string name="thanksmsg">Thank you for registering with us! Your acount will get activated after verification. you ill getactivation email once verification is done</string>
     <string name="school">School</string>
     <string name="passvalid"><![CDATA[Password must contain atlest 1 uppercase, 1 lower case, 1 numeric & 1 special character.]]></string>
+    <string name="active">info@brainmate.co.in</string>
+    <string name="th">Your account is not yet activated. You will get an activation email once verification is done. For any query please contact at 6398863703 or info@brainmate.co.in</string>
 
 </resources>

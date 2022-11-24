@@ -53,6 +53,7 @@ import com.studybuddy.pc.brainmate.mains.Apis;
 import com.studybuddy.pc.brainmate.mains.LoginBothActivity;
 import com.studybuddy.pc.brainmate.Network_connection.utils.NetworkUtil;
 import com.studybuddy.pc.brainmate.R;
+import com.studybuddy.pc.brainmate.mains.Registration;
 import com.studybuddy.pc.brainmate.student.CommonMethods;
 import com.studybuddy.pc.brainmate.student.Stu_Classes;
 import com.sun.mail.imap.protocol.ID;
@@ -125,7 +126,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         PatientList = new ArrayList<HashMap<String, String>>();
         CatalogArray = new ArrayList<>();
 
-
+        setGetAccesescode();
 
         //BookNotFound
         imageListLty=findViewById(R.id.bookImageLty);
@@ -215,135 +216,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         }
 */
 
-        progressDialog = new ProgressDialog(Main2Activity.this);
-        progressDialog.setMessage("Loading..."); // Setting Title
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
-        progressDialog.show(); // Display Progress Dialog
-        progressDialog.setCancelable(false);
-        //RequestQueue queue = Volley.newRequestQueue(Main2Activity.this);
-        //String url = "http://www.techive.in/studybuddy/api/teacher_book.php";
-        String url = Apis.base_url + Apis.teacher_book_url;
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("ViewClass", response);
-                       // Toast.makeText(activity, "api"+response, Toast.LENGTH_SHORT).show();
 
-                        progressDialog.dismiss();
-                        try {
-                            JSONObject jsonObject1 = null;
-                            jsonObject1 = new JSONObject(response);
-                            Log.d("object111", jsonObject1.getString("success"));
-                            code=jsonObject1.getString("success");
-                            String msg=jsonObject1.getString("msg");
-                           // Toast.makeText(activity, "msg"+msg+"code:"+msg, Toast.LENGTH_SHORT).show();
-
-                            if(jsonObject1.getString("success").equals("0")){
-                               // Toast.makeText(activity, "inactive teacher", Toast.LENGTH_SHORT).show();
-                               // Toast.makeText(activity, "Acount is in active", Toast.LENGTH_SHORT).show();
-                             startActivity(new Intent(Main2Activity.this,TeacherInactiveActivity.class));
-                            }else {
-                               // Toast.makeText(activity, "active teacher", Toast.LENGTH_SHORT).show();
-                                JSONArray heroArray = jsonObject1.getJSONArray("data");
-
-                                for (int j = 0; j < heroArray.length(); j++) {
-                                    JSONObject c1 = heroArray.getJSONObject(j);
-                                    if (c1.getString("class").equals("Nursery")) {
-                                        HashMap<String, String> ObjectiveMap = new HashMap<>();
-                                        ObjectiveMap.put("Class", c1.getString("class"));
-                                        Arraylist.add(ObjectiveMap);
-                                    }
-                                }
-                                for (int j = 0; j < heroArray.length(); j++) {
-                                    JSONObject c1 = heroArray.getJSONObject(j);
-                                    if (c1.getString("class").equals("LKG")) {
-                                        HashMap<String, String> ObjectiveMap = new HashMap<>();
-                                        ObjectiveMap.put("Class", c1.getString("class"));
-                                        Arraylist.add(ObjectiveMap);
-                                    }
-                                }
-                                for (int j = 0; j < heroArray.length(); j++) {
-                                    JSONObject c1 = heroArray.getJSONObject(j);
-                                    if (c1.getString("class").equals("UKG")) {
-                                        HashMap<String, String> ObjectiveMap = new HashMap<>();
-                                        ObjectiveMap.put("Class", c1.getString("class"));
-                                        Arraylist.add(ObjectiveMap);
-                                    }
-                                }
-                                for (int j = 0; j < heroArray.length(); j++) {
-                                    JSONObject c1 = heroArray.getJSONObject(j);
-                                    if (c1.getString("status").equals("1")) {
-                                        Log.d("imageArray", "ok" + c1.getString("class"));
-                                        HashMap<String, String> ObjectiveMap = new HashMap<>();
-                                        // ObjectiveMap.put("Title", c1.getString("title"));
-                                        ObjectiveMap.put("Class", c1.getString("class"));
-                                        // ObjectiveMap.put("Subject", c1.getString("subject"));
-                                        //ObjectiveMap.put("book_img", c1.getString("book_img"));
-                                        // ObjectiveMap.put("ebook", c1.getString("ebook"));
-                                        // ObjectiveMap.put("manual", c1.getString("manual"));
-                                        // ObjectiveMap.put("animation", c1.getString("animation"));
-                                        // ObjectiveMap.put("status", c1.getString("status"));
-                                        // ObjectiveMap.put("book_Type", "11");
-                                        // ObjectiveMap.put("access_code", c1.getString("access_code"));
-
-                                        //   Books_By_Accesscode.add(ObjectiveMap);
-                                        Arraylist.add(ObjectiveMap);
-                                        Log.d("imageArray1254f", c1.getString("book_img"));
-                                    }
-                                }
-                                for (int i = 0; i < Arraylist.size(); i++) {
-
-                                    for (int j = i + 1; j < Arraylist.size(); j++) {
-                                        if (Arraylist.get(i).equals(Arraylist.get(j))) {
-                                            Arraylist.remove(j);
-                                            j--;
-                                        }
-                                    }
-                                }
-                                Toast.makeText(activity, "array="+Arraylist.size(), Toast.LENGTH_SHORT).show();
-                                if (Arraylist.size() == 0) {
-                                    list.setVisibility(View.GONE);
-                                    classesListLty.setVisibility(View.VISIBLE);
-                                } else {
-                                    list.setVisibility(View.VISIBLE);
-                                    classesListLty.setVisibility(View.GONE);
-                                    adapter = new StudentClassAdapter(Main2Activity.this, Arraylist);
-                                    list.setAdapter(adapter);
-                                }
-
-
-                                Log.d("Sssssssslist", String.valueOf(PatientList));
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        // Create the AlertDialog object and return it
-                        /* return builder.create();*/
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-                progressDialog.dismiss();
-                if (error instanceof NoConnectionError) {
-                    Toast.makeText(Main2Activity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(Main2Activity.this, R.string.some_error_occurred, Toast.LENGTH_SHORT).show();
-                }
-            }
-        }) {
-            @Override
-            protected java.util.Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-               // params.put("accesscodes", accesscodes);
-                params.put("teacher_id", Teachers_ID);
-                return params;
-            }
-        };
-        // Add the request to the RequestQueue.
-        //queue.add(stringRequest);
-        CommonMethods.callWebserviceForResponse(stringRequest, context);
 
         /*inputSearch.addTextChangedListener(new TextWatcher() {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -421,9 +294,142 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    private void ShowThanksDialogBox() {
+    private void setGetAccesescode() {
+
+        progressDialog = new ProgressDialog(Main2Activity.this);
+        progressDialog.setMessage("Loading..."); // Setting Title
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+        progressDialog.show(); // Display Progress Dialog
+        progressDialog.setCancelable(false);
+        //RequestQueue queue = Volley.newRequestQueue(Main2Activity.this);
+        //String url = "http://www.techive.in/studybuddy/api/teacher_book.php";
+        String url = Apis.base_url + Apis.teacher_book_url;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("ViewClass", response);
+                        // Toast.makeText(activity, "api"+response, Toast.LENGTH_SHORT).show();
+
+                        progressDialog.dismiss();
+                        try {
+                            JSONObject jsonObject1 = null;
+                            jsonObject1 = new JSONObject(response);
+                            if(jsonObject1.getString("success").equals("0")){
+                                // Toast.makeText(activity, "inactive teacher", Toast.LENGTH_SHORT).show();
+                                // Toast.makeText(activity, "Acount is in active", Toast.LENGTH_SHORT).show();
+                                Intent intent=new Intent(Main2Activity.this,TeacherInactiveActivity.class);
+                                intent.putExtra("email",CommonMethods.getEmailId(Main2Activity.this));
+                                intent.putExtra("pass",CommonMethods.getUsername(Main2Activity.this));
+                                CommonMethods.saveIsLogin(Main2Activity.this, 3);
+                                CommonMethods.saveEmailId(Main2Activity.this,CommonMethods.getEmailId(Main2Activity.this));
+                                CommonMethods.saveUsername(Main2Activity.this,CommonMethods.getUsername(Main2Activity.this));
+                                startActivity(intent);
+                                finishAffinity();
+                            }else if(jsonObject1.getString("success").equals("2")){
+
+                                list.setVisibility(View.GONE);
+                                classesListLty.setVisibility(View.VISIBLE);
+                            }else {
+                                // Toast.makeText(activity, "active teacher", Toast.LENGTH_SHORT).show();
+                                JSONArray heroArray = jsonObject1.getJSONArray("data");
+
+                                for (int j = 0; j < heroArray.length(); j++) {
+                                    JSONObject c1 = heroArray.getJSONObject(j);
+                                    if (c1.getString("class").equals("Nursery")) {
+                                        HashMap<String, String> ObjectiveMap = new HashMap<>();
+                                        ObjectiveMap.put("Class", c1.getString("class"));
+                                        Arraylist.add(ObjectiveMap);
+                                    }
+                                }
+                                for (int j = 0; j < heroArray.length(); j++) {
+                                    JSONObject c1 = heroArray.getJSONObject(j);
+                                    if (c1.getString("class").equals("LKG")) {
+                                        HashMap<String, String> ObjectiveMap = new HashMap<>();
+                                        ObjectiveMap.put("Class", c1.getString("class"));
+                                        Arraylist.add(ObjectiveMap);
+                                    }
+                                }
+                                for (int j = 0; j < heroArray.length(); j++) {
+                                    JSONObject c1 = heroArray.getJSONObject(j);
+                                    if (c1.getString("class").equals("UKG")) {
+                                        HashMap<String, String> ObjectiveMap = new HashMap<>();
+                                        ObjectiveMap.put("Class", c1.getString("class"));
+                                        Arraylist.add(ObjectiveMap);
+                                    }
+                                }
+                                for (int j = 0; j < heroArray.length(); j++) {
+                                    JSONObject c1 = heroArray.getJSONObject(j);
+                                    if (c1.getString("status").equals("1")) {
+                                        Log.d("imageArray", "ok" + c1.getString("class"));
+                                        HashMap<String, String> ObjectiveMap = new HashMap<>();
+                                        // ObjectiveMap.put("Title", c1.getString("title"));
+                                        ObjectiveMap.put("Class", c1.getString("class"));
+                                        // ObjectiveMap.put("Subject", c1.getString("subject"));
+                                        //ObjectiveMap.put("book_img", c1.getString("book_img"));
+                                        // ObjectiveMap.put("ebook", c1.getString("ebook"));
+                                        // ObjectiveMap.put("manual", c1.getString("manual"));
+                                        // ObjectiveMap.put("animation", c1.getString("animation"));
+                                        // ObjectiveMap.put("status", c1.getString("status"));
+                                        // ObjectiveMap.put("book_Type", "11");
+                                        // ObjectiveMap.put("access_code", c1.getString("access_code"));
+
+                                        //   Books_By_Accesscode.add(ObjectiveMap);
+                                        Arraylist.add(ObjectiveMap);
+                                        Log.d("imageArray1254f", c1.getString("book_img"));
+                                    }
+                                }
+                                for (int i = 0; i < Arraylist.size(); i++) {
+
+                                    for (int j = i + 1; j < Arraylist.size(); j++) {
+                                        if (Arraylist.get(i).equals(Arraylist.get(j))) {
+                                            Arraylist.remove(j);
+                                            j--;
+                                        }
+                                    }
+                                }
+                                if (Arraylist.size() == 0) {
+                                    list.setVisibility(View.GONE);
+                                    classesListLty.setVisibility(View.VISIBLE);
+                                } else {
+                                    list.setVisibility(View.VISIBLE);
+                                    classesListLty.setVisibility(View.GONE);
+                                    adapter = new StudentClassAdapter(Main2Activity.this, Arraylist);
+                                    list.setAdapter(adapter);
+                                }
 
 
+                                Log.d("Sssssssslist", String.valueOf(PatientList));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        // Create the AlertDialog object and return it
+                        /* return builder.create();*/
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                progressDialog.dismiss();
+                if (error instanceof NoConnectionError) {
+                    Toast.makeText(Main2Activity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Main2Activity.this, R.string.some_error_occurred, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }) {
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                // params.put("accesscodes", accesscodes);
+                params.put("teacher_id", Teachers_ID);
+                return params;
+            }
+        };
+        // Add the request to the RequestQueue.
+        //queue.add(stringRequest);
+        CommonMethods.callWebserviceForResponse(stringRequest, context);
     }
 
     public void checkNetDialog() {
@@ -621,9 +627,6 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     }
     private void LetsAddAccessCode() {
 
-        AddAccessesCodebutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 if (NetworkUtil.getConnectivityStatus(Main2Activity.this) > 0) {
                     System.out.println("Connect");
                     Network_Status = "Connect";
@@ -650,6 +653,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                                         Log.d("login_succes_student", "" + LoginCredential);
                                         if (LoginCredential.equals("1")) {
                                             Toast.makeText(Main2Activity.this, "Book Added Successfully", Toast.LENGTH_LONG).show();
+                                            setGetAccesescode();
                                         } else if (LoginCredential.equals("0")) {
                                             Toast.makeText(Main2Activity.this, "Something went to wrong", Toast.LENGTH_LONG).show();
                                         } else if (LoginCredential.equals("2")) {
@@ -670,8 +674,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                             } else {
                                 Toast.makeText(Main2Activity.this, R.string.some_error_occurred, Toast.LENGTH_SHORT).show();
                             }
-                        }
-                    }) {
+                        }}){
                         @Override
                         protected java.util.Map<String, String> getParams() throws AuthFailureError {
                             java.util.Map<String, String> params = new HashMap<>();
@@ -686,13 +689,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                     System.out.println("No connection");
                     Network_Status = "notConnect";
                     getConnectedStatus();
-                }
-
-            }
-        });
-
-    }
-
+                }}
 
     @Override
     public void onBackPressed() {

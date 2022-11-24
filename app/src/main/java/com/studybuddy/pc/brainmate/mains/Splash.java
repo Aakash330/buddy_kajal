@@ -15,6 +15,7 @@ import com.studybuddy.pc.brainmate.student.StudentdashBord;
 import com.studybuddy.pc.brainmate.teacher.Books_Access_Code;
 import com.studybuddy.pc.brainmate.R;
 import com.studybuddy.pc.brainmate.teacher.Main2Activity;
+import com.studybuddy.pc.brainmate.teacher.TeacherInactiveActivity;
 
 public class Splash extends Activity {
 
@@ -72,6 +73,12 @@ public class Splash extends Activity {
             public void run() {
                 if (CommonMethods.getIsLogin(context) == 0) {
                     Intent i = new Intent(context, LoginBothActivity.class);
+                    startActivity(i);
+                    finish();
+                }if (CommonMethods.getIsLogin(context) == 3) {
+                    Intent i = new Intent(context, TeacherInactiveActivity.class);
+                    i.putExtra("email", "" + CommonMethods.getEmailId(context));
+                    i.putExtra("pass", "" +CommonMethods.getUsername(context));
                     startActivity(i);
                     finish();
                 } else if (CommonMethods.getIsLogin(context) == 1) {

@@ -4,13 +4,16 @@ public class Apis {
 
     //public static final String base_url = "https://www.techive.in/studybuddy/api/";
     //public static final String base_url = "https://brainmate.co.in/studybuddy/api/";@kajal
-    public static final String base_url = "https://test.brainmate.co.in/studybuddy/api/"; //old api(for all except register)
-    public static final String new_base_url = "https://test.brainmate.co.in/studybuddy/api_ver_2/";  //new api(only for register)
+   // public static final String base_url = "https://test.brainmate.co.in/studybuddy/api/"; //old api(for all except register)
+    public static final String base_url = "https://brainmate.co.in/studybuddy/api/"; //old api(for all except register)
+   // public static final String new_base_url = "https://test.brainmate.co.in/studybuddy/api_ver_2/";  //new api(only for register)
+    public static final String new_base_url = "https://brainmate.co.in/studybuddy/api_ver_2/";  //new api(only for register)
 
     //Login base url
-   //  public static final String base_url1 = "https://brainmate.co.in/studybuddy/api/";@kajal
-    public static final String base_url1 ="https://test.brainmate.co.in/studybuddy/api/";
-    public static final String base_url2 = "https://test.brainmate.co.in/";//yugal sir e-book api base url
+     public static final String base_url1 = "https://brainmate.co.in/studybuddy/api/";//@kajal
+   // public static final String base_url1 ="https://test.brainmate.co.in/studybuddy/api/";
+ //   public static final String base_url2 = "https://test.brainmate.co.in/";//yugal sir e-book api base url
+    public static final String base_url2 = "https://brainmate.co.in/";//yugal sir e-book api base url
 
     //public static final String base_url_img = "https://www.techive.in/studybuddy/";
     public static final String base_url_img = "https://brainmate.co.in/studybuddy/";
