@@ -111,6 +111,26 @@
                 android:textColor="#006A62"
                 android:textSize="16sp" />
 
+            <Button
+                android:id="@+id/Reference_Material"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/buttoncard"
+                android:text="Reference_Material"
+                android:textColor="#006A62"
+                android:visibility="visible"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="visible"
+                android:background="#282626" />
+
+
         </LinearLayout>
 
     </LinearLayout>

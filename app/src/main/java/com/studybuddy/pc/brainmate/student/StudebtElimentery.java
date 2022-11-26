@@ -33,7 +33,7 @@ import java.util.Map;
 
 public class StudebtElimentery extends AppCompatActivity {
 
-    Button TakeTest, E_Book, AnimationVideo;
+    Button TakeTest, E_Book, AnimationVideo, Reference_Material;
     String access_code, ebook, Subject,Title;
     Toolbar toolbarHeader;
     ProgressDialog progressDialog;
@@ -66,6 +66,7 @@ public class StudebtElimentery extends AppCompatActivity {
         TakeTest = (Button) findViewById(R.id.ActivityOlympiad);
         E_Book = (Button) findViewById(R.id.E_Book);
         AnimationVideo = (Button) findViewById(R.id.AnimationVideo);
+        Reference_Material = (Button) findViewById(R.id.Reference_Material);
         //E_Book.setText(Title != null ? Title : "");
 
         TakeTest.setOnClickListener(new View.OnClickListener() {
@@ -101,6 +102,16 @@ public class StudebtElimentery extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Reference_Material.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StudebtElimentery.this, ReferenceMaterial.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     @Override

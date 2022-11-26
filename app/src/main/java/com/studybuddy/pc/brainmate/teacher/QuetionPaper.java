@@ -2546,17 +2546,18 @@ public class QuetionPaper extends AppCompatActivity {
                             JSONObject object = new JSONObject(response);
                             String success = object.getString("success");
                             if (success.equals("1")) {
-                                Toast.makeText(QuetionPaper.this, "Question Paper Generated.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(QuetionPaper.this,  object.getString("msg"), Toast.LENGTH_LONG).show();
                                 //ViewCreatedPdfActivity2
-                                Intent intent = new Intent(QuetionPaper.this, ViewCreatedPdfActivity2.class);
+                               /* Intent intent = new Intent(QuetionPaper.this, ViewCreatedPdfActivity2.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 intent.putExtra("accesscodes", CommonMethods.getAccessCode(QuetionPaper.this));
                                 intent.putExtra("Teachers_ID", CommonMethods.getId(QuetionPaper.this));
                                 intent.putExtra("isFromQuestionPaper", true);
-                                startActivity(intent);
+                                startActivity(intent);*/
                                 //finish();
                             } else {
-                                Toast.makeText(QuetionPaper.this, getString(R.string.some_error_occurred), Toast.LENGTH_LONG).show();
+                             //   Toast.makeText(QuetionPaper.this, getString(R.string.some_error_occurred), Toast.LENGTH_LONG).show();
+                                Toast.makeText(QuetionPaper.this, object.getString("msg;=="), Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

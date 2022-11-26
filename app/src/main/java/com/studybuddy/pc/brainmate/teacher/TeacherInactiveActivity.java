@@ -79,7 +79,7 @@ public class TeacherInactiveActivity extends AppCompatActivity {
 
 
             thankMsgTv.setText(msg);
-            AlertDialog dialog=  new AlertDialog.Builder(this)
+           /* AlertDialog dialog=  new AlertDialog.Builder(this)
                     .setIcon(R.drawable.ic_launcher2)
                     .setTitle("Thank you for Registration")
                     .setMessage(msg)
@@ -90,7 +90,7 @@ public class TeacherInactiveActivity extends AppCompatActivity {
                         }
 
                     })
-                    .show();
+                    .show();*/
         }catch (Exception ee){}
 
 

@@ -24,6 +24,8 @@ import com.studybuddy.pc.brainmate.Network_connection.utils.NetworkUtil;
 import com.studybuddy.pc.brainmate.R;
 import com.studybuddy.pc.brainmate.mains.Apis;
 import com.studybuddy.pc.brainmate.student.CommonMethods;
+import com.studybuddy.pc.brainmate.student.ReferenceMaterial;
+import com.studybuddy.pc.brainmate.student.StudebtElimentery;
 import com.studybuddy.pc.brainmate.student.Students_Chapters;
 
 import org.json.JSONArray;
@@ -36,7 +38,7 @@ import java.util.Map;
 public class LearningElementary extends AppCompatActivity {
 
     private static final String TAG = "LearningElementary";
-    Button TestGenrator, E_Book, TeachersBook, AnimationVideo, Activities;
+    Button TestGenrator, E_Book, TeachersBook, AnimationVideo, Activities,ReferenceMaterial;
     String Class, Subject, displayClassName;
     String ebook;
     String access_code, manual;
@@ -53,6 +55,7 @@ public class LearningElementary extends AppCompatActivity {
         TestGenrator = (Button) findViewById(R.id.TestGenrator);
         AnimationVideo = (Button) findViewById(R.id.AnimationVideo);
         E_Book = (Button) findViewById(R.id.E_Book);
+        ReferenceMaterial = (Button) findViewById(R.id.Reference_Material);
         TeachersBook = (Button) findViewById(R.id.TeacherMenual);
         Activities = (Button) findViewById(R.id.Activities);
         Class = getIntent().getStringExtra("Class");
@@ -147,6 +150,11 @@ public class LearningElementary extends AppCompatActivity {
                 Intent intent = new Intent(LearningElementary.this, AnimationView.class);
                 startActivity(intent);
             }
+        });
+
+        ReferenceMaterial.setOnClickListener(v -> {
+            Intent intent = new Intent(LearningElementary.this, ReferenceMaterial.class);
+            startActivity(intent);
         });
     }
 

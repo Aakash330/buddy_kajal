@@ -143,28 +143,41 @@ public class StudentdashBord extends AppCompatActivity {// implements Navigation
                 Log.d("ebookebook", book_Type);
                 String result = Books_By_Accesscode.get(position).get("Class");//.replaceAll("[^\\d.]", "");
                 if (book_Type.equals("Art & Craft")) {
-                    if(expireStatus.equals("0")){
-                    Intent intent = new Intent(StudentdashBord.this, TePaintingChapters.class);
-                    intent.putExtra("access_code", Books_By_Accesscode.get(position).get("access_code"));
-                    intent.putExtra("class", result);
-                    intent.putExtra("Subject", Subject);
-                    startActivity(intent);}
-                    else{
-                        getBookWithAccessCode();
+                    if(Books_By_Accesscode.get(position).get("status").equals("1")){
+
+                        if(expireStatus.equals("0")){
+                            Intent intent = new Intent(StudentdashBord.this, TePaintingChapters.class);
+                            intent.putExtra("access_code", Books_By_Accesscode.get(position).get("access_code"));
+                            intent.putExtra("class", result);
+                            intent.putExtra("Subject", Subject);
+                            startActivity(intent);}
+                        else{
+                            getBookWithAccessCode();
+                        }
+
+                    }else {
+                        Toast.makeText(StudentdashBord.this, "This Book is no more available. Sorry for the inconvenience", Toast.LENGTH_SHORT).show();
+
                     }
+
                 } else {
-                    if(expireStatus.equals("0")){
-                        Intent intent = new Intent(StudentdashBord.this, StudebtElimentery.class);
-                        intent.putExtra("access_code", Books_By_Accesscode.get(position).get("access_code"));
-                        intent.putExtra("ebook", Books_By_Accesscode.get(position).get("ebook"));
+                    if(Books_By_Accesscode.get(position).get("status").equals("1")){
+                        if(expireStatus.equals("0")){
+                            Intent intent = new Intent(StudentdashBord.this, StudebtElimentery.class);
+                            intent.putExtra("access_code", Books_By_Accesscode.get(position).get("access_code"));
+                            intent.putExtra("ebook", Books_By_Accesscode.get(position).get("ebook"));
 
-                        intent.putExtra("Title", Books_By_Accesscode.get(position).get("Title"));
-                        intent.putExtra("animation", Books_By_Accesscode.get(position).get("animation"));
-                        intent.putExtra("Subject", Subject);
-                        startActivity(intent);
-                    }else{
-                     getBookWithAccessCode();
+                            intent.putExtra("Title", Books_By_Accesscode.get(position).get("Title"));
+                            intent.putExtra("animation", Books_By_Accesscode.get(position).get("animation"));
+                            intent.putExtra("Subject", Subject);
+                            startActivity(intent);
+                        }else{
+                            getBookWithAccessCode();
 
+                        }
+                    }
+                    else {
+                        Toast.makeText(StudentdashBord.this, "This Book is no more available. Sorry for the inconvenience", Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -209,7 +222,8 @@ public class StudentdashBord extends AppCompatActivity {// implements Navigation
 
                                 for (int j = 0; j < heroArray.length(); j++) {
                                     JSONObject c1 = heroArray.getJSONObject(j);
-                                    if (c1.getString("status").equals("1")) {
+
+                          /*          if (c1.getString("status").equals("1")) {*/
                                         Log.d("imageArray", "ok" + c1.getString("class"));
                                        /* HashMap<String, String> ObjectiveMap = new HashMap<>();
                                         ObjectiveMap.put("Title", c1.getString("title"));
@@ -247,7 +261,7 @@ public class StudentdashBord extends AppCompatActivity {// implements Navigation
                                                 ObjectiveMap.put("expire_status", c1.getString("expire_status"));
                                                 Books_By_Accesscode.add(ObjectiveMap);
                                             }
-                                        }
+                                       // }
                               /*      }else{
                                             getBookWithAccessCode();
                                         }*/

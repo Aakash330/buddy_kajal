@@ -307,7 +307,7 @@ public class Stu_Classes extends AppCompatActivity implements NavigationView.OnN
                             for (int j = 0; j < heroArray.length(); j++) {
                                 c1 = heroArray.getJSONObject(j);
                                 Log.w(TAG,"APi length c1="+c1.length());
-                                if (c1.getString("status").equals("1")) {
+                             /*   if (c1.getString("status").equals("1")) {*/
                                     Log.d("imageArray", "ok" + c1.getString("class"));
                                     HashMap<String, String> ObjectiveMap = new HashMap<>();
                                     // ObjectiveMap.put("Title", c1.getString("title"));
@@ -325,7 +325,7 @@ public class Stu_Classes extends AppCompatActivity implements NavigationView.OnN
                                     Arraylist.add(ObjectiveMap);
                                     Log.d("imageArray1254f",c1.getString("book_img"));
                                 }
-                            }
+                           // }
                             for (int i = 0; i < Arraylist.size(); i++) {
 
                                 for (int j = i + 1; j < Arraylist.size(); j++) {

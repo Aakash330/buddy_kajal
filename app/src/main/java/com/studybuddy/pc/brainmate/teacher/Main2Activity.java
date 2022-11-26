@@ -117,7 +117,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         Teachers_ID = getIntent().getStringExtra("Teachers_ID") != null ? getIntent().getStringExtra("Teachers_ID") : CommonMethods.getId(Main2Activity.this);
         accesscodes = getIntent().getStringExtra("accesscodes") != null ? getIntent().getStringExtra("accesscodes") : CommonMethods.getAccessCode(Main2Activity.this);
 
-       // Toast.makeText(activity, "TID:"+Teachers_ID, Toast.LENGTH_SHORT).show();
+        Toast.makeText(activity, "TID:"+Teachers_ID, Toast.LENGTH_SHORT).show();
 
         Log.w(TAG,"TID:"+Teachers_ID);
          Log.w(TAG,"AC:"+accesscodes);
@@ -308,7 +308,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("ViewClass", response);
+                        Log.d(TAG,"ViewClass"+response);
                         // Toast.makeText(activity, "api"+response, Toast.LENGTH_SHORT).show();
 
                         progressDialog.dismiss();
@@ -327,7 +327,6 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                                 startActivity(intent);
                                 finishAffinity();
                             }else if(jsonObject1.getString("success").equals("2")){
-
                                 list.setVisibility(View.GONE);
                                 classesListLty.setVisibility(View.VISIBLE);
                             }else {
@@ -360,7 +359,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                                 }
                                 for (int j = 0; j < heroArray.length(); j++) {
                                     JSONObject c1 = heroArray.getJSONObject(j);
-                                    if (c1.getString("status").equals("1")) {
+                               /*     if (c1.getString("status").equals("1")) {*/
                                         Log.d("imageArray", "ok" + c1.getString("class"));
                                         HashMap<String, String> ObjectiveMap = new HashMap<>();
                                         // ObjectiveMap.put("Title", c1.getString("title"));
@@ -377,7 +376,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                                         //   Books_By_Accesscode.add(ObjectiveMap);
                                         Arraylist.add(ObjectiveMap);
                                         Log.d("imageArray1254f", c1.getString("book_img"));
-                                    }
+                                   // }
                                 }
                                 for (int i = 0; i < Arraylist.size(); i++) {
 
@@ -424,6 +423,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 Map<String, String> params = new HashMap<>();
                 // params.put("accesscodes", accesscodes);
                 params.put("teacher_id", Teachers_ID);
+                Log.w(TAG,"tID"+Teachers_ID);
                 return params;
             }
         };
@@ -583,7 +583,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                                             Toast.makeText(Main2Activity.this, "Already assigned", Toast.LENGTH_LONG).show();
 
                                         }else if(LoginCredential.equals("3")){
-                                            Toast.makeText(Main2Activity.this, "Some thing went wrong", Toast.LENGTH_LONG).show();
+                                            //Toast.makeText(Main2Activity.this, "Some thing went wrong", Toast.LENGTH_LONG).show();
 
                                         }
                                         else  if(LoginCredential.equals("2")){
@@ -654,9 +654,11 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                                         if (LoginCredential.equals("1")) {
                                             Toast.makeText(Main2Activity.this, "Book Added Successfully", Toast.LENGTH_LONG).show();
                                             setGetAccesescode();
-                                        } else if (LoginCredential.equals("0")) {
+                                        } else if (LoginCredential.equals("3")) {
                                             Toast.makeText(Main2Activity.this, "Something went to wrong", Toast.LENGTH_LONG).show();
-                                        } else if (LoginCredential.equals("2")) {
+                                        }   else if (LoginCredential.equals("0")) {
+                                                Toast.makeText(Main2Activity.this, "update", Toast.LENGTH_LONG).show();
+                                        } else if (LoginCredential.equals("0")) {
                                             Toast.makeText(Main2Activity.this, "you have already added this book", Toast.LENGTH_LONG).show();
                                             dialog.dismiss();
                                         }

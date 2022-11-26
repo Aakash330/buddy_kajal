@@ -157,7 +157,7 @@ public class Stu_Subjects extends AppCompatActivity {
                             JSONArray heroArray = jsonObject1.getJSONArray("data");
                             for (int j = 0; j < heroArray.length(); j++) {
                                 JSONObject c1 = heroArray.getJSONObject(j);
-                                if (c1.getString("status").equals("1")) {
+                               /* if (c1.getString("status").equals("1")) {*/
                                     Log.d("imageArray", "ok" + c1.getString("class"));
                                     HashMap<String, String> ObjectiveMap = new HashMap<>();
                                     // ObjectiveMap.put("Title", c1.getString("title"));
@@ -167,6 +167,8 @@ public class Stu_Subjects extends AppCompatActivity {
                                       Arraylist.add(ObjectiveMap);
                                     }
                                     // ObjectiveMap.put("Subject", c1.getString("subject"));
+
+
                                     //ObjectiveMap.put("book_img", c1.getString("book_img"));
                                     // ObjectiveMap.put("ebook", c1.getString("ebook"));
                                     // ObjectiveMap.put("manual", c1.getString("manual"));
@@ -178,7 +180,7 @@ public class Stu_Subjects extends AppCompatActivity {
                                     //   Books_By_Accesscode.add(ObjectiveMap);
 
                                     Log.d("imageArray1254f", c1.getString("book_img"));
-                                }
+                              //  }
                             }
                             for (int i = 0; i < Arraylist.size(); i++) {
 

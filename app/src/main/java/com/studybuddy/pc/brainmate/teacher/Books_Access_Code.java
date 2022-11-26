@@ -254,28 +254,42 @@ public class Books_Access_Code extends AppCompatActivity {//implements Navigatio
                         }
                     } else if (book_Type.equals("Art & Craft")) {
                         //finish();
-                        if(expireStatus.equals("0")) {
-                            Intent intent = new Intent(Books_Access_Code.this, TePaintingChapters.class);
-                            intent.putExtra("access_code", Books_By_Accesscode.get(position).get("access_code"));
-                            intent.putExtra("class", result);
-                            startActivity(intent);
+                        if(Books_By_Accesscode.get(position).get("status").equals("1")) {
+                            if (expireStatus.equals("0")) {
+                                Intent intent = new Intent(Books_Access_Code.this, TePaintingChapters.class);
+                                intent.putExtra("access_code", Books_By_Accesscode.get(position).get("access_code"));
+                                intent.putExtra("class", result);
+                                startActivity(intent);
+                            } else {
+                                getBookWithAccessCode();
+                            }
                         }else {
-                            getBookWithAccessCode();
+                            Toast.makeText(Books_Access_Code.this, "This Book is no more available. Sorry for the inconvenience", Toast.LENGTH_SHORT).show();
+
+
                         }
+
                     } else {
                         //finish();
-                        if(expireStatus.equals("0")){
-                            Intent intent = new Intent(Books_Access_Code.this, LearningElementary.class);
-                            intent.putExtra("access_code", Books_By_Accesscode.get(position).get("access_code"));
-                            intent.putExtra("ebook", ebook);
-                            intent.putExtra("SubjectNme", SubjectNme);
-                            intent.putExtra("displayClassName", displayClassName);
-                            intent.putExtra("manual", Books_By_Accesscode.get(position).get("manual"));
-                            intent.putExtra("Title", Books_By_Accesscode.get(position).get("Title"));
-                            startActivity(intent);
+                        if(Books_By_Accesscode.get(position).get("status").equals("1")){
+
+                            if(expireStatus.equals("0")){
+                                Intent intent = new Intent(Books_Access_Code.this, LearningElementary.class);
+                                intent.putExtra("access_code", Books_By_Accesscode.get(position).get("access_code"));
+                                intent.putExtra("ebook", ebook);
+                                intent.putExtra("SubjectNme", SubjectNme);
+                                intent.putExtra("displayClassName", displayClassName);
+                                intent.putExtra("manual", Books_By_Accesscode.get(position).get("manual"));
+                                intent.putExtra("Title", Books_By_Accesscode.get(position).get("Title"));
+                                startActivity(intent);
+                            }else {
+                                getBookWithAccessCode();
+                            }
                         }else {
-                           getBookWithAccessCode();
-                        }}
+                            Toast.makeText(Books_Access_Code.this, "This Book is no more available. Sorry for the inconvenience", Toast.LENGTH_SHORT).show();
+
+                        }
+                      }
                 } else {
                     Toast.makeText(Books_Access_Code.this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
                 }
@@ -820,7 +834,8 @@ public class Books_Access_Code extends AppCompatActivity {//implements Navigatio
                                 JSONArray heroArray = jsonObject1.getJSONArray("data");
                                 for (int j = 0; j < heroArray.length(); j++) {
                                     JSONObject c1 = heroArray.getJSONObject(j);
-                                    if (c1.getString("status").equals("1")) {
+
+                                  /*  if (c1.getString("status").equals("1")) {*/
                                         Log.d("imageArray", "ok" + c1.getString("class"));
                                         HashMap<String, String> ObjectiveMap = new HashMap<>();
                                         ObjectiveMap.put("Subject", c1.getString("subject"));
@@ -841,7 +856,7 @@ public class Books_Access_Code extends AppCompatActivity {//implements Navigatio
                                             }
                                         }
                                         Log.d("imageArray1254f", c1.getString("book_img"));
-                                    }
+                                   // }
                                 }
                                 for (int i = 0; i < Books_By_Accesscode.size(); i++) {
 

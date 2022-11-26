@@ -133,7 +133,7 @@ public class Book_Subjects extends AppCompatActivity {
 
                             for (int j = 0; j < heroArray.length(); j++) {
                                 JSONObject c1 = heroArray.getJSONObject(j);
-                                if (c1.getString("status").equals("1")) {
+                             /*   if (c1.getString("status").equals("1")) {*/
                                     Log.d("imageArray", "ok" + c1.getString("class"));
                                     HashMap<String, String> ObjectiveMap = new HashMap<>();
                                     // ObjectiveMap.put("Title", c1.getString("title"));
@@ -157,7 +157,7 @@ public class Book_Subjects extends AppCompatActivity {
                                     //   Books_By_Accesscode.add(ObjectiveMap);
 
                                     Log.d("imageArray1254f", c1.getString("book_img"));
-                                }
+                               // }
                             }
                             for (int i = 0; i < Arraylist.size(); i++) {
 

@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -37,7 +38,7 @@ class BooksAcsStuCodeAdapter extends BaseAdapter {
     }
 
     public class ViewHolder {
-        TextView BookTitle,ForClass,BookSubject;
+        TextView BookTitle,ForClass,BookSubject,expire_tv;
         // Button details,Medicalhistory;
         LinearLayout linearLayout;
         ImageView Book_Image;
@@ -71,6 +72,7 @@ class BooksAcsStuCodeAdapter extends BaseAdapter {
             holder.ForClass = (TextView) view.findViewById(R.id.ForClass);
             holder.BookSubject = (TextView) view.findViewById(R.id.BookSubject);
             holder.Book_Image=(ImageView)view.findViewById(R.id.Book_Image) ;
+            holder.expire_tv=(TextView) view.findViewById(R.id.inactive_tv) ;
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
@@ -85,6 +87,13 @@ class BooksAcsStuCodeAdapter extends BaseAdapter {
         //Image_url ="http://techive.in/studybuddy/"+Image_Name;
         Image_url =Apis.base_url_img +Image_Name;
         Log.d("Image_url",""+Image_url);
+
+        if(Books_by_accessCode.get(position).get("expire_status").equals("1")){
+
+            holder.expire_tv.setVisibility(View.VISIBLE);
+            Toast.makeText(mContext, "expire", Toast.LENGTH_SHORT).show();
+        }
+
         Glide.with(mContext).load(Image_url)
                 .thumbnail(0.5f)
                 .crossFade()

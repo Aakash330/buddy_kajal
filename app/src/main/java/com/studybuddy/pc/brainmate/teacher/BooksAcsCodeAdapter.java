@@ -40,7 +40,7 @@ public class BooksAcsCodeAdapter extends BaseAdapter {
     }
 
     public class ViewHolder {
-        TextView BookTitle, ForClass, BookSubject;
+        TextView BookTitle, ForClass, BookSubject,expire_status;
         // Button details,Medicalhistory;
         LinearLayout linearLayout;
         ImageView Book_Image;
@@ -73,10 +73,15 @@ public class BooksAcsCodeAdapter extends BaseAdapter {
             holder.ForClass = (TextView) view.findViewById(R.id.ForClass);
             holder.BookSubject = (TextView) view.findViewById(R.id.BookSubject);
             holder.Book_Image = (ImageView) view.findViewById(R.id.Book_Image);
+            holder.expire_status = (TextView) view.findViewById(R.id.inactive_tv);
 
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
+        }
+
+        if(Books_by_accessCode.get(position).get("expire_status").equals("1")){
+                 holder.expire_status.setVisibility(View.VISIBLE);
         }
         // Set the results into TextViews
         map = new HashMap<>(position);
@@ -108,6 +113,8 @@ public class BooksAcsCodeAdapter extends BaseAdapter {
         } else if (book_status.equals("Active")) {
 
         }
+
+
         return view;
     }
 }
