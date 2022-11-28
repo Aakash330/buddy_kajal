@@ -1,4 +1,4 @@
-package com.studybuddy.pc.brainmate.mains;
+package com.studybuddy.pc.brainmate.teacher;
 
 import static com.studybuddy.pc.brainmate.Network_connection.data.Constants.CONNECTIVITY_ACTION;
 
@@ -7,15 +7,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
@@ -27,10 +26,8 @@ import com.studybuddy.pc.brainmate.Network_connection.utils.NetworkUtil;
 import com.studybuddy.pc.brainmate.R;
 import com.studybuddy.pc.brainmate.student.CommonMethods;
 import com.studybuddy.pc.brainmate.student.Stu_Classes;
-import com.studybuddy.pc.brainmate.teacher.E_book;
-import com.studybuddy.pc.brainmate.teacher.Main2Activity;
 
-public class BuyBooksOnline extends AppCompatActivity {
+public class BuyBooksOnlineT extends AppCompatActivity {
     WebView webView;
     ProgressDialog pd;
     IntentFilter intentFilter;
@@ -55,10 +52,10 @@ public class BuyBooksOnline extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_buy_books_online);
+        setContentView(R.layout.activity_buy_books_online_t);
+        toolbarHeader = findViewById(R.id.toolbarHeader);
 
         setSupportActionBar(toolbarHeader);
-
         webPageNotFound = findViewById(R.id.pageNotFoundLyt);
 
         if (getSupportActionBar() != null) {
@@ -68,16 +65,16 @@ public class BuyBooksOnline extends AppCompatActivity {
             //toolbar.setNavigationIcon(R.drawable.ic_toolbar_arrow);
             //getSupportActionBar().setTitle("Techive");
         }
-        setTitle(getIntent().getStringExtra("Title") != null ? getIntent().getStringExtra("Title") : "");
+        setTitle("Book Online");
 
         intentFilter = new IntentFilter();
         intentFilter.addAction(CONNECTIVITY_ACTION);
         receiver = new NetworkChangeReceiver();
 
-        if (NetworkUtil.getConnectivityStatus(BuyBooksOnline.this) > 0) {
+        if (NetworkUtil.getConnectivityStatus(BuyBooksOnlineT.this) > 0) {
             System.out.println("Connect");
             Network_Status = "Connect";
-            pd = ProgressDialog.show(BuyBooksOnline.this, "", "Please wait...", true);
+            pd = ProgressDialog.show(BuyBooksOnlineT.this, "", "Please wait...", true);
 
             webView = (WebView) findViewById(R.id.webView);
             webView.getSettings().setJavaScriptEnabled(true); // enable javascript
@@ -86,7 +83,7 @@ public class BuyBooksOnline extends AppCompatActivity {
             //webView.loadUrl("http://brainmate.co.in/BELS/Infonet%20Book3");
             webView.setWebViewClient(new WebViewClient() {
                 public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                    Toast.makeText(BuyBooksOnline.this, description, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BuyBooksOnlineT.this, description, Toast.LENGTH_SHORT).show();
                     Log.d("getEbook", "" + description);
                 }
 
@@ -102,23 +99,25 @@ public class BuyBooksOnline extends AppCompatActivity {
                 }
             });
 
-            webView.loadUrl("brainmate.co.in ");
-            checkNetDialog();
+            webView.loadUrl("brainmate.co.in");
 
+
+        }else{
+            checkNetDialog();
         }
 
     }
 
     public void checkNetDialog() {
-        android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(BuyBooksOnline.this);
+        android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(BuyBooksOnlineT.this);
         alertDialogBuilder.setMessage(getString(R.string.no_internet));
         alertDialogBuilder.setCancelable(false);
         alertDialogBuilder.setPositiveButton(getString(R.string.retry),
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int arg1) {
-                        if (NetworkUtil.getConnectivityStatus(BuyBooksOnline.this) > 0) {
-                            Toast.makeText(BuyBooksOnline.this, "" + getString(R.string.connected), Toast.LENGTH_SHORT).show();
+                        if (NetworkUtil.getConnectivityStatus(BuyBooksOnlineT.this) > 0) {
+                            Toast.makeText(BuyBooksOnlineT.this, "" + getString(R.string.connected), Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
                         } else {
                             checkNetDialog();
@@ -151,10 +150,10 @@ public class BuyBooksOnline extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.action_go_home:
-                Intent intent = new Intent(BuyBooksOnline.this, Stu_Classes.class);
+                Intent intent = new Intent(BuyBooksOnlineT.this, Main2Activity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("accesscodes", CommonMethods.getAccessCode(BuyBooksOnline.this));
-                intent.putExtra("Teachers_ID", CommonMethods.getId(BuyBooksOnline.this));
+                intent.putExtra("accesscodes", CommonMethods.getAccessCode(BuyBooksOnlineT.this));
+                intent.putExtra("Teachers_ID", CommonMethods.getId(BuyBooksOnlineT.this));
                 startActivity(intent);
                 return true;
         }

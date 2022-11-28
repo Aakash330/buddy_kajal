@@ -2,27 +2,29 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="10dp"
     android:layout_gravity="center">
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/layout_click"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
+        android:gravity="start"
         android:layout_marginEnd="1dp"
         android:orientation="horizontal"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textView5"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_weight="1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:background="@drawable/circle_layout"
             android:gravity="center"
             android:text="12"
@@ -35,6 +37,8 @@
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
             android:text="Reference code"
-            android:textSize="15dp" />
+            android:textColor="#252323"
+            android:textSize="18sp"
+            android:textStyle="bold" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -5,7 +5,10 @@ public class ReferenceMaterialModel {
     private String Title;
     private String url;
 
-    public ReferenceMaterialModel(int i, String a) {
+    public ReferenceMaterialModel(int i, String a,String url) {
+        Title=a;
+        this.url=url;
+
     }
 
     public String getTitle() {

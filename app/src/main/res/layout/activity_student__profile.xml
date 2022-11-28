@@ -54,6 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Accesses Code"
+                android:visibility="gone"
                 android:textColor="#252323"
                 android:textSize="18sp" />
 
@@ -102,6 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:textColor="#252323"
+                android:visibility="gone"
                 android:textSize="18sp" />
 
             <TextView

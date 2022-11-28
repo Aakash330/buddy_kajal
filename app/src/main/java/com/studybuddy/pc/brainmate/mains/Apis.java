@@ -68,4 +68,5 @@ public class Apis {
     public static String send_otp="send-otp.php";
     public static String register_url="register.php";
     public static String read_url="readingAPI.php";
+    public static String checkStatus_url="check_status.php";
 }

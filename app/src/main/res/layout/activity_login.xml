@@ -545,7 +545,8 @@
                     android:text="@string/passvalid"
                     android:textStyle="bold"
                     android:visibility="gone"
-                    android:textColor="@color/color1"/>
+                    android:elevation="30dp"
+                    android:textColor="@color/white"/>
 
 
                 <EditText
@@ -718,6 +719,8 @@
                     android:text="Register"
                     android:layout_marginTop="25dp"
                     android:textColor="#fff" />
+
+
             </LinearLayout>
         </LinearLayout>
 
@@ -824,6 +827,7 @@
                 android:layout_gravity="center"
                 android:orientation="vertical"
                 android:visibility="visible">
+
                 <EditText
                     android:id="@+id/AccessCodeTeacher"
                     android:layout_width="match_parent"
@@ -881,7 +885,7 @@
                     android:text="@string/passvalid"
                     android:textStyle="bold"
                     android:visibility="gone"
-                    android:textColor="@color/color1"/>
+                    android:textColor="@color/white"/>
 
 
                 <EditText
@@ -1060,16 +1064,23 @@
             android:id="@+id/llShareDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:orientation="horizontal"
+            android:gravity="center"
             android:layout_marginTop="20dp">
 
             <TextView
-                android:id="@+id/txt_share_details"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
                 android:gravity="center"
-                android:text="Do not have username password ?"
+                android:text="Already registered?"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/txt_share_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Login"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 

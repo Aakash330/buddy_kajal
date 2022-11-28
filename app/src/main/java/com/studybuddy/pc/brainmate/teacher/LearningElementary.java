@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -41,10 +42,11 @@ public class LearningElementary extends AppCompatActivity {
     Button TestGenrator, E_Book, TeachersBook, AnimationVideo, Activities,ReferenceMaterial;
     String Class, Subject, displayClassName;
     String ebook;
-    String access_code, manual;
+    String access_code, manual,sno;
     String Title;
     String Network_Status;
     Toolbar toolbarHeader;
+    LinearLayout noBookAvailable,BookAvailable,LtyE_book,LtyActivity,LtyReferenceMaterial,LtyTG,LtyTM;
     ProgressDialog progressDialog;
 
     @Override
@@ -59,16 +61,27 @@ public class LearningElementary extends AppCompatActivity {
         TeachersBook = (Button) findViewById(R.id.TeacherMenual);
         Activities = (Button) findViewById(R.id.Activities);
         Class = getIntent().getStringExtra("Class");
+
         displayClassName = getIntent().getStringExtra("displayClassName");
         Subject = getIntent().getStringExtra("SubjectNme");
         ebook = getIntent().getStringExtra("ebook");
         access_code = getIntent().getStringExtra("access_code");
         manual = getIntent().getStringExtra("manual");
         Title = getIntent().getStringExtra("Title");
+        sno = getIntent().getStringExtra("sno");
+        Log.w(TAG,"sno"+sno);
         //E_Book.setText(Title != null ? Title : "");
         Log.d("manual321", "http://techive.in/studybuddy/publisher/" + manual);
 
         toolbarHeader = findViewById(R.id.toolbarHeader);
+        noBookAvailable = (LinearLayout) findViewById(R.id.nobookLty);
+        BookAvailable = (LinearLayout) findViewById(R.id.bookLty);
+        LtyTG = (LinearLayout) findViewById(R.id.tgLyt);
+        LtyTM = (LinearLayout) findViewById(R.id.tmLty);
+        LtyActivity= (LinearLayout) findViewById(R.id.aLty);
+        LtyE_book = (LinearLayout) findViewById(R.id.eLty);
+        LtyReferenceMaterial = (LinearLayout) findViewById(R.id.rfLty);
+
         setSupportActionBar(toolbarHeader);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -78,6 +91,95 @@ public class LearningElementary extends AppCompatActivity {
             //getSupportActionBar().setTitle("Techive");
         }
         setTitle(getIntent().getStringExtra("Title") != null ? getIntent().getStringExtra("Title") : "");
+
+
+        if (NetworkUtil.getConnectivityStatus(LearningElementary.this) > 0) {
+            System.out.println("Connect");
+            Network_Status = "Connect";
+
+            progressDialog = new ProgressDialog(LearningElementary.this);
+            progressDialog.setMessage("Loading..."); // Setting Title
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+            progressDialog.show(); // Display Progress Dialog
+            progressDialog.setCancelable(false);
+            String url = Apis.base_url1+Apis.checkStatus_url;//webView ebook link come from this api
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d("checkStatusT", response);
+                            progressDialog.dismiss();
+                            try {
+                                JSONObject jsonObject1 = null;
+                                jsonObject1 = new JSONObject(response);
+                                Log.w("check","ebook_status"+jsonObject1.getString("ebook_status"));
+                                Log.w("check","rehere"+jsonObject1.getString("reference_material_status"));
+
+                                if(jsonObject1.getString("ebook_status").equals("0")&&
+                                        jsonObject1.getString("test_generator_status").equals("0")&&
+                                        jsonObject1.getString("test_manual_status").equals("0")&&
+                                        jsonObject1.getString("reference_material_status").equals("0")){
+
+                                    noBookAvailable.setVisibility(View.VISIBLE);
+                                    BookAvailable.setVisibility(View.GONE);
+                                }
+                                if(jsonObject1.getString("test_manual_status").equals("1")){
+                                    LtyTM.setVisibility(View.VISIBLE);
+                                }
+
+                                if(jsonObject1.getString("test_generator_status").equals("1")){
+                                    LtyTG.setVisibility(View.VISIBLE);
+                                    LtyActivity.setVisibility(View.VISIBLE);
+                                }
+
+                                if(jsonObject1.getString("ebook_status").equals("1")){
+
+                                    LtyE_book.setVisibility(View.VISIBLE);
+                                }
+                                String rf= jsonObject1.getString("reference_material_status");
+                                if(rf.equals("1"))
+                                {
+
+                                    LtyReferenceMaterial.setVisibility(View.VISIBLE);
+                                }
+
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    progressDialog.dismiss();
+                    System.out.println("ResponseRegistration" + error.getMessage());
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("sno",sno);
+                    return params;
+                }
+            };
+            // Add the request to the RequestQueue.
+            CommonMethods.callWebserviceForResponse(stringRequest,LearningElementary.this);
+        } else {
+            System.out.println("No connection");
+            Network_Status = "notConnect";
+            android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(LearningElementary.this);
+            alertDialogBuilder.setMessage(getString(R.string.no_internet));
+            alertDialogBuilder.setPositiveButton("Exit",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            finish();
+                        }
+                    });
+            android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
 
         Activities.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,6 +239,7 @@ public class LearningElementary extends AppCompatActivity {
                         Intent intent = new Intent(LearningElementary.this, TeachersManual.class);
                         intent.putExtra("manual", manual);
                         intent.putExtra("Title", Title);
+                        intent.putExtra("access_code", access_code);
                         startActivity(intent);
                     }
                 } else {
@@ -153,7 +256,11 @@ public class LearningElementary extends AppCompatActivity {
         });
 
         ReferenceMaterial.setOnClickListener(v -> {
-            Intent intent = new Intent(LearningElementary.this, ReferenceMaterial.class);
+            Intent intent = new Intent(LearningElementary.this, ReferenceMaterialTeacher.class);
+            intent.putExtra("Title", Title);
+            intent.putExtra("Subject", Subject);
+            intent.putExtra("ClassName", Class);
+            intent.putExtra("access_code", access_code);
             startActivity(intent);
         });
     }

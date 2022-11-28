@@ -1,10 +1,11 @@
-package com.studybuddy.pc.brainmate.student;
+package com.studybuddy.pc.brainmate.teacher;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,8 +14,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +34,8 @@ import com.studybuddy.pc.brainmate.Network_connection.utils.NetworkUtil;
 import com.studybuddy.pc.brainmate.R;
 import com.studybuddy.pc.brainmate.mains.Apis;
 import com.studybuddy.pc.brainmate.model.ReferenceMaterialModel;
+import com.studybuddy.pc.brainmate.student.CommonMethods;
+import com.studybuddy.pc.brainmate.student.Stu_Classes;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,30 +45,38 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ReferenceMaterial extends AppCompatActivity {
+public class ReferenceMaterialTeacher extends AppCompatActivity {
 
+    private static  String TAG ="ReferenceMaterialTeacher" ;
     private Toolbar toolbarHeader;
     private ArrayList<ReferenceMaterialModel> referenceMaterialList;
+    private ArrayList<HashMap<String,String>> list;
     private ListView listView;
+
     private ReferenceMaterialModel model;
     private ReferenceMaterialAdaptor materialAdaptor;
     private String Network_Status;
     private ProgressDialog progressDialog;
-    private String S_id,Subject,ClassName,Title;
+    private String T_id,Subject,ClassName,Title,access_code;
+
+    private LinearLayout layout;
+    @SuppressLint("LongLogTag")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reference_material);
+        setContentView(R.layout.activity_reference_material_teacher);
+
         listView=findViewById(R.id.RM_List);
         toolbarHeader = findViewById(R.id.toolbarHeader);
+        layout = findViewById(R.id.layout);
         referenceMaterialList=new ArrayList<>();
+        list=new ArrayList<>();
         //Toolbar
         setSupportActionBar(toolbarHeader);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             toolbarHeader.setTitleTextColor(getResources().getColor(R.color.white));
-
         }
         setTitle("Reference Material");
 
@@ -70,13 +84,21 @@ public class ReferenceMaterial extends AppCompatActivity {
             Subject = getIntent().getStringExtra("Subject");
             ClassName = getIntent().getStringExtra("ClassName");
             Title = getIntent().getStringExtra("Title");
+            access_code = getIntent().getStringExtra("access_code");
+
+            Log.w(TAG,"subj ReferenceMaterialTeacher="+Subject);
+            Log.w(TAG,"title ReferenceMaterialTeacher="+Title);
+            Log.w(TAG,"class  ReferenceMaterialTeacher="+ClassName);
+            Log.w(TAG,"ac  ReferenceMaterialTeacher="+access_code);
+
         }catch (Exception ee){}
         //toolbar set back button
 
-        S_id=CommonMethods.getId(ReferenceMaterial.this);
+        T_id= CommonMethods.getId(ReferenceMaterialTeacher.this);
 
         //Reference Material
         setTitleInList();
+
     }
 
     @Override
@@ -95,10 +117,10 @@ public class ReferenceMaterial extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.action_go_home:
-                Intent intent = new Intent(ReferenceMaterial.this, Stu_Classes.class);
+                Intent intent = new Intent(ReferenceMaterialTeacher.this, Main2Activity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("accesscodes", CommonMethods.getAccessCode(ReferenceMaterial.this));
-                intent.putExtra("Student_ID", CommonMethods.getId(ReferenceMaterial.this));
+                intent.putExtra("accesscodes", CommonMethods.getAccessCode(ReferenceMaterialTeacher.this));
+                intent.putExtra("Student_ID", CommonMethods.getId(ReferenceMaterialTeacher.this));
                 startActivity(intent);
                 return true;
         }
@@ -107,19 +129,19 @@ public class ReferenceMaterial extends AppCompatActivity {
 
     private void setTitleInList() {
 
-        if (NetworkUtil.getConnectivityStatus(ReferenceMaterial.this) > 0) {
+        if (NetworkUtil.getConnectivityStatus(ReferenceMaterialTeacher.this) > 0) {
             System.out.println("Connect");
             Network_Status = "Connect";
 
 
-            progressDialog = new ProgressDialog(ReferenceMaterial.this);
+            progressDialog = new ProgressDialog(ReferenceMaterialTeacher.this);
             progressDialog.setMessage("Loading..."); // Setting Title
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
             progressDialog.show(); // Display Progress Dialog
             progressDialog.setCancelable(false);
-            RequestQueue queue = Volley.newRequestQueue(ReferenceMaterial.this);
+            RequestQueue queue = Volley.newRequestQueue(ReferenceMaterialTeacher.this);
             //String url = "http://www.techive.in/studybuddy/api/student_book.php";
-            String url = Apis.base_url+Apis.student_book_url;
+            String url = Apis.base_url+Apis.teacher_book_url;
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                     new Response.Listener<String>() {
                         @Override
@@ -140,26 +162,49 @@ public class ReferenceMaterial extends AppCompatActivity {
 
                                 for (int j = 0; j < heroArray.length(); j++) {
                                     JSONObject c1 = heroArray.getJSONObject(j);
-
+                                    Log.w(TAG,"thread1");
 
                                     if (Subject.equals(c1.getString("subject"))) {
-
+                                        Log.w(TAG,"thread1 if start"+ClassName);
                                         if (ClassName.equals(c1.getString("class"))) {
-                                            if (ClassName.equals(c1.getString("Title"))) {
+                                            Log.w(TAG,"thread1 if2 start"+Title);
+                                            if (Title.equals(c1.getString("title"))) {
+                                                Toast.makeText(ReferenceMaterialTeacher.this, "ok title", Toast.LENGTH_SHORT).show();
+                                                Log.w(TAG,"thread1 if");
                                                 JSONArray array = c1.getJSONArray("book_referal");
-                                                for (int n = 0; n < array.length(); n++) {
-                                                    JSONObject object = array.getJSONObject(n);
-
-                                                    referenceMaterialList.add(new ReferenceMaterialModel(n, object.getString("title"), object.getString("url")));
-
+                                                for (int in = 0; in < array.length(); in++) {
+                                                    JSONObject object = array.getJSONObject(in);
+                                                    Log.w(TAG,"thread2");
+                                                    Log.w(TAG,"title ReferenceMaterialTeacher"+object.getString("title"));
+                                                    Log.w(TAG,"url ReferenceMaterialTeacher"+object.getString("url"));
+                                                    int size=referenceMaterialList.size();
+                                                    referenceMaterialList.add(new ReferenceMaterialModel(in, object.getString("title"), object.getString("url")));
                                                 }
+                                                Log.w(TAG,"thread2 finish"+referenceMaterialList.size());
+
                                             }
-                                        }
+
+                                            Log.w(TAG,"thread1 if finish");
+
+                                        }     Log.w(TAG,"thread1 if2 finish");
+
                                     }
+                                    Log.w(TAG,"thread1  finish");
+                                }
+                                Log.w(TAG,"thread3  start list sizze:"+referenceMaterialList.size());
+                                if(referenceMaterialList.size()==0){
+                                    listView.setVisibility(View.GONE);
+                                    layout.setVisibility(View.VISIBLE);
+                                }else{
+                                    listView.setVisibility(View.VISIBLE);
+                                    layout.setVisibility(View.GONE);
+                                    materialAdaptor=new ReferenceMaterialAdaptor(ReferenceMaterialTeacher.this,referenceMaterialList);
+                                    listView.setAdapter(materialAdaptor);
+                                    materialAdaptor.notifyDataSetChanged();
+
                                 }
 
-                                materialAdaptor=new ReferenceMaterialAdaptor(ReferenceMaterial.this,referenceMaterialList);
-                                listView.setAdapter(materialAdaptor);
+
 
 
 
@@ -177,7 +222,8 @@ public class ReferenceMaterial extends AppCompatActivity {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String, String> params = new HashMap<>();
-                    params.put("student_id",S_id);
+                   // params.put("accesscodes",access_code);
+                    params.put("teacher_id",T_id);
                     Log.d("getStudentId", "" + params.toString());
                     return params;
                 }
@@ -229,9 +275,21 @@ public class ReferenceMaterial extends AppCompatActivity {
             }
             TextView S_No = (TextView) rview.findViewById(R.id.textView5);
             TextView Title = (TextView) rview.findViewById(R.id.textView6);
+            LinearLayout layout = (LinearLayout) rview.findViewById(R.id.layout_click);
 
             S_No.setText(""+(position+1));
             Title.setText(model.getTitle());
+
+            layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent=new Intent(referenceMaterial,ShowReferenceMaterial.class);
+                    intent.putExtra("url",model.getUrl());
+                    startActivity(intent);
+                }
+            });
+
+
             return rview;
         }
 

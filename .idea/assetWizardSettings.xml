@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/logout/baseline_logout_24.xml" />
+                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/book_online/baseline_book_online_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,8 +28,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="faf7f7" />
-                            <entry key="outputName" value="ic_baseline_logout_24" />
+                            <entry key="color" value="777676" />
+                            <entry key="outputName" value="ic_baseline_book_online_24" />
                             <entry key="sourceFile" value="C:\Users\KAJAL\AndroidStudioProjects\study_buddy_26_04_19\StudyBuddy" />
                           </map>
                         </option>

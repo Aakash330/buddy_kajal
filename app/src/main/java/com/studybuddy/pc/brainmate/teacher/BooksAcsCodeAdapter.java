@@ -80,9 +80,10 @@ public class BooksAcsCodeAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
 
-        if(Books_by_accessCode.get(position).get("expire_status").equals("1")){
+        if(Books_by_accessCode.get(position).get("status").equals("0")){
                  holder.expire_status.setVisibility(View.VISIBLE);
         }
+
         // Set the results into TextViews
         map = new HashMap<>(position);
         holder.BookTitle.setText(Books_by_accessCode.get(position).get("Title"));

@@ -1,4 +1,4 @@
-package com.studybuddy.pc.brainmate.teacher;
+package com.studybuddy.pc.brainmate.student;
 
 import static com.studybuddy.pc.brainmate.Network_connection.data.Constants.CONNECTIVITY_ACTION;
 
@@ -6,8 +6,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -22,10 +22,9 @@ import android.widget.Toast;
 import com.studybuddy.pc.brainmate.Network_connection.services.NetworkChangeReceiver;
 import com.studybuddy.pc.brainmate.Network_connection.utils.NetworkUtil;
 import com.studybuddy.pc.brainmate.R;
-import com.studybuddy.pc.brainmate.student.CommonMethods;
-import com.studybuddy.pc.brainmate.student.Stu_Classes;
+import com.studybuddy.pc.brainmate.teacher.Main2Activity;
 
-public class ShowReferenceMaterial extends AppCompatActivity {
+public class ShowReferenceMaterialStudent extends AppCompatActivity {
 
     private static final String TAG ="ShowReferenceMaterial";
     private String url;
@@ -52,7 +51,7 @@ public class ShowReferenceMaterial extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_reference_material);
+        setContentView(R.layout.activity_show_reference_material_student);
         url=getIntent().getExtras().getString("url");
        // Toast.makeText(this, "url="+url, Toast.LENGTH_SHORT).show();
         webPageNotFound=findViewById(R.id.pageNotFoundLyt);
@@ -74,10 +73,10 @@ public class ShowReferenceMaterial extends AppCompatActivity {
     }
 
     private void checkNetDialog() {
-        if (NetworkUtil.getConnectivityStatus(ShowReferenceMaterial.this) > 0) {
+        if (NetworkUtil.getConnectivityStatus(ShowReferenceMaterialStudent.this) > 0) {
             System.out.println("Connect");
             Network_Status = "Connect";
-            pd = ProgressDialog.show(ShowReferenceMaterial.this, "", "Please wait...", true);
+            pd = ProgressDialog.show(ShowReferenceMaterialStudent.this, "", "Please wait...", true);
 
 
             webView.getSettings().setJavaScriptEnabled(true); // enable javascript
@@ -86,7 +85,7 @@ public class ShowReferenceMaterial extends AppCompatActivity {
             //webView.loadUrl("http://brainmate.co.in/BELS/Infonet%20Book3");
             webView.setWebViewClient(new WebViewClient() {
                 public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                    Toast.makeText(ShowReferenceMaterial.this, description, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ShowReferenceMaterialStudent.this, description, Toast.LENGTH_SHORT).show();
                     Log.d("getEbook", "" + description);
                 }
 
@@ -135,10 +134,10 @@ public class ShowReferenceMaterial extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.action_go_home:
-                Intent intent = new Intent(ShowReferenceMaterial.this,Main2Activity.class);
+                Intent intent = new Intent(ShowReferenceMaterialStudent.this, Stu_Classes.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("accesscodes", CommonMethods.getAccessCode(ShowReferenceMaterial.this));
-                intent.putExtra("Student_ID", CommonMethods.getId(ShowReferenceMaterial.this));
+                intent.putExtra("accesscodes", CommonMethods.getAccessCode(ShowReferenceMaterialStudent.this));
+                intent.putExtra("Student_ID", CommonMethods.getId(ShowReferenceMaterialStudent.this));
                 startActivity(intent);
                 return true;
         }

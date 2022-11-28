@@ -88,10 +88,10 @@ class BooksAcsStuCodeAdapter extends BaseAdapter {
         Image_url =Apis.base_url_img +Image_Name;
         Log.d("Image_url",""+Image_url);
 
-        if(Books_by_accessCode.get(position).get("expire_status").equals("1")){
+        if(Books_by_accessCode.get(position).get("status").equals("0")){
 
             holder.expire_tv.setVisibility(View.VISIBLE);
-            Toast.makeText(mContext, "expire", Toast.LENGTH_SHORT).show();
+
         }
 
         Glide.with(mContext).load(Image_url)

@@ -132,6 +132,8 @@ public class StudentdashBord extends AppCompatActivity {// implements Navigation
         receiver = new NetworkChangeReceiver();
 
         studentCheckForUpdateBook();
+        //@kajal 11_28_22
+        check_status();
 
         Bookslist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -141,6 +143,7 @@ public class StudentdashBord extends AppCompatActivity {// implements Navigation
                 String expireStatus = Books_By_Accesscode.get(position).get("expire_status");
                 ebook = ebook.replace(" ", "%20");
                 Log.d("ebookebook", book_Type);
+
                 String result = Books_By_Accesscode.get(position).get("Class");//.replaceAll("[^\\d.]", "");
                 if (book_Type.equals("Art & Craft")) {
                     if(Books_By_Accesscode.get(position).get("status").equals("1")){
@@ -166,10 +169,11 @@ public class StudentdashBord extends AppCompatActivity {// implements Navigation
                             Intent intent = new Intent(StudentdashBord.this, StudebtElimentery.class);
                             intent.putExtra("access_code", Books_By_Accesscode.get(position).get("access_code"));
                             intent.putExtra("ebook", Books_By_Accesscode.get(position).get("ebook"));
-
                             intent.putExtra("Title", Books_By_Accesscode.get(position).get("Title"));
                             intent.putExtra("animation", Books_By_Accesscode.get(position).get("animation"));
+                            intent.putExtra("sno", Books_By_Accesscode.get(position).get("sno"));
                             intent.putExtra("Subject", Subject);
+                            intent.putExtra("ClassName", ClassName);
                             startActivity(intent);
                         }else{
                             getBookWithAccessCode();
@@ -183,6 +187,11 @@ public class StudentdashBord extends AppCompatActivity {// implements Navigation
                 }
             }
         });
+    }
+
+    private void check_status() {
+
+
     }
 
     private void studentCheckForUpdateBook() {
@@ -249,6 +258,7 @@ public class StudentdashBord extends AppCompatActivity {// implements Navigation
 
                                             if (ClassName.equals(c1.getString("class"))) {
                                                 ObjectiveMap.put("Title", c1.getString("title"));
+                                                ObjectiveMap.put("sno", c1.getString("sno"));
                                                 ObjectiveMap.put("Class", c1.getString("class"));
                                                 ObjectiveMap.put("Subject", c1.getString("subject"));
                                                 ObjectiveMap.put("book_img", c1.getString("book_img"));

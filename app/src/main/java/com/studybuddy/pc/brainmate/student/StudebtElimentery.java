@@ -13,6 +13,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -34,10 +36,11 @@ import java.util.Map;
 public class StudebtElimentery extends AppCompatActivity {
 
     Button TakeTest, E_Book, AnimationVideo, Reference_Material;
-    String access_code, ebook, Subject,Title;
+    String access_code, ebook, Subject,Title,ClassName;
     Toolbar toolbarHeader;
     ProgressDialog progressDialog;
-    String Network_Status;
+    String Network_Status,sno;
+    LinearLayout LtyE_book,LtyActivity,LtyReferenceMaterial,noBookAvailable,BookAvailable;
 
 
     @Override
@@ -48,6 +51,8 @@ public class StudebtElimentery extends AppCompatActivity {
         access_code = getIntent().getStringExtra("access_code");
         ebook = getIntent().getStringExtra("ebook");
         Subject = getIntent().getStringExtra("Subject");
+        ClassName = getIntent().getStringExtra("ClassName");
+        sno = getIntent().getStringExtra("sno");
         Title = getIntent().getStringExtra("Title");
 
         toolbarHeader = findViewById(R.id.toolbarHeader);
@@ -67,7 +72,89 @@ public class StudebtElimentery extends AppCompatActivity {
         E_Book = (Button) findViewById(R.id.E_Book);
         AnimationVideo = (Button) findViewById(R.id.AnimationVideo);
         Reference_Material = (Button) findViewById(R.id.Reference_Material);
+        LtyE_book = (LinearLayout) findViewById(R.id.e_bookLty);
+        LtyActivity = (LinearLayout) findViewById(R.id.activityO);
+        LtyReferenceMaterial = (LinearLayout) findViewById(R.id.reference_material);
+        noBookAvailable = (LinearLayout) findViewById(R.id.nobookLty);
+        BookAvailable = (LinearLayout) findViewById(R.id.bookLty);
         //E_Book.setText(Title != null ? Title : "");
+
+        if (NetworkUtil.getConnectivityStatus(StudebtElimentery.this) > 0) {
+            System.out.println("Connect");
+            Network_Status = "Connect";
+
+            progressDialog = new ProgressDialog(StudebtElimentery.this);
+            progressDialog.setMessage("Loading..."); // Setting Title
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+            progressDialog.show(); // Display Progress Dialog
+            progressDialog.setCancelable(false);
+            String url = Apis.base_url1+Apis.checkStatus_url;//webView ebook link come from this api
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d("checkStatus", response);
+                            progressDialog.dismiss();
+                            try {
+                                JSONObject jsonObject1 = null;
+                                jsonObject1 = new JSONObject(response);
+                                Log.w("check","ebook_status"+jsonObject1.getString("ebook_status"));
+                                Log.w("check","rehere"+jsonObject1.getString("reference_material_status"));
+                               String rf= jsonObject1.getString("reference_material_status");
+
+                                if(jsonObject1.getString("ebook_status").equals("1")){
+                                    LtyE_book.setVisibility(View.VISIBLE);
+                                }
+                                if(rf.equals("1"))
+                                {
+
+                                    LtyReferenceMaterial.setVisibility(View.VISIBLE);
+                                }
+                                if(jsonObject1.getString("ebook_status").equals("0")&&
+                                        jsonObject1.getString("test_generator_status").equals("0")&&
+                                        jsonObject1.getString("test_manual_status").equals("0")&&
+                                        jsonObject1.getString("reference_material_status").equals("0")){
+
+                                    noBookAvailable.setVisibility(View.VISIBLE);
+                                    BookAvailable.setVisibility(View.GONE);
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    progressDialog.dismiss();
+                    System.out.println("ResponseRegistration" + error.getMessage());
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("sno",sno);
+                    return params;
+                }
+            };
+            // Add the request to the RequestQueue.
+            CommonMethods.callWebserviceForResponse(stringRequest,StudebtElimentery.this);
+        } else {
+            System.out.println("No connection");
+            Network_Status = "notConnect";
+            android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(StudebtElimentery.this);
+            alertDialogBuilder.setMessage(getString(R.string.no_internet));
+            alertDialogBuilder.setPositiveButton("Exit",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            finish();
+                        }
+                    });
+            android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
 
         TakeTest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,12 +194,17 @@ public class StudebtElimentery extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudebtElimentery.this, ReferenceMaterial.class);
+                intent.putExtra("ClassName",ClassName);
+                intent.putExtra("Subject",Subject);
+                intent.putExtra("Title",Title);
                 startActivity(intent);
             }
         });
 
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

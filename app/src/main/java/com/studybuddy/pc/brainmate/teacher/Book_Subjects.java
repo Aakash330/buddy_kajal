@@ -70,7 +70,7 @@ public class Book_Subjects extends AppCompatActivity {
     //EditText inputSearch;
     ArrayList<HashMap<String, String>> searchResults;
     String accesscodes, Teachers_ID;
-    String ClassName, displayClassName;
+    String ClassName, displayClassName,sno;
     RecyclerView Audiolist, Imageslist, PDFlist;
     ImageslistAdapter imageslistAdapter;
     private LinearLayoutManager horizontalLayoutManager;
@@ -102,6 +102,7 @@ public class Book_Subjects extends AppCompatActivity {
         Teachers_ID = getIntent().getStringExtra("Teachers_ID");
         ClassName = getIntent().getStringExtra("ClassName");
         displayClassName = getIntent().getStringExtra("Class");
+        sno = getIntent().getStringExtra("sno");
         Arraylist = new ArrayList<>();
         CatalogArray = new ArrayList<>();
         CLASS = getIntent().getStringExtra("Class");
@@ -497,6 +498,7 @@ public class Book_Subjects extends AppCompatActivity {
                         intent.putExtra("accesscodes", accesscodes);
                         intent.putExtra("Teachers_ID", Teachers_ID);
                         intent.putExtra("Subject", animalNamesList.get(position).get("Subject"));
+                        intent.putExtra("sno", animalNamesList.get(position).get("sno"));
                         mContext.startActivity(intent);
                     } else {
                         Toast.makeText(Book_Subjects.this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();

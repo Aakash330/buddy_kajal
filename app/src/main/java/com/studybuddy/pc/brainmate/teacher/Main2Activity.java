@@ -50,6 +50,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.studybuddy.pc.brainmate.mains.Apis;
+import com.studybuddy.pc.brainmate.mains.BuyBooksOnline;
+import com.studybuddy.pc.brainmate.mains.BuyEbooks;
 import com.studybuddy.pc.brainmate.mains.LoginBothActivity;
 import com.studybuddy.pc.brainmate.Network_connection.utils.NetworkUtil;
 import com.studybuddy.pc.brainmate.R;
@@ -866,7 +868,13 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
             intent.putExtra("Teachers_ID", Teachers_ID);
             startActivity(intent);
 
-        } else if (id == R.id.InviteFriends) {
+        }   else if(id== R.id.BuyOnlineBook){
+            Intent intent = new Intent(Main2Activity.this, BuyBooksOnlineT.class);
+            startActivity(intent);
+        } else if(id== R.id.BuyEBook){
+            Intent intent = new Intent(Main2Activity.this, BuyEbooksT.class);
+            startActivity(intent);
+        }else if (id == R.id.InviteFriends) {
             Intent share = new Intent(android.content.Intent.ACTION_SEND);
             share.setType("text/plain");
             share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
@@ -1213,6 +1221,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                         intent.putExtra("accesscodes", accesscodes);
                         intent.putExtra("Teachers_ID", Teachers_ID);
                         intent.putExtra("ClassName", animalNamesList.get(position).get("Class"));
+                        intent.putExtra("sno", animalNamesList.get(position).get("sno"));
                         mContext.startActivity(intent);
                     } else {
                         Toast.makeText(Main2Activity.this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();

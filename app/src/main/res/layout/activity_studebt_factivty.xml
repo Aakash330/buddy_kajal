@@ -20,68 +20,118 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:gravity="center"
+        android:orientation="vertical"
         android:padding="10dp">
 
         <LinearLayout
+            android:id="@+id/nobookLty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/book_not_found" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No book available"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textSize="20dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bookLty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/card"
             android:orientation="vertical"
             android:padding="10dp">
 
-            <Button
-                android:id="@+id/ActivityOlympiad"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="Activities/olympiad"
-                android:background="@drawable/buttoncard"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="16sp" />
+<LinearLayout
+    android:id="@+id/activityO"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:visibility="gone">
+    <Button
+        android:id="@+id/ActivityOlympiad"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Activities/olympiad"
+        android:background="@drawable/buttoncard"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="16sp" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:background="#403e3e">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="#403e3e">
+    </View>
+</LinearLayout>
+        <LinearLayout
+    android:id="@+id/e_bookLty"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:visibility="gone">
+    <Button
+        android:id="@+id/E_Book"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/buttoncard"
+        android:text="E-Book"
+        android:textColor="#006A62"
+        android:textSize="16sp" />
 
-            </View>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="#282626" />
 
-            <Button
-                android:id="@+id/E_Book"
+</LinearLayout>
+            <LinearLayout
+                android:id="@+id/reference_material"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/buttoncard"
-                android:text="E-Book"
-                android:textColor="#006A62"
-                android:textSize="16sp" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+                <Button
+                    android:id="@+id/Reference_Material"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/buttoncard"
+                    android:text="Reference_Material"
+                    android:textColor="#006A62"
+                    android:visibility="visible"
+                    android:textSize="16sp" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:background="#282626" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:visibility="visible"
+                    android:layout_marginBottom="5dp"
+                    android:background="#282626" />
+            </LinearLayout>
 
-            <Button
-                android:id="@+id/Reference_Material"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/buttoncard"
-                android:text="Reference_Material"
-                android:textColor="#006A62"
-                android:visibility="visible"
-                android:textSize="16sp" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="5dp"
-                android:visibility="visible"
-                android:layout_marginBottom="5dp"
-                android:background="#282626" />
+
+
+
 
             <Button
                 android:id="@+id/AnimationVideo"
@@ -102,7 +152,7 @@
                 android:background="#282626"
                 android:visibility="gone" />
 
-            <Button
+           <!-- <Button
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="5dp"
@@ -110,7 +160,7 @@
                 android:text="Activities/olympiad"
                 android:textColor="#006A62"
                 android:textSize="16sp"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
             <View
                 android:layout_width="match_parent"
@@ -118,7 +168,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:background="#282626"
-                android:visibility="gone" />
+                android:visibility="gone" />-->
             <!-- <Button
                  android:layout_marginTop="5dp"
                  android:id="@+id/TeacherMenual"
@@ -129,5 +179,7 @@
                  android:layout_width="match_parent"
                  android:layout_height="50dp" />-->
         </LinearLayout>
+
+
     </LinearLayout>
 </LinearLayout>

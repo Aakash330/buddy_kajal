@@ -60,6 +60,18 @@
             android:iconTint="#006A62"
             android:title="About Us" />
         <item
+            android:id="@+id/BuyOnlineBook"
+            android:icon="@drawable/ic_baseline_menu_book_24"
+            android:iconTint="#006A62"
+            android:title="Buy Books Online" />
+
+        <item
+            android:id="@+id/BuyEBook"
+            android:icon="@drawable/ic_baseline_book_online_24"
+            android:iconTint="#006A62"
+            android:title="Buy Ebooks       " />
+
+        <item
             android:id="@+id/SLogout"
             android:icon="@drawable/ic_logout"
             android:iconTint="#006A62"

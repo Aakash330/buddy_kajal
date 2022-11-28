@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,7 +11,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -46,7 +44,6 @@ import com.studybuddy.pc.brainmate.REgVerifyAccessCode;
 import com.studybuddy.pc.brainmate.RegistrationModeView;
 import com.studybuddy.pc.brainmate.student.CommonMethods;
 import com.studybuddy.pc.brainmate.student.Stu_Classes;
-import com.studybuddy.pc.brainmate.teacher.Main2Activity;
 import com.studybuddy.pc.brainmate.teacher.TeacherInactiveActivity;
 
 import org.json.JSONArray;
@@ -92,6 +89,7 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
     REgVerifyAccessCode registrationVerify;
     private RegistrationModeView model;
     SharedPreferences getPref;
+    String IsValidAccessCode;
 
     //endregion
 
@@ -356,10 +354,9 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
 
 // endregion
 
-
         });
         txt_share_details.setOnClickListener(view -> {
-            Intent intent = new Intent(Registration.this, ShareDetailsActivity.class);
+            Intent intent = new Intent(Registration.this, LoginBothActivity.class);
             startActivity(intent);
         });
 
@@ -585,11 +582,21 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
         });
     }
 
-    private void studentReg() {
+    private void studentReg(String stAccessCode) {
+
+        Log.w(TAG,"student student"+IsValidAccessCode);
+        if(stAccessCode.equals("1")){
+            AccessCode.getText().clear();
+            IsValidAccessCode=AccessCode.getText().toString();
+        }else{
+          //  AccessCode.getText().clear();
+            IsValidAccessCode=AccessCode.getText().toString();
+        }
+
 
         Log.w(TAG,"CurrentTime: "+System.currentTimeMillis());
         try {
-            Log.w(TAG, "OTP:" +SMS_OTP + " EdOTP:" + ST_ENTER_OTP.getText().toString());
+            Log.w(TAG, "OTP:" +SMS_OTP + " EdOTP:" + stAccessCode);
 
             if (NetworkUtil.getConnectivityStatus(Registration.this) > 0) {
                 System.out.println("Connect");
@@ -607,7 +614,7 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
                 }
 
                 else {
-                    Log.w(TAG,"AC="+ST_ACCESS_CODE);
+                    Log.w(TAG,"AC="+ stAccessCode);
                     if (System.currentTimeMillis() >OTP_VALID_TILL&&ST_OTP_CLICKED) {
 
                         Toast.makeText(context, "TimeOut! Resend OTP", Toast.LENGTH_SHORT).show();
@@ -709,7 +716,7 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
                                 Toast.makeText(context, "Empty Access Code", Toast.LENGTH_SHORT).show();
                                 //   ST_ACCESS_CODE="0";
                                 AccessCode.getText().clear();
-                                ST_ACCESS_CODE=AccessCode.getText().toString();
+                                ST_ACCESS_CODE =AccessCode.getText().toString();
                             }
                             progressDialog = new ProgressDialog(Registration.this);
                             progressDialog.setMessage("Loading..."); // Setting Title
@@ -743,26 +750,20 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
                                                     ST_Id= jsonObject1.getString("student_id");
 
                                                     Intent intent = new Intent(Registration.this, Stu_Classes.class);
-                                                    if(AccessCode.getText().toString().isEmpty()){
-                                                        intent.putExtra("accesscodes","123");
-                                                        CommonMethods.saveAccessCode(Registration.this,"123");
 
-                                                    }else{
-                                                        intent.putExtra("accesscodes", ST_ACCESS_CODE);
-                                                        CommonMethods.saveAccessCode(Registration.this,AccessCode.getText().toString());
+                                                    intent.putExtra("Student_ID",jsonObject1.getString("student_id"));
+                                                    intent.putExtra("accesscodes",IsValidAccessCode);
 
-                                                    }
 
-                                                    intent.putExtra("Student_ID", ST_Id);
-
-                                                    Toast.makeText(context, msg+"student id="+ST_Id, Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(context, msg+"student id="+jsonObject1.getString("student_id"), Toast.LENGTH_SHORT).show();
                                                     clearTeacherField();
                                                     clearStudentField();
                                                     SharedPreferences.Editor editor1 = pref.edit();
                                                     editor1.putInt("IsLogin", 1);
                                                     editor1.apply();
                                                     CommonMethods.saveEmailId(Registration.this, StEmail.getText().toString());
-                                                    CommonMethods.saveId(Registration.this, ST_Id);
+                                                    CommonMethods.saveId(Registration.this,jsonObject1.getString("student_id"));
+                                                    CommonMethods.saveAccessCode(Registration.this,IsValidAccessCode);
                                                     Toast.makeText(context, "Thank you for registering with us!", Toast.LENGTH_SHORT).show();
                                                     startActivity(intent);
                                                     finishAffinity();
@@ -798,7 +799,7 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
                                     Log.w(TAG," ST N:"+ StName.getText().toString());
                                     Log.w(TAG," ST Contact:"+ StContact.getText().toString());
                                     Log.w(TAG," ST SN:"+StSchoolName.getText().toString());
-                                    Log.w(TAG," ST SAC:"+ST_ACCESS_CODE);
+                                    Log.w(TAG," ST SAC:"+IsValidAccessCode);
                                     Log.w(TAG," ST State:"+ST_STATE.getSelectedItem().toString());
                                     Log.w(TAG," ST Address:"+StAddress.getText().toString());
                                     Log.w(TAG," ST city:"+ST_CITY.getSelectedItem().toString());
@@ -810,7 +811,7 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
                                    params.put("school_addess","0");
 
                                    params.put("school_phone","0");
-                                   params.put("accesscode",ST_ACCESS_CODE);
+                                   params.put("accesscode",stAccessCode);
                                    params.put("address",StAddress.getText().toString());
 
                                    params.put("state_id",ST_STATE.getSelectedItem().toString());
@@ -847,7 +848,7 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
                                     Toast.makeText(Registration.this, "No Connection", Toast.LENGTH_SHORT).show();
                                     dialog.dismiss();
                                 } else {
-                                    studentReg();
+                                    studentReg(ST_ACCESS_CODE);
                                 }
                             }
                         });
@@ -1800,13 +1801,13 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
                                     String LoginCredential = jsonObject1.getString("success");
 
                                     if (LoginCredential.equals("0")) {
-
-                                        ST_ACCESS_CODE=AccessCode.getText().toString();
-                                        studentReg();
+                                        studentReg("1");
+                                        Log.w(TAG,"invalid");
                                         return;
                                     }
-                                    ST_ACCESS_CODE=AccessCode.getText().toString();
-                                    studentReg();
+                                    studentReg("2");
+                                    Log.w(TAG,"valid");
+
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

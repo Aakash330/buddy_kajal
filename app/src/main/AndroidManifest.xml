@@ -17,9 +17,37 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".mains.BuyEbooks"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar_StatusBar" />
+        <activity
+            android:name=".mains.BuyBooksOnline"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar_StatusBar" />
+        <activity
+            android:name=".teacher.BuyEbooksT"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar_StatusBar" />
+        <activity
+            android:name=".teacher.BuyBooksOnlineT"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar_StatusBar" />
+        <activity
+            android:name=".teacher.ShowReferenceMaterial"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar_StatusBar" />
+        <activity
+            android:name=".student.ShowReferenceMaterialStudent"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar_StatusBar" />
+        <activity
             android:name=".student.ReferenceMaterial"
             android:exported="false"
-            android:theme="@style/AppTheme.NoActionBar_StatusBar"/>
+            android:theme="@style/AppTheme.NoActionBar_StatusBar" />
+        <activity
+            android:name=".teacher.ReferenceMaterialTeacher"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar_StatusBar" />
         <activity
             android:name=".teacher.TeacherInactiveActivity"
             android:exported="false" />

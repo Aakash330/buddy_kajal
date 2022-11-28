@@ -47,6 +47,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.studybuddy.pc.brainmate.mains.Apis;
+import com.studybuddy.pc.brainmate.mains.BuyBooksOnline;
+import com.studybuddy.pc.brainmate.mains.BuyEbooks;
 import com.studybuddy.pc.brainmate.mains.LoginBothActivity;
 import com.studybuddy.pc.brainmate.Network_connection.utils.NetworkUtil;
 import com.studybuddy.pc.brainmate.R;
@@ -110,9 +112,7 @@ public class Stu_Classes extends AppCompatActivity implements NavigationView.OnN
         accesscodes = getIntent().getStringExtra("accesscodes");
         Student_ID = getIntent().getStringExtra("Student_ID");
 
-        if(accesscodes.equals("123")){
 
-        }
         Log.w(TAG,"accesscode:"+accesscodes);
         Log.w(TAG,"studentId:"+Student_ID);
         Log.w(TAG," sp studentId:"+CommonMethods.getId(this));
@@ -302,12 +302,18 @@ public class Stu_Classes extends AppCompatActivity implements NavigationView.OnN
 
                             JSONObject jsonObject1 = null;
                             jsonObject1 = new JSONObject(response);
-                            Log.d("object111", jsonObject1.getString("success"));
-                            JSONArray heroArray = jsonObject1.getJSONArray("data");
-                            for (int j = 0; j < heroArray.length(); j++) {
-                                c1 = heroArray.getJSONObject(j);
-                                Log.w(TAG,"APi length c1="+c1.length());
-                             /*   if (c1.getString("status").equals("1")) {*/
+
+                            if(jsonObject1.getString("success").equals(0)){
+                                Toast.makeText(Stu_Classes.this, "success 0", Toast.LENGTH_SHORT).show();
+                                classList.setVisibility(View.GONE);
+                                classesListLty.setVisibility(View.VISIBLE);
+
+                            }else{
+                                JSONArray heroArray = jsonObject1.getJSONArray("data");
+                                for (int j = 0; j < heroArray.length(); j++) {
+                                    c1 = heroArray.getJSONObject(j);
+                                    Log.w(TAG,"APi length c1="+c1.length());
+                                    /*   if (c1.getString("status").equals("1")) {*/
                                     Log.d("imageArray", "ok" + c1.getString("class"));
                                     HashMap<String, String> ObjectiveMap = new HashMap<>();
                                     // ObjectiveMap.put("Title", c1.getString("title"));
@@ -325,20 +331,20 @@ public class Stu_Classes extends AppCompatActivity implements NavigationView.OnN
                                     Arraylist.add(ObjectiveMap);
                                     Log.d("imageArray1254f",c1.getString("book_img"));
                                 }
-                           // }
-                            for (int i = 0; i < Arraylist.size(); i++) {
+                                // }
+                                for (int i = 0; i < Arraylist.size(); i++) {
 
-                                for (int j = i + 1; j < Arraylist.size(); j++) {
-                                    if (Arraylist.get(i).equals(Arraylist.get(j))) {
-                                        Arraylist.remove(j);
-                                        j--;
+                                    for (int j = i + 1; j < Arraylist.size(); j++) {
+                                        if (Arraylist.get(i).equals(Arraylist.get(j))) {
+                                            Arraylist.remove(j);
+                                            j--;
+                                        }
                                     }
-                                }
+
+                            }
 
                             }
                             Log.d("AAAAAAA", String.valueOf(Arraylist));
-
-                            Toast.makeText(Stu_Classes.this, "c1="+c1.length(), Toast.LENGTH_SHORT).show();
 
                             if(Arraylist.size() == 0) {
                                 Log.w(TAG, "zero c1=" + c1.length());
@@ -445,7 +451,15 @@ public class Stu_Classes extends AppCompatActivity implements NavigationView.OnN
             CommonMethods.saveType(Stu_Classes.this, null);
             CommonMethods.saveIsLogin(Stu_Classes.this, 0);
             CommonMethods.saveAccessCode(Stu_Classes.this, null);
-        } else if (id == R.id.AddCode) {
+        }
+        else if(id== R.id.BuyOnlineBook){
+            Intent intent = new Intent(Stu_Classes.this, BuyBooksOnline.class);
+            startActivity(intent);
+        } else if(id== R.id.BuyEBook){
+            Intent intent = new Intent(Stu_Classes.this, BuyEbooks.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.AddCode) {
             getBookWithAccessCode();
           /*  final Dialog dialog = new Dialog(Stu_Classes.this);
             dialog.setContentView(R.layout.addaccesscodlay);

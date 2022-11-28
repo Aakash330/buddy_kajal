@@ -62,7 +62,7 @@ public class Books_Access_Code extends AppCompatActivity {//implements Navigatio
     NetworkChangeReceiver receiver;
     private static TextView log_network;
     private static String log_str;
-    String Network_Status, SubjectNme, ClassName, displayClassName;
+    String Network_Status, SubjectNme, ClassName, displayClassName,sNo;
     Toolbar toolbarHeader;
      Dialog dialog;
     Context context;
@@ -92,6 +92,8 @@ public class Books_Access_Code extends AppCompatActivity {//implements Navigatio
         Teachers_ID = getIntent().getStringExtra("Teachers_ID");
         SubjectNme = getIntent().getStringExtra("Subject");
         ClassName = getIntent().getStringExtra("ClassName");
+        sNo = getIntent().getStringExtra("sno");
+        displayClassName = getIntent().getStringExtra("displayClassName");
         displayClassName = getIntent().getStringExtra("displayClassName");
 
         toolbarHeader = findViewById(R.id.toolbarHeader);
@@ -233,6 +235,8 @@ public class Books_Access_Code extends AppCompatActivity {//implements Navigatio
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String book_Type = Books_By_Accesscode.get(position).get("Subject");
                 String ebook = Books_By_Accesscode.get(position).get("ebook").trim();
+                String sno = Books_By_Accesscode.get(position).get("sno");
+                Log.w("eeee","hash sno"+sno);
                 ebook = ebook.replace(" ", "%20");
                 Log.d("ebookebook", book_Type);
                 // str = str.replaceAll("[^\\d.]", "");
@@ -264,10 +268,7 @@ public class Books_Access_Code extends AppCompatActivity {//implements Navigatio
                                 getBookWithAccessCode();
                             }
                         }else {
-                            Toast.makeText(Books_Access_Code.this, "This Book is no more available. Sorry for the inconvenience", Toast.LENGTH_SHORT).show();
-
-
-                        }
+                            Toast.makeText(Books_Access_Code.this, "This Book is no more available. Sorry for the inconvenience", Toast.LENGTH_SHORT).show(); }
 
                     } else {
                         //finish();
@@ -281,6 +282,10 @@ public class Books_Access_Code extends AppCompatActivity {//implements Navigatio
                                 intent.putExtra("displayClassName", displayClassName);
                                 intent.putExtra("manual", Books_By_Accesscode.get(position).get("manual"));
                                 intent.putExtra("Title", Books_By_Accesscode.get(position).get("Title"));
+                                intent.putExtra("Class", Books_By_Accesscode.get(position).get("Class"));
+                                intent.putExtra("sno",Books_By_Accesscode.get(position).get("sno"));
+                                Log.w("ee","sno"+Books_By_Accesscode.get(position).get("sno"));
+                                Log.w("eeeeeee","sNo"+Books_By_Accesscode.get(position).get("sno"));
                                 startActivity(intent);
                             }else {
                                 getBookWithAccessCode();
@@ -850,6 +855,8 @@ public class Books_Access_Code extends AppCompatActivity {//implements Navigatio
                                                 ObjectiveMap.put("animation", c1.getString("animation"));
                                                 ObjectiveMap.put("status", c1.getString("status"));
                                                 ObjectiveMap.put("book_Type", "11");
+                                                ObjectiveMap.put("sno", c1.getString("sno"));
+
                                                 ObjectiveMap.put("access_code", c1.getString("access_code"));
                                                 ObjectiveMap.put("expire_status", c1.getString("expire_status"));
                                                 Books_By_Accesscode.add(ObjectiveMap);
