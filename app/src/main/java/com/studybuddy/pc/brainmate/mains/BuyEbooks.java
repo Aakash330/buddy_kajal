@@ -64,7 +64,7 @@ public class BuyEbooks extends AppCompatActivity {
             //toolbar.setNavigationIcon(R.drawable.ic_toolbar_arrow);
             //getSupportActionBar().setTitle("Techive");
         }
-        setTitle( "Buy E-books");
+        setTitle("Buy E-books");
 
         intentFilter = new IntentFilter();
         intentFilter.addAction(CONNECTIVITY_ACTION);

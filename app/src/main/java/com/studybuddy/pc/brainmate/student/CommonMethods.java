@@ -65,6 +65,7 @@ public class CommonMethods {
         stringRequest.setRetryPolicy(policy);
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.getCache().clear();
+
         requestQueue.add(stringRequest);
     }
 

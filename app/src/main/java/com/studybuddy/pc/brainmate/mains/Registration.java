@@ -44,6 +44,7 @@ import com.studybuddy.pc.brainmate.REgVerifyAccessCode;
 import com.studybuddy.pc.brainmate.RegistrationModeView;
 import com.studybuddy.pc.brainmate.student.CommonMethods;
 import com.studybuddy.pc.brainmate.student.Stu_Classes;
+import com.studybuddy.pc.brainmate.teacher.Main2Activity;
 import com.studybuddy.pc.brainmate.teacher.TeacherInactiveActivity;
 
 import org.json.JSONArray;
@@ -53,6 +54,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.regex.Pattern;
@@ -248,7 +250,11 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
         getPreference = context.getSharedPreferences("TEACHER_DETAILS", MODE_PRIVATE);
 
 
-        ST_CLASS.setOnClickListener(v -> showStudentClassList());
+        ST_CLASS.setOnClickListener(v -> {
+
+            showStudentClassList();
+
+        });
         TC_CLASS.setOnClickListener(v -> showTeacherClassList());
 
         STATE_LIST.add(0,"Select State");
@@ -392,11 +398,17 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
                 //TCEmails.setError("Please Fill Valid Email");
                 Toast.makeText(context, "Enter Email First", Toast.LENGTH_SHORT).show();
                 Log.w(TAG, "invalid mail");
+                TC_ENTER_OTP.setVisibility(View.GONE);
+                TC_DIS_OTP.setVisibility(View.GONE);
+                TC_SEND_OTP.setVisibility(View.VISIBLE);
             }else if(!isValidEmail(TCEmails.getText().toString())) {
                // TCEmails.setError("Please Fill Valid Email");
                 Toast.makeText(context, "Enter Invalid Email", Toast.LENGTH_SHORT).show();
                 Log.w(TAG, "invalid mail");
                 TC_OTP_CLICKED=false;
+                TC_ENTER_OTP.setVisibility(View.GONE);
+                TC_DIS_OTP.setVisibility(View.GONE);
+                TC_SEND_OTP.setVisibility(View.VISIBLE);
             }
             else {
                 TC_OTP_CLICKED=true;
@@ -593,6 +605,9 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
             IsValidAccessCode=AccessCode.getText().toString();
         }
 
+        if(AccessCode.getText().toString().isEmpty()){
+            IsValidAccessCode=AccessCode.getText().toString();
+        }
 
         Log.w(TAG,"CurrentTime: "+System.currentTimeMillis());
         try {
@@ -681,7 +696,7 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
 
 
                             //Set Otp button enable to resend OTP
-                            TC_OTP_CLICKED=false;
+                            ST_OTP_CLICKED=false;
                             ST_ENTER_OTP.setVisibility(View.GONE);
                             ST_DIS_OTP.setVisibility(View.GONE);
                             ST_SEND_OTP.setVisibility(View.VISIBLE);
@@ -710,10 +725,8 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
                             editor.putString("Class",ST_CLASS.getText().toString());
                             editor.apply();
 
-                            Toast.makeText(context, ""+check, Toast.LENGTH_SHORT).show();
 
                             if(AccessCode.getText().toString().isEmpty()){
-                                Toast.makeText(context, "Empty Access Code", Toast.LENGTH_SHORT).show();
                                 //   ST_ACCESS_CODE="0";
                                 AccessCode.getText().clear();
                                 ST_ACCESS_CODE =AccessCode.getText().toString();
@@ -755,7 +768,6 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
                                                     intent.putExtra("accesscodes",IsValidAccessCode);
 
 
-                                                    Toast.makeText(context, msg+"student id="+jsonObject1.getString("student_id"), Toast.LENGTH_SHORT).show();
                                                     clearTeacherField();
                                                     clearStudentField();
                                                     SharedPreferences.Editor editor1 = pref.edit();
@@ -771,7 +783,6 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
                                                 }
 
 
-
                                             } catch (JSONException e) {
                                                 Log.d("getDetailshere", "" + e.getMessage());
                                                 e.printStackTrace();
@@ -784,16 +795,53 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
                                     progressDialog.dismiss();
                                     Log.w(TAG, "TeacherLogin Registration error:" + error.getMessage());
                                     System.out.println("ResponseRegistration" + error.getMessage());
-                                    Toast.makeText(context, "failed" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, "volleymsg:"+error.getMessage(), Toast.LENGTH_SHORT).show();
 
                                 }
-                            }) {
+                                }) {
 
                                 @Override
                                 protected java.util.Map<String, String> getParams() throws AuthFailureError {
                                     java.util.Map<String, String> params = new HashMap<>();
 
+                                  /*  params.put("email","mmmu@gmail.com");
+                                    params.put("password","Qwe123@@@");
+                                    params.put("name","ffff");
+                                    params.put("mobile","1234556675");
+                                    params.put("school_name","gsjfh");
+                                    params.put("school_addess","hfohf");
+
+                                    params.put("school_phone","0214241353");
+                                    params.put("accesscode",AccessCode.getText().toString());
+                                    params.put("address","fjlsd");
+
+                                    params.put("state_id","fhld");
+                                    params.put("city_id","dsfh");
+                                    params.put("classes","ahk");
+
+                                    params.put("subject","hhf");
+                                    params.put("type","1");*/
+
+
                                    params.put("email", StEmail.getText().toString());
+                                   params.put("password", stPassword.getText().toString());
+                                   params.put("name", StName.getText().toString());
+                                   params.put("mobile", StContact.getText().toString());
+                                   params.put("school_name", StSchoolName.getText().toString());
+                                   params.put("school_addess","0");
+
+                                   params.put("school_phone","0");
+                                   params.put("accesscode",IsValidAccessCode);
+                                   params.put("address",StAddress.getText().toString());
+
+                                   params.put("state_id",ST_STATE.getSelectedItem().toString());
+                                   params.put("city_id",ST_CITY.getSelectedItem().toString());
+                                   params.put("classes",ST_CLASS.getText().toString());
+
+                                   params.put("subject","0");
+                                   params.put("type", "1");
+
+
                                     Log.w(TAG," ST Email:"+StEmail.getText().toString());
                                     Log.w(TAG," ST p:"+stPassword.getText().toString());
                                     Log.w(TAG," ST N:"+ StName.getText().toString());
@@ -804,26 +852,16 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
                                     Log.w(TAG," ST Address:"+StAddress.getText().toString());
                                     Log.w(TAG," ST city:"+ST_CITY.getSelectedItem().toString());
                                     Log.w(TAG," ST class:"+ST_CLASS.getText().toString());
-                                   params.put("password", stPassword.getText().toString());
-                                   params.put("name", StName.getText().toString());
-                                   params.put("mobile", StContact.getText().toString());
-                                   params.put("school_name", StSchoolName.getText().toString());
-                                   params.put("school_addess","0");
-
-                                   params.put("school_phone","0");
-                                   params.put("accesscode",stAccessCode);
-                                   params.put("address",StAddress.getText().toString());
-
-                                   params.put("state_id",ST_STATE.getSelectedItem().toString());
-                                   params.put("city_id",ST_CITY.getSelectedItem().toString());
-                                   params.put("classes",ST_CLASS.getText().toString());
-
-                                   params.put("subject","0");
-                                   params.put("type", "1");
 
                                    return params;
+                                } @Override
+                                public Map<String, String> getHeaders() throws AuthFailureError {
+                                    Map<String,String> params = new HashMap<>();
+                                    params.put("Content-Type","application/x-www-form-urlencoded");
+                                    return params;
                                 }
                             };
+
                             CommonMethods.callWebserviceForResponse(stringRequest, context);
 
 
@@ -966,7 +1004,7 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
                         else{
                             if(SMS_OTP.equals(TC_ENTER_OTP.getText().toString())) {
 
-                                Teacher_ValidateOnClick();
+                                //Teacher_ValidateOnClick();
                                 //VERIFY OTP SUCCESSFULLY GONE OTP LAYOUT
                                 TC_OTP_CLICKED=false;
                                 TC_ENTER_OTP.getText().clear();
@@ -978,6 +1016,8 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
                                 SharedPreferences.Editor editor = getPreference.edit();
 
                                 editor.putString("TName", TCName.getText().toString());
+
+
 
                                 editor.putString("TEmail", TCEmails.getText().toString());
                                 editor.putString("TPassword", TCPassword.getText().toString());
@@ -1007,47 +1047,45 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
 
                                                 // Here for already registered user success value is 2
                                                 try {
-                                                    Log.w(TAG, "response"+response);
-                                                    Log.w(TAG, " TC OTP:" +SMS_OTP+ " TC EdOTP:" +TC_ENTER_OTP.getText().toString());
+                                                    Log.w(TAG, "response" + response);
+                                                    Log.w(TAG, " TC OTP:" + SMS_OTP + " TC EdOTP:" + TC_ENTER_OTP.getText().toString());
 
                                                     JSONObject jsonObject1 = new JSONObject(response);
-                                                    String msg= jsonObject1.getString("msg");
+                                                    String msg = jsonObject1.getString("msg");
                                                     String RESPONSE_CODE = jsonObject1.getString("error");
                                                     String TC_Id = jsonObject1.getString("teacher_id");
-                                                    Log.w(TAG, " msg:" +msg+ " TC code:" +RESPONSE_CODE);
+                                                    Log.w(TAG, " msg:" + msg + " TC code:" + RESPONSE_CODE);
 
                                                     if (RESPONSE_CODE.equals(400)) {
-                                                        Toast.makeText(context, ""+msg, Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(context, "" + msg, Toast.LENGTH_SHORT).show();
 
-                                                    }
-                                                   else{
+                                                    } else {
 
-                                                       String email=TCEmails.getText().toString();
-                                                       String pass=TCPassword.getText().toString();
-
+                                                        String email = TCEmails.getText().toString();
+                                                        String pass = TCPassword.getText().toString();
+                                                        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                                                         Intent intent = new Intent(Registration.this, TeacherInactiveActivity.class);
                                                         intent.putExtra("Type", "2");
-                                                        intent.putExtra("Id", TC_Id);
+                                                       // intent.putExtra("Id", TC_Id);
+                                                        intent.putExtra("studentId", TC_Id);
                                                         intent.putExtra("EntryType", "Reg");
                                                         intent.putExtra("accesscodes", TC_ACCESS_CODE);
-                                                        intent.putExtra("Email",TCEmails.getText().toString());
-                                                        intent.putExtra("Password",TCPassword.getText().toString());
-
-                                                        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
-                                                        clearTeacherField();
-                                                        clearStudentField();
-                                                        SharedPreferences.Editor editor1= pref.edit();
-                                                        editor1.putInt("IsLogin",3);
+                                                      /*  intent.putExtra("msg",msg);
+                                                        CommonMethods.saveMsg(Registration.this, msg);*/
+                                                        intent.putExtra("email", TCEmails.getText().toString());
+                                                        intent.putExtra("pass", TCPassword.getText().toString());
+                                                        SharedPreferences.Editor editor1 = pref.edit();
+                                                        editor1.putInt("IsLogin", 1);
                                                         editor1.apply();
                                                         SharedPreferences.Editor editor2 = getPref.edit();
-                                                        editor2.putString("email",TCEmails.getText().toString());
-                                                        editor2.putString("pass",TCPassword.getText().toString());
+                                                        editor2.putString("email", TCEmails.getText().toString());
+                                                        editor2.putString("pass", TCPassword.getText().toString());
                                                         editor2.apply();
                                                         CommonMethods.saveIsLogin(Registration.this, 3);
-                                                        CommonMethods.saveEmailId(Registration.this,email);
-                                                        CommonMethods.saveUsername(Registration.this,pass);
-                                                        CommonMethods.saveId(Registration.this,TC_Id);
-                                                        CommonMethods.saveAccessCode(Registration.this,TC_ACCESS_CODE);
+                                                        CommonMethods.saveEmailId(Registration.this,TCEmails.getText().toString());
+                                                        CommonMethods.saveUsername(Registration.this,TCPassword.getText().toString());
+                                                        CommonMethods.saveId(Registration.this, TC_Id);
+                                                        CommonMethods.saveAccessCode(Registration.this, TC_ACCESS_CODE);
                                                         startActivity(intent);
 
 
@@ -1061,14 +1099,12 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
                                                     }
 
 
-
-
-
                                                 } catch (JSONException e) {
                                                     Log.d("getDetailshere", "" + e.getMessage());
                                                     e.printStackTrace();
                                                 }
                                             }
+
                                         }, new Response.ErrorListener() {
                                     @Override
                                     public void onErrorResponse(VolleyError error) {
@@ -1113,9 +1149,10 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
                                 Toast.makeText(context, "Invalid OTP", Toast.LENGTH_SHORT).show();
                                    }
 
-                        }
+                        }}
                     }
-                }}
+                }
+        //}
             else {
                 System.out.println("No connection");
                 Network_Status = "notConnect";
@@ -1382,7 +1419,6 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
                                         Toast.makeText(context, "otp"+SMS_OTP, Toast.LENGTH_SHORT).show();
 
 
-
                                     }
 
                                 }catch (Exception ee){}
@@ -1477,6 +1513,7 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
                                             TC_ENTER_OTP.requestFocus();
 
                                     }else{
+
                                         Toast.makeText(context,  msg, Toast.LENGTH_SHORT).show();
 
                                             TC_ENTER_OTP.setVisibility(View.VISIBLE);
@@ -1485,6 +1522,8 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
                                             TC_ENTER_OTP.requestFocus();
                                         SMS_OTP = jsonObject1.getString("otp");
                                         Log.w(TAG,"OTP:"+SMS_OTP);
+                                       Toast.makeText(context, " Otp="+SMS_OTP, Toast.LENGTH_SHORT).show();
+
 
                                     }
 
@@ -1674,7 +1713,7 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
                                     JSONArray jsonArray = jsonObject1.getJSONArray("city_list");
 
                                     ArrayList<String>  CITY_LIST=new ArrayList<>();
-                                    CITY_LIST.add(0,"select city");
+                                    CITY_LIST.add(0,"Select City");
 
                                     tvCity.setVisibility(View.GONE);
                                     ST_CITY.setVisibility(View.VISIBLE);
@@ -1947,7 +1986,7 @@ public class Registration extends AppCompatActivity implements REgVerifyAccessCo
 
     @Override
     public void IsInValidAccessCode(boolean value) {
-        Toast.makeText(context, "CheckValideAccessCode:"+value, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(context, "CheckValideAccessCode:"+value, Toast.LENGTH_SHORT).show();
     }
     //Access code mandatory code @kajal 11-12-2022
  /*   private void Teachers_ValidateOnClick() {

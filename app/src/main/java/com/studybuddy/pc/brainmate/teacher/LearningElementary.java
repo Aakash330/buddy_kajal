@@ -133,7 +133,6 @@ public class LearningElementary extends AppCompatActivity {
                                 }
 
                                 if(jsonObject1.getString("ebook_status").equals("1")){
-
                                     LtyE_book.setVisibility(View.VISIBLE);
                                 }
                                 String rf= jsonObject1.getString("reference_material_status");

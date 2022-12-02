@@ -119,7 +119,6 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         Teachers_ID = getIntent().getStringExtra("Teachers_ID") != null ? getIntent().getStringExtra("Teachers_ID") : CommonMethods.getId(Main2Activity.this);
         accesscodes = getIntent().getStringExtra("accesscodes") != null ? getIntent().getStringExtra("accesscodes") : CommonMethods.getAccessCode(Main2Activity.this);
 
-        Toast.makeText(activity, "TID:"+Teachers_ID, Toast.LENGTH_SHORT).show();
 
         Log.w(TAG,"TID:"+Teachers_ID);
          Log.w(TAG,"AC:"+accesscodes);
@@ -138,7 +137,6 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         list = (ListView) findViewById(R.id.listview12);
         Imageslist = (RecyclerView) findViewById(R.id.Imageslist);
         imageRetryBtn.setOnClickListener(v ->{//imageslistAdapter.notify();
-            Toast.makeText(this, "imageBtn", Toast.LENGTH_SHORT).show();
         });
         classRetryBtn.setOnClickListener(v ->getBookWithAccessCode());
         autoScrollAnother();

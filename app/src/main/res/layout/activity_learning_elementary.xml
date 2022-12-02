@@ -41,7 +41,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="No book available"
+                android:text="No E-Content Available"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:gravity="center"

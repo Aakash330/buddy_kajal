@@ -69,7 +69,6 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/back"
                 android:hint="Password"
-                android:inputType="textPassword"
                 android:textColor="#fff"
                 android:textColorHint="#fff" />
 

@@ -681,7 +681,7 @@
                         android:elevation="3dp"
                         android:visibility="gone"
                         android:background="@drawable/roundloginbutton"
-                        android:text="Resend OTP"
+                        android:text="Resend Otp"
                         android:textColor="#fff" />
 
                 </LinearLayout>

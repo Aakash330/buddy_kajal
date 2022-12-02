@@ -110,7 +110,7 @@ public class Stu_Classes extends AppCompatActivity implements NavigationView.OnN
         setSupportActionBar(toolbar);
         setTitle("Classes");
         accesscodes = getIntent().getStringExtra("accesscodes");
-        Student_ID = getIntent().getStringExtra("Student_ID");
+        Student_ID = getIntent().getStringExtra("Student_ID")!=null?getIntent().getStringExtra("Student_ID"):CommonMethods.getId(this);
 
 
         Log.w(TAG,"accesscode:"+accesscodes);
@@ -297,14 +297,14 @@ public class Stu_Classes extends AppCompatActivity implements NavigationView.OnN
                     @Override
                     public void onResponse(String response) {
                         Log.d("ViewClass123654", response);
+                        Log.w(TAG,"studentId:"+Student_ID);
                         progressDialog.dismiss();
                         try {
 
                             JSONObject jsonObject1 = null;
                             jsonObject1 = new JSONObject(response);
 
-                            if(jsonObject1.getString("success").equals(0)){
-                                Toast.makeText(Stu_Classes.this, "success 0", Toast.LENGTH_SHORT).show();
+                            if(jsonObject1.getString("success").equals("0")){
                                 classList.setVisibility(View.GONE);
                                 classesListLty.setVisibility(View.VISIBLE);
 
@@ -347,14 +347,14 @@ public class Stu_Classes extends AppCompatActivity implements NavigationView.OnN
                             Log.d("AAAAAAA", String.valueOf(Arraylist));
 
                             if(Arraylist.size() == 0) {
-                                Log.w(TAG, "zero c1=" + c1.length());
+                              //  Log.w(TAG, "zero c1=" + c1.length());
                                 classList.setVisibility(View.GONE);
                                 classesListLty.setVisibility(View.VISIBLE);
 
                             } else {
                                 classList.setVisibility(View.VISIBLE);
                                 classesListLty.setVisibility(View.GONE);
-                                Log.w(TAG, "length c1=" + c1.length());
+                              //  Log.w(TAG, "length c1=" + c1.length());
                                 adapter = new StudentClassAdapter(Stu_Classes.this, Arraylist);
                                 list.setAdapter(adapter);
                             }
@@ -382,6 +382,7 @@ public class Stu_Classes extends AppCompatActivity implements NavigationView.OnN
             protected java.util.Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 //TODO : changes made below
+                Log.w(TAG,"studentId:"+Student_ID);
                 params.put("accesscodes",accesscodes);
                 params.put("student_id",Student_ID);
                 return params;

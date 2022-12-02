@@ -77,8 +77,10 @@ public class TeacherInactiveActivity extends AppCompatActivity {
             Log.w(TAG," Sp msg="+ CommonMethods.getMsg(this));
 
 
+            if(msg!=null&&msg!="0"){
+                thankMsgTv.setText(msg);
+            }
 
-            thankMsgTv.setText(msg);
            /* AlertDialog dialog=  new AlertDialog.Builder(this)
                     .setIcon(R.drawable.ic_launcher2)
                     .setTitle("Thank you for Registration")
@@ -163,8 +165,6 @@ public class TeacherInactiveActivity extends AppCompatActivity {
                                         String email = c.getString("email");
                                         String name = c.getString("name");
                                         Teachers_ID = c.getString("t_id");
-
-                                        Toast.makeText(TeacherInactiveActivity.this, "tid"+Teachers_ID, Toast.LENGTH_SHORT).show();
 
                                         Log.d("teachers_ID", "Teachers " + Teachers_ID + "Acc " + accesscodes + "Status" + Active_Status);
 

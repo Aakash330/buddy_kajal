@@ -36,7 +36,7 @@ import java.util.Map;
 public class StudebtElimentery extends AppCompatActivity {
 
     Button TakeTest, E_Book, AnimationVideo, Reference_Material;
-    String access_code, ebook, Subject,Title,ClassName;
+    String access_code, ebook, Subject,Title,ClassName,bookLty;
     Toolbar toolbarHeader;
     ProgressDialog progressDialog;
     String Network_Status,sno;
@@ -100,21 +100,31 @@ public class StudebtElimentery extends AppCompatActivity {
                                 jsonObject1 = new JSONObject(response);
                                 Log.w("check","ebook_status"+jsonObject1.getString("ebook_status"));
                                 Log.w("check","rehere"+jsonObject1.getString("reference_material_status"));
-                               String rf= jsonObject1.getString("reference_material_status");
 
+
+                                if(jsonObject1.getString("test_manual_status").equals("1")){
+                                    BookAvailable.setVisibility(View.VISIBLE);
+                                    LtyActivity.setVisibility(View.VISIBLE);
+                                    noBookAvailable.setVisibility(View.GONE);
+
+
+                                }
                                 if(jsonObject1.getString("ebook_status").equals("1")){
+                                    noBookAvailable.setVisibility(View.GONE);
+                                    BookAvailable.setVisibility(View.VISIBLE);
                                     LtyE_book.setVisibility(View.VISIBLE);
                                 }
+                                String rf= jsonObject1.getString("reference_material_status");
                                 if(rf.equals("1"))
                                 {
-
+                                    noBookAvailable.setVisibility(View.GONE);
+                                    BookAvailable.setVisibility(View.VISIBLE);
                                     LtyReferenceMaterial.setVisibility(View.VISIBLE);
                                 }
                                 if(jsonObject1.getString("ebook_status").equals("0")&&
-                                        jsonObject1.getString("test_generator_status").equals("0")&&
-                                        jsonObject1.getString("test_manual_status").equals("0")&&
-                                        jsonObject1.getString("reference_material_status").equals("0")){
-
+                                        jsonObject1.getString("reference_material_status").equals("0")&&jsonObject1.getString("test_manual_status").equals("0")){
+                                    noBookAvailable.setVisibility(View.GONE);
+                                    BookAvailable.setVisibility(View.VISIBLE);
                                     noBookAvailable.setVisibility(View.VISIBLE);
                                     BookAvailable.setVisibility(View.GONE);
                                 }
@@ -185,6 +195,7 @@ public class StudebtElimentery extends AppCompatActivity {
         AnimationVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //BookAvailable.setVisibility(View.VISIBLE);
                 Intent intent = new Intent(StudebtElimentery.this, StudentAnimition.class);
                 startActivity(intent);
             }

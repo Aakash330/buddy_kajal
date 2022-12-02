@@ -463,9 +463,9 @@ public class LoginBothActivity extends AppCompatActivity {
 
                                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                             startActivity(intent);
-                                        } else if (LoginCredential.equals("0")) {
+                                        } /*else if (LoginCredential.equals("0")) {
                                             Toast.makeText(LoginBothActivity.this, "Access Code Invalid", Toast.LENGTH_LONG).show();
-                                        } else {
+                                        } */else {
                                             final Dialog dialog = new Dialog(LoginBothActivity.this);
                                             dialog.setContentView(R.layout.dialog_layout);
                                             //dialog.setTitle("Custom Dialog");
@@ -540,6 +540,8 @@ public class LoginBothActivity extends AppCompatActivity {
                                         //  Log.d("login_succes_student", "" + jsonObject1.getString("success"));
                                        // String LoginCredential = jsonObject1.getString("success");
                                        // String email_field = jsonObject1.getString("email_field");
+                                        Log.d("pass", "" +stPassword);
+                                        Log.d("Email", "" +StEmail);
 
                                         if (jsonObject1.getString("success").equals("0")) {
                                             Toast.makeText(LoginBothActivity.this, getString(R.string.register_first), Toast.LENGTH_LONG).show();

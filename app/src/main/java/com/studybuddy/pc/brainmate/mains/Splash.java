@@ -41,6 +41,7 @@ public class Splash extends Activity {
         Teachers_ID = prefs.getString("Teachers_ID", "0");
 
         Status = prefs.getString("Status", "0");
+        Status = prefs.getString("Status", "0");
 
        // Toast.makeText(context, "Login type:"+CommonMethods.getIsLogin(this), Toast.LENGTH_SHORT).show();
         /*for (int i = 0; i < 10; i++) {
@@ -71,14 +72,20 @@ public class Splash extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                Log.w("spl","login="+CommonMethods.getIsLogin(context));
                 if (CommonMethods.getIsLogin(context) == 0) {
                     Intent i = new Intent(context, LoginBothActivity.class);
                     startActivity(i);
                     finish();
                 }if (CommonMethods.getIsLogin(context) == 3) {
                     Intent i = new Intent(context, TeacherInactiveActivity.class);
-                    i.putExtra("email", "" + CommonMethods.getEmailId(context));
-                    i.putExtra("pass", "" +CommonMethods.getUsername(context));
+                    i.putExtra("email", CommonMethods.getEmailId(context));
+                    i.putExtra("pass", CommonMethods.getUsername(context));
+                    i.putExtra("msg",CommonMethods.getMsg(context));
+
+                    Log.w(TAG,"email="+ CommonMethods.getEmailId(context));
+                    Log.w(TAG,"pass="+ CommonMethods.getUsername(context));
+                    Log.w(TAG,"pass="+ CommonMethods.getMsg(context));
                     startActivity(i);
                     finish();
                 } else if (CommonMethods.getIsLogin(context) == 1) {
