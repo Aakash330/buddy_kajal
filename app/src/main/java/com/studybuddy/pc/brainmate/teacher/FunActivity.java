@@ -24,7 +24,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
 import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 import com.studybuddy.pc.brainmate.R;
 import com.studybuddy.pc.brainmate.adapters.FunAdapter;
 import com.studybuddy.pc.brainmate.mains.Apis;
@@ -44,13 +46,19 @@ import java.util.HashMap;
 
 public class FunActivity extends AppCompatActivity {
 
+    private static final String TAG ="FunActivity" ;
     private ArrayList<HashMap<String, String>> funList = new ArrayList<>();
     private ArrayList<FunForList> funForLists = new ArrayList<>();
     private Context context;
-    RecyclerView recyclerViewFun;
-    Toolbar toolbarHeader;
-    ProgressDialog progressDialog;
-    String displayClassName;
+    private RecyclerView recyclerViewFun;
+    private Toolbar toolbarHeader;
+    private ProgressDialog progressDialog;
+    private String displayClassName;
+    @SerializedName("dataList")
+    FunDataList  dataList;
+    @SerializedName("list")
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,24 +112,33 @@ public class FunActivity extends AppCompatActivity {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             if (jsonObject.getString("success").equals("1")) {
-                                FunDataList dataList = new Gson().fromJson(response, FunDataList.class);
+                              dataList = new Gson().fromJson(response, FunDataList.class);
+
                                 int p = 0;
-                                for (Data list : dataList.getData()) {
-                                    FunForList forList = new FunForList();
-                                    forList.setId(list.getId());
-                                    forList.setPublisher_id(list.getPublisher_id());
-                                    forList.setClass1(list.getClass1());
-                                    forList.setSubject(list.getSubject());
-                                    forList.setSeries(list.getSeries());
-                                    forList.setTitle(list.getTitle());
-                                    forList.setType(list.getType());
-                                    forList.setUrl(list.getUrl());
-                                    forList.setDate(list.getDate());
-                                    //forList.setIsFree(p % 2 == 0 ? "0" : "1");
-                                    forList.setIsFree("1");
-                                    funForLists.add(forList);
-                                    p++;
-                                }
+                                               if(p==0
+                                               ) {
+                                                   Log.w("ngfgggg", "array=" +dataList);
+                                                   return;
+                                               }
+                                    for ( Data list : dataList.getData()){
+                                        Log.w(TAG, "List eeee");
+                                        Log.w(TAG, "List =" + list);
+                                        FunForList forList = new FunForList();
+                                        forList.setId(list.getId());
+                                        forList.setPublisher_id(list.getPublisher_id());
+                                        forList.setClass1(list.getClass1());
+                                        forList.setSubject(list.getSubject());
+                                        forList.setSeries(list.getSeries());
+                                        forList.setTitle(list.getTitle());
+                                        forList.setType(list.getType());
+                                        forList.setUrl(list.getUrl());
+                                        forList.setDate(list.getDate());
+                                        //forList.setIsFree(p % 2 == 0 ? "0" : "1");
+                                        forList.setIsFree("1");
+                                        funForLists.add(forList);
+                                        p++;
+                                    }
+
                                 if (funForLists.size() > 0) {
                                     Collections.sort(funForLists, FunForList.getByType);
                                 }
