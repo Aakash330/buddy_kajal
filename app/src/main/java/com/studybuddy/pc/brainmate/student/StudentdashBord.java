@@ -34,8 +34,10 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.studybuddy.pc.brainmate.CertificateClass0S6;
 import com.studybuddy.pc.brainmate.Network_connection.services.NetworkChangeReceiver;
 import com.studybuddy.pc.brainmate.Network_connection.utils.NetworkUtil;
 import com.studybuddy.pc.brainmate.R;
@@ -206,7 +208,8 @@ public class StudentdashBord extends AppCompatActivity {// implements Navigation
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
             progressDialog.show(); // Display Progress Dialog
             progressDialog.setCancelable(false);
-            RequestQueue queue = Volley.newRequestQueue(StudentdashBord.this);
+           // RequestQueue queue = Volley.newRequestQueue(StudentdashBord.this);
+            RequestQueue queue = Volley.newRequestQueue(StudentdashBord.this, new HurlStack(null, CertificateClass0S6.getSslSocketFactory(StudentdashBord.this)));
             //String url = "http://www.techive.in/studybuddy/api/student_book.php";
             String url = Apis.base_url+Apis.student_book_url;
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url,

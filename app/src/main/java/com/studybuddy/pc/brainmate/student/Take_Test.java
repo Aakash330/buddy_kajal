@@ -26,8 +26,10 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.studybuddy.pc.brainmate.CertificateClass0S6;
 import com.studybuddy.pc.brainmate.R;
 
 import org.json.JSONArray;
@@ -182,7 +184,8 @@ public class Take_Test extends AppCompatActivity {
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.show();
         progressDialog.setCancelable(false);*/
-        RequestQueue queue = Volley.newRequestQueue(Take_Test.this);
+       // RequestQueue queue = Volley.newRequestQueue(Take_Test.this);
+        RequestQueue queue = Volley.newRequestQueue(Take_Test.this, new HurlStack(null, CertificateClass0S6.getSslSocketFactory(Take_Test.this)));
         String url = "http://techive.in/medical_api/patient_data.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -339,7 +342,8 @@ public class Take_Test extends AppCompatActivity {
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.show();
         progressDialog.setCancelable(false);*/
-        RequestQueue queue1 = Volley.newRequestQueue(Take_Test.this);
+        //RequestQueue queue1 = Volley.newRequestQueue(Take_Test.this);
+        RequestQueue queue1 = Volley.newRequestQueue(Take_Test.this, new HurlStack(null,CertificateClass0S6.getSslSocketFactory(Take_Test.this)));
         String url1 = "http://techive.in/medical_api/patient_data.php";
         StringRequest stringRequest1 = new StringRequest(Request.Method.POST, url1,
                 new Response.Listener<String>() {

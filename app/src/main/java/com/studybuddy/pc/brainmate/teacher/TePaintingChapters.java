@@ -18,8 +18,10 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.studybuddy.pc.brainmate.CertificateClass0S6;
 import com.studybuddy.pc.brainmate.R;
 import com.studybuddy.pc.brainmate.mains.Apis;
 import com.studybuddy.pc.brainmate.student.freehandpainting.FreehandActivityMain;
@@ -76,7 +78,8 @@ public class TePaintingChapters extends AppCompatActivity {
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
         progressDialog.show(); // Display Progress Dialog
         progressDialog.setCancelable(false);
-        RequestQueue queue1 = Volley.newRequestQueue(TePaintingChapters.this);
+       // RequestQueue queue1 = Volley.newRequestQueue(TePaintingChapters.this);
+        RequestQueue queue1 = Volley.newRequestQueue(TePaintingChapters.this, new HurlStack(null, CertificateClass0S6.getSslSocketFactory(TePaintingChapters.this)));
         //String url1 = "http://www.techive.in/studybuddy/api/painting_images.php";
         String url1 = Apis.base_url + Apis.painting_images_url;
         StringRequest stringRequest1 = new StringRequest(Request.Method.POST, url1,

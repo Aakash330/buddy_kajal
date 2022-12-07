@@ -9,8 +9,10 @@ import android.widget.Toast;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
 import com.android.volley.RetryPolicy;
+import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.studybuddy.pc.brainmate.CertificateClass0S6;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -63,7 +65,9 @@ public class CommonMethods {
         int socketTimeout = 30000;//10 seconds - change to what you want
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         stringRequest.setRetryPolicy(policy);
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        RequestQueue requestQueue;
+        requestQueue = Volley.newRequestQueue(context, new HurlStack(null,CertificateClass0S6.getSslSocketFactory(context)));
+
         requestQueue.getCache().clear();
 
         requestQueue.add(stringRequest);

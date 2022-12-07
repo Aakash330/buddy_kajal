@@ -36,11 +36,13 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.studybuddy.pc.brainmate.CertificateClass0S6;
 import com.studybuddy.pc.brainmate.R;
 import com.studybuddy.pc.brainmate.adapters.ColorGridImgAdapter;
 import com.studybuddy.pc.brainmate.save.PermissionUtils;
@@ -231,7 +233,8 @@ public class FreehandActivityMain extends AppCompatActivity implements View.OnCl
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.show();
         progressDialog.setCancelable(false);
-        RequestQueue queue1 = Volley.newRequestQueue(FreehandActivityMain.this);
+       // RequestQueue queue1 = Volley.newRequestQueue(FreehandActivityMain.this);
+        RequestQueue queue1 =Volley.newRequestQueue(context, new HurlStack(null, CertificateClass0S6.getSslSocketFactory(context)));
         String url1 = "http://www.techive.in/studybuddy/api/painting_images.php";
         StringRequest stringRequest1 = new StringRequest(Request.Method.POST, url1,
                 new Response.Listener<String>() {

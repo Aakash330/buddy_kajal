@@ -30,11 +30,13 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
+import com.studybuddy.pc.brainmate.CertificateClass0S6;
 import com.studybuddy.pc.brainmate.DisplayTestResultActivity;
 import com.studybuddy.pc.brainmate.mains.Apis;
 import com.studybuddy.pc.brainmate.R;
@@ -293,7 +295,8 @@ public class StudentTest extends AppCompatActivity {
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.show();
         progressDialog.setCancelable(false);
-        RequestQueue queue = Volley.newRequestQueue(StudentTest.this);
+      //  RequestQueue queue = Volley.newRequestQueue(StudentTest.this);
+        RequestQueue queue =Volley.newRequestQueue(context, new HurlStack(null, CertificateClass0S6.getSslSocketFactory(context)));
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -1133,7 +1136,8 @@ public class StudentTest extends AppCompatActivity {
         rg1 = (RadioGroup) findViewById(R.id.rg1);
         MarksTF = (TextView) findViewById(R.id.MarksTF);
         final TextView TFQuestionNo = (TextView) findViewById(R.id.TFQuestionNo);
-        RequestQueue queue3 = Volley.newRequestQueue(StudentTest.this);
+       // RequestQueue queue3 = Volley.newRequestQueue(StudentTest.this);
+        RequestQueue queue3 = Volley.newRequestQueue(context, new HurlStack(null,CertificateClass0S6.getSslSocketFactory(context)));
         //String url3 = "http://www.techive.in/studybuddy/api/random_question.php";
         String url3 = Apis.base_url + Apis.random_question_url;
         StringRequest stringRequest3 = new StringRequest(Request.Method.POST, url3,
@@ -1391,7 +1395,8 @@ public class StudentTest extends AppCompatActivity {
         final TextView txtFB5 = (TextView) findViewById(R.id.txtFB5);
         final TextView txtFbtitle = (TextView) findViewById(R.id.txtFbtitle);
 
-        RequestQueue queue2 = Volley.newRequestQueue(StudentTest.this);
+        //RequestQueue queue2 = Volley.newRequestQueue(StudentTest.this);
+        RequestQueue queue2 = Volley.newRequestQueue(context, new HurlStack(null,CertificateClass0S6.getSslSocketFactory(context)));
         //String url2 = "http://www.techive.in/studybuddy/api/random_question.php";
         String url2 = Apis.base_url + Apis.random_question_url;
         StringRequest stringRequest2 = new StringRequest(Request.Method.POST, url2,
@@ -1759,7 +1764,8 @@ public class StudentTest extends AppCompatActivity {
 
         //region "Fill MColumn List"
 
-        RequestQueue queueMCol = Volley.newRequestQueue(StudentTest.this);
+       // RequestQueue queueMCol = Volley.newRequestQueue(StudentTest.this);
+        RequestQueue queueMCol = Volley.newRequestQueue(context, new HurlStack(null,CertificateClass0S6.getSslSocketFactory(context)));
         //String urlMCol = "http://www.techive.in/studybuddy/api/random_question.php";
         String urlMCol = Apis.base_url + Apis.random_question_url;
         StringRequest stringRequestMCol = new StringRequest(Request.Method.POST, urlMCol,

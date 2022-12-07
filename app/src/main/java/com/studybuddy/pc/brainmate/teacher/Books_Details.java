@@ -23,8 +23,10 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.studybuddy.pc.brainmate.CertificateClass0S6;
 import com.studybuddy.pc.brainmate.R;
 import com.studybuddy.pc.brainmate.mains.Apis;
 
@@ -74,7 +76,8 @@ public class Books_Details extends AppCompatActivity {
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
         progressDialog.show(); // Display Progress Dialog
         progressDialog.setCancelable(false);
-        RequestQueue queue = Volley.newRequestQueue(Books_Details.this);
+       // RequestQueue queue = Volley.newRequestQueue(Books_Details.this);
+        RequestQueue queue =Volley.newRequestQueue(Books_Details.this, new HurlStack(null, CertificateClass0S6.getSslSocketFactory(Books_Details.this)));
         String url = "http://techive.in/medical_api/patient_data.php";
         //String url = Apis.base_url+Apis. "http://techive.in/medical_api/patient_data.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,

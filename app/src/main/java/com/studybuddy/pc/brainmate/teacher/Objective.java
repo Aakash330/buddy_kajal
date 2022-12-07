@@ -20,8 +20,10 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.studybuddy.pc.brainmate.CertificateClass0S6;
 import com.studybuddy.pc.brainmate.R;
 
 import org.json.JSONArray;
@@ -81,7 +83,8 @@ public class Objective extends AppCompatActivity {
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.show();
         progressDialog.setCancelable(false);
-        RequestQueue queue = Volley.newRequestQueue(Objective.this);
+       // RequestQueue queue = Volley.newRequestQueue(Objective.this);
+        RequestQueue queue =Volley.newRequestQueue(Objective.this, new HurlStack(null, CertificateClass0S6.getSslSocketFactory(Objective.this)));
         String url = "http://techive.in/medical_api/patient_data.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
